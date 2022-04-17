@@ -1,0 +1,100 @@
+.roomName {
+	position: absolute;
+	font-family: 'Blox2', 'Courier New', Courier, monospace;
+	font-size: 0.9rem;
+	color: greenyellow;
+	width: 100%;
+	padding: auto;
+	background-color: rgba(0, 0, 255, 0);
+	background-image: unset;
+	-webkit-text-stroke: 1px rgba(0, 0, 0, 0.247);
+}
+
+.roomName:hover {
+	text-shadow: 5px 0px 10px greenyellow;
+}
+
+.map-container {
+	--metagame-left: 50%;
+	--metagame-top: 50px;
+	--metagame-height: 90%;
+	--metagame-scale-ratio: 1;
+	--metagame-width: 750px;
+	--metagame-transform: translateX(-50%);
+}
+
+.image-map {
+	position: absolute;
+	transform: var(--metagame-transform);
+	left: var(--metagame-left);
+	top: var(--metagame-top);
+	height: calc(var(--metagame-scale-ratio) * var(--metagame-height));
+	border: solid 2px transparent;
+	background: unset;
+	box-sizing: border-box;
+	/* max-width: 100%; */
+	/* height: auto; */
+	bottom: 0;
+	top: 0;
+	margin: auto;
+}
+
+.mapInstructions {
+	position: absolute;
+	left: calc(var(--metagame-left));
+	top: calc(var(--metagame-top) - 7%);
+	color: white;
+	font-size: 1.3rem;
+}
+
+.defaultRoomName {
+	position: absolute;
+	left: calc(
+		var(--metagame-left) + var(--metagame-width) *
+			var(--metagame-scale-ratio) - 5%
+	);
+	top: calc(var(--metagame-top) + 5%);
+	color: greenyellow;
+}
+
+
+.video {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 640px;
+	height: 480px;
+	background: beige;
+	border: 3px groove yellow;
+}
+
+
+.modal {
+	/* display: none; Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+
+.webgl {
+	position: fixed;
+	top: 0;
+	left: 0;
+	outline: none;
+	background: rgb(41,2,80);
+	background: linear-gradient(0deg, rgba(41,2,80,1) 0%, rgba(25,0,50,1) 40%);
+	width: 100%;
+	height: 100%;
+	z-index: 0;
+}
+
+
+
+

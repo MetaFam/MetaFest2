@@ -1,21 +1,27 @@
 import Instructions from '@/components/dom/Instructions'
+import {
+  ApplySection,
+} from "@/components/dom/page-sections";
 import dynamic from 'next/dynamic'
 
 const Box = dynamic(() => import('@/components/canvas/Box'), {
   ssr: false,
 })
-
+const NomadVox = dynamic(() => import('@/components/canvas/Nomad'), {
+  ssr: false,
+})
 const DOM = () => {
   return (
     // Step 5 - delete Instructions components
-    <Instructions />
+    <ApplySection />
   )
 }
 
 const R3F = () => {
   return (
     <>
-      <Box route='/' />
+      <NomadVox route='/' />
+      {/* <Box route='/' /> */}
     </>
   )
 }
