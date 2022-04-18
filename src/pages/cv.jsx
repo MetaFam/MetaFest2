@@ -1,4 +1,4 @@
-import { PerspectiveCamera } from '@react-three/drei'
+import { PerspectiveCamera, Stats } from '@react-three/drei'
 import React, { useEffect, useMemo, useRef, forwardRef } from "react";
 import * as THREE from "three";
 import { useFrame, extend } from '@react-three/fiber'
@@ -11,15 +11,25 @@ import {
   ArtistMusashi,
 } from "@/components/dom/cv-artists";
 
+import {
+  galaxy1Params,
+  galaxy2Params,
+  galaxy3Params,
+  galaxy4Params,
+  galaxy5Params,
+} from '@/components/canvas/galaxies';
+import { Effects, Nucleus } from "@/components/canvas/Galaxy";
+
 const NomadVox = dynamic(() => import('@/components/canvas/Nomad'), {
   ssr: false,
 })
-
 const LuxVox = dynamic(() => import('@/components/canvas/Lux'), {
   ssr: false,
 })
-
 const JetsetterVox = dynamic(() => import('@/components/canvas/Jetsetter'), {
+  ssr: false,
+})
+const Galaxy = dynamic(() => import('@/components/canvas/Galaxy'), {
   ssr: false,
 })
 
@@ -48,7 +58,9 @@ const DOM = () => {
 const R3F = () => {
   const camera = useRef({ x: 0, y: 0 });
   const cameraGroup = useRef({ x: 0, y: 0 });
+  const dof = useRef(null);
   const rimLight = useRef({ x: 0, y: 0 });
+  const rimLight2 = useRef({ x: 0, y: 0 });
   const scrollY = useRef(0)
   const sizes = useRef({ width: 0, height: 0 })
   const cursor = useRef({ x: 0, y: 0 })
@@ -96,7 +108,7 @@ const R3F = () => {
         const newSection = Math.round(scrollY.current / sizes.current.height);
         if (newSection !== currentSection) {
           currentSection = newSection;
-          console.log(currentSection);
+          console.log('Current section: ', currentSection);
         }
       });
 
@@ -128,12 +140,14 @@ const R3F = () => {
     // camera.updateMatrixWorld();
     // Animate camera
     camera.current.position.y = (-scrollY.current / sizes.current.height) * objectsDistance;
-    rimLight.current.position.y = (-scrollY.current / sizes.current.height) * objectsDistance;
-    cameraGroup.current.position.x +=
-      (parallaxX - cameraGroup.current.position.x) * 5 * deltaTime;
-    cameraGroup.current.position.y +=
-      (parallaxY - cameraGroup.current.position.y) * 5 * deltaTime;
 
+    cameraGroup.current.position.x +=
+    (parallaxX - cameraGroup.current.position.x) * 5 * deltaTime;
+    cameraGroup.current.position.y +=
+    (parallaxY - cameraGroup.current.position.y) * 5 * deltaTime;
+
+    rimLight.current.position.y = (-scrollY.current / sizes.current.height) * objectsDistance;
+    rimLight2.current.position.y = (-scrollY.current / sizes.current.height) * objectsDistance;
     // rimLight.current.position.x +=
     //   (parallaxX - rimLight.current.position.x) ;
     // rimLight.current.position.y =
@@ -151,27 +165,47 @@ const R3F = () => {
           width={6}
           height={2}
           intensity={5}
-          color="pink"
+          color="#fffccc'"
           position={[0, 0, 1.5]}
           rotation={[0, 0, 0]}
           castShadow
         />
-
+        <rectAreaLight
+          ref={rimLight2}
+          width={6}
+          height={2}
+          intensity={5}
+          color="blue"
+          position={[0, 0, 1.5]}
+          rotation={[0, 0, 0]}
+          castShadow
+        />
+                <rectAreaLight
+          ref={rimLight2}
+          width={6}
+          height={2}
+          intensity={5}
+          color="pink"
+          position={[-1.6, -1, 0.5]}
+          rotation={[0, 0, 0]}
+          castShadow
+        />
+        <Stats />
       </group>
 
       <R3FSceneSection name="SectionOne" count={0}>
         <JetsetterVox route='/' position={[1, -2.4, -2]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
       </R3FSceneSection>
+
       <R3FSceneSection name="SectionTwo" count={1}>
-        {/* <group position={[5, 0, 3]} rotation={[0, 0.1, 0]}>
-        <directionalLight
-          intensity={0.3}
-            decay={2}
-            color="cyan"
-          rotation={[0, 0, 0]}
+        <Galaxy
+          dof={dof}
+          parameters={galaxy5Params}
+          nucleus={true}
+          // effects={true}
+          position={[1, -0.4, -3]}
+          rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]}
         />
-        <axesHelper />
-      </group> */}
         <LuxVox route='/' position={[-3, -2, -1]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
         <NomadVox route='/' position={[3, -1.5, -0.5]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
         <JetsetterVox route='/' position={[1, -2.4, -3]} rotation={[-Math.PI / 0.55, Math.PI / 3, 0]} />
@@ -231,7 +265,6 @@ export const artists = [
 ];
 
 function RimLight({ brightness, color, camPos }) {
-  console.log('ref', camPos);
   return (
     <rectAreaLight
       width={4}

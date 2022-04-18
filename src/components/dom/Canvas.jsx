@@ -10,7 +10,7 @@ import {
   galaxy2Params,
   galaxy3Params,
   galaxy4Params,
-} from "./galaxies";
+} from "../canvas/galaxies";
 // import { OctoA } from './models/Octopus'
 // import NomadModel from "./models/CarbonNomad";
 import SeedLogo from "../img/assets/textures/particles/seed_logo.png";

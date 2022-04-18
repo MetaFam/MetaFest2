@@ -11,7 +11,7 @@ import { Suspense, useEffect, useRef } from 'react'
 // const { OctoEasterEggR3F } = dynamic(() => import('@/components/canvas/EasterEgg.r3f'), {
 //   ssr: false,
 // })
-import { OctoEasterEggR3F } from '@/components/canvas/EasterEgg.r3f';
+import {CanvasLoader} from '@/components/canvas/Loader'
 
 const LControl = () => {
   const dom = useStore((state) => state.dom)
@@ -33,6 +33,8 @@ const LCanvas = ({ children }) => {
   return (
     <Canvas
       mode='concurrent'
+      linear
+      // flat
       style={{
         position: 'fixed',
         top: 0,
@@ -45,9 +47,9 @@ const LCanvas = ({ children }) => {
     >
       {/* <LControl /> */}
       <Preload all />
-      <Suspense fallback={<OctoEasterEggR3F />}>
+      <Suspense fallback={<CanvasLoader />}>
         {children}
-        </Suspense>
+      </Suspense>
     </Canvas>
   )
 }

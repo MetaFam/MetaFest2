@@ -3,8 +3,8 @@ import React, { useRef, useState, useMemo } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
 import * as THREE from "three";
 
-import babyOctoGif from "../../static/assets/textures/baby_octo_alpha_0001.png";
-import babyOctoAlpha from "../../static/assets/textures/baby_octo_alpha_map.png";
+import babyOctoGif from "@/static/assets/textures/baby_octo_alpha_0001.png";
+import babyOctoAlpha from "@/static/assets/textures/baby_octo_alpha_map.png";
 
 export const OctoEasterEggR3F = (props) => {
   const mesh = useRef();
@@ -15,9 +15,9 @@ export const OctoEasterEggR3F = (props) => {
 
   const texture = useMemo(() => textureLoader.load(babyOctoGif),[textureLoader]);
   const alphaTexture = useMemo(() => textureLoader.load(babyOctoAlpha), [textureLoader]);
-  // alphaTexture.minFilter = THREE.NearestFilter;
-  // alphaTexture.magFilter = THREE.NearestFilter;
-  // alphaTexture.generateMipmaps = true;
+  alphaTexture.minFilter = THREE.NearestFilter;
+  alphaTexture.magFilter = THREE.NearestFilter;
+  alphaTexture.generateMipmaps = true;
 
   useFrame(() => {
     const elapsedTime = clock.getElapsedTime();

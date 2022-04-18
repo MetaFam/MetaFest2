@@ -40,7 +40,15 @@ export const galaxy1Params = {
     randomnessPower: 8,
     insideColor: galaxyColors.inside,
     outsideColor: galaxyColors.outside,
-    type: 1
+    type: 1,
+    opacity: 1,
+    focusDistance: 0.05,
+    focalLength: 0.05,
+    width: 480,
+    height: 480,
+    focusX: 0,
+    focusY: 0,
+    focusZ: 0,
 }
 export const galaxy2Params = {
     count: 2000000,
@@ -52,7 +60,15 @@ export const galaxy2Params = {
     randomnessPower: 8,
     insideColor: galaxy2Colors.inside,
     outsideColor: galaxy2Colors.outside,
-    type: 2
+    type: 2,
+    opacity: 1,
+    focusDistance: 0.05,
+    focalLength: 0.05,
+    width: 480,
+    height: 480,
+    focusX: 0,
+    focusY: 0,
+    focusZ: 0,
 }
 // gui.addColor(galaxy2Params, 'insideColor').onFinishChange()
 
@@ -66,7 +82,15 @@ export const galaxy3Params = {
     randomnessPower: 20,
     insideColor: galaxy3Colors.inside,
     outsideColor: galaxy3Colors.outside,
-    type: 3
+    type: 3,
+    opacity: 1,
+    focusDistance: 0.05,
+    focalLength: 0.05,
+    width: 480,
+    height: 480,
+    focusX: 0,
+    focusY: 0,
+    focusZ: 0,
 }
 
 export const galaxy4Params = {
@@ -79,9 +103,37 @@ export const galaxy4Params = {
     randomnessPower: 20,
     insideColor: galaxy4Colors.inside,
     outsideColor: galaxy4Colors.outside,
-    type: 4
+    type: 4,
+    opacity: 1,
+    focusDistance: 0.05,
+    focalLength: 0.05,
+    width: 480,
+    height: 480,
+    focusX: 0,
+    focusY: 0,
+    focusZ: 0,
 }
 
+export const galaxy5Params = {
+    count: 35000,
+    size: 0.03,
+    radius: 5,
+    branches: 8,
+    spin: 5,
+    randomness: 4,
+    randomnessPower: 20,
+    insideColor: galaxy4Colors.inside,
+    outsideColor: galaxy4Colors.outside,
+    type: 3,
+    opacity: 1,
+    focusDistance: 0.05,
+    focalLength: 0.05,
+    width: 480,
+    height: 480,
+    focusX: 0,
+    focusY: 0,
+    focusZ: 0,
+}
 let geometry = null
 let material = null
 let points = null
@@ -129,7 +181,7 @@ export const generateGalaxy = (params) => {
 
 
             if (i < 20) {
-                console.log(i, branchAngle)
+                console.log(params.type, i, branchAngle)
             }
         }
     } else if (params.type === 2) {
@@ -156,7 +208,7 @@ export const generateGalaxy = (params) => {
 
 
             if (i < 20) {
-                console.log(i, branchAngle)
+                console.log(params.type, i, branchAngle)
             }
         }
 
@@ -184,7 +236,7 @@ export const generateGalaxy = (params) => {
 
 
             if (i < 20) {
-                console.log(i, branchAngle)
+                console.log(params.type, i, branchAngle)
             }
         }
     } else if (params.type === 4) {
@@ -198,7 +250,7 @@ export const generateGalaxy = (params) => {
             const randomY = Math.pow(Math.random(), params.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)
             const randomZ = Math.pow(Math.random(), params.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)
 
-            positions[i3 + 0] = Math.cos(branchAngle + spinAngle)  * radius + randomX
+            positions[i3 + 0] = Math.cos(branchAngle + spinAngle) * radius + randomX
             positions[i3 + 1] = Math.sin(branchAngle - spinAngle) * radius + randomY
             positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + randomZ
 
@@ -211,7 +263,34 @@ export const generateGalaxy = (params) => {
 
 
             if (i < 20) {
-                console.log(i, branchAngle)
+                console.log(params.type, i, branchAngle)
+            }
+        }
+    } else if (params.type === 5) {
+        for (let i = 0; i < params.count; i++) {
+            const i3 = i * 3
+            const radius = Math.random() * params.radius
+            const spinAngle = radius * params.spin
+            const branchAngle = (i % params.branches) / params.branches * Math.PI * 2
+
+            const randomX = Math.pow(Math.random(), params.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)
+            const randomY = Math.pow(Math.random(), params.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)
+            const randomZ = Math.pow(Math.random(), params.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)
+
+            positions[i3 + 0] = Math.cos(branchAngle + spinAngle) * radius + randomX
+            positions[i3 + 1] = Math.sin(branchAngle - spinAngle) * radius + randomY
+            positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + randomZ
+
+            const mixedColor = colorInside.clone()
+            mixedColor.lerp(colorOutside, radius / params.radius * 1.5)
+
+            colors[i3 + 0] = mixedColor.r
+            colors[i3 + 1] = mixedColor.g
+            colors[i3 + 2] = mixedColor.b
+
+
+            if (i < 20) {
+                console.log(params.type, i, branchAngle)
             }
         }
     }
