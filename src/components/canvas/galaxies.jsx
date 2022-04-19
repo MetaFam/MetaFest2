@@ -27,11 +27,15 @@ export const galaxy4Colors = {
     inside: '#462080',
     outside: '#7C56FF'
 }
+export const galaxy5Colors = {
+    inside: '#76EBF2',
+    outside: '#FF61E6'
+}
 /**
  * Galaxy
  */
 export const galaxy1Params = {
-    count: 500000,
+    count: 100000,
     size: 0.033,
     radius: 4.86,
     branches: 8,
@@ -51,7 +55,7 @@ export const galaxy1Params = {
     focusZ: 0,
 }
 export const galaxy2Params = {
-    count: 2000000,
+    count: 200000,
     size: 0.01,
     radius: 12,
     branches: 8,
@@ -73,7 +77,7 @@ export const galaxy2Params = {
 // gui.addColor(galaxy2Params, 'insideColor').onFinishChange()
 
 export const galaxy3Params = {
-    count: 600000,
+    count: 100000,
     size: 0.01,
     radius: 1.86,
     branches: 3,
@@ -117,10 +121,10 @@ export const galaxy4Params = {
 export const galaxy5Params = {
     count: 35000,
     size: 0.03,
-    radius: 5,
+    radius: 35,
     branches: 8,
     spin: 5,
-    randomness: 4,
+    randomness: 16,
     randomnessPower: 20,
     insideColor: galaxy4Colors.inside,
     outsideColor: galaxy4Colors.outside,

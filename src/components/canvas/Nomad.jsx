@@ -18,14 +18,14 @@ export default function NomadVox(props) {
 
   return (
     <group ref={group} {...props} dispose={null}>
-      {/* <group position={[0.01, 0, -0.01]} rotation={[2, 0.1, 2.13]}>
+      <group position={[0.01, 0, -0.01]} rotation={[2, 0.1, 2.13]}>
         <directionalLight
-          intensity={5}
-          color="pink"
+          intensity={0.5}
+          color="#FF61E6"
           decay={2}
           rotation={[-Math.PI / 2, 0, 0]}
         />
-      </group> */}
+      </group>
       <mesh
         castShadow
         receiveShadow

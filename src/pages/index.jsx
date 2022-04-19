@@ -1,6 +1,6 @@
-import React, { createRef, useEffect, useMemo, useRef } from "react";
+import React, { createRef, useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
-import { useFrame, extend } from '@react-three/fiber'
+import { useFrame, useThree, extend } from '@react-three/fiber'
 import { PerspectiveCamera, Stats } from '@react-three/drei'
 import dynamic from 'next/dynamic'
 
@@ -38,12 +38,16 @@ const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
 const NomadVox = dynamic(() => import('@/components/canvas/Nomad'), {
   ssr: false,
 })
-
 const LuxVox = dynamic(() => import('@/components/canvas/Lux'), {
   ssr: false,
 })
-
 const JetsetterVox = dynamic(() => import('@/components/canvas/Jetsetter'), {
+  ssr: false,
+})
+const BabyEarthVox = dynamic(() => import('@/components/canvas/BabyEarth'), {
+  ssr: false,
+})
+const OctoPetVox = dynamic(() => import('@/components/canvas/OctoPet'), {
   ssr: false,
 })
 const Starfield = dynamic(() => import('@/components/canvas/Starfield'), {
@@ -69,24 +73,33 @@ const DOM = () => {
 }
 
 export const objectsDistance = 4;
-export const R3FSceneSection = ({ name, count, children }) => {
+
+export const R3FSceneSection = ({ name, count, children, ...props }) => {
   const group = useRef(null);
+  // const { layers } = props;
+  // useLayoutEffect(() => {
+  //   group.current.layers.enable(layers);
+  // }, [layers])
+
   return (
-    <group ref={group} name={name} position={[0, -objectsDistance * count, 0]}>{children}</group>
+    <group ref={group} name={name} position={[0, -objectsDistance * count, 0]} {...props}>{children}</group>
   )
 }
 
 // canvas components goes here
 const R3F = () => {
+  const { size, viewport } = useThree();
+  const aspect = size.width / viewport.width;
+  const dof = useRef(null);
   const dof1 = useRef(null);
   const dof2 = useRef(null);
   const dof3 = useRef(null);
   const dof4 = useRef(null);
-  const galaxy1Anim = useRef(null);
-  const galaxy1Group = useRef(null);
+  const galaxy1 = useRef(null);
   const camera = useRef({ x: 0, y: 0 });
   const cameraGroup = useRef({ x: 0, y: 0 });
   const rimLight = useRef({ x: 0, y: 0 });
+  const rimLight2 = useRef({ x: 0, y: 0 });
   const scrollY = useRef(0)
   const sizes = useRef({ width: 0, height: 0 })
   const cursor = useRef({ x: 0, y: 0 })
@@ -115,8 +128,6 @@ const R3F = () => {
         width: window.innerWidth,
         height: window.innerHeight,
       };
-
-
 
       // Scroll
       scrollY.current = window.scrollY;
@@ -152,11 +163,13 @@ const R3F = () => {
         rayMousePos.current.x = event.clientX / sizes.current.width;
         rayMousePos.current.y = event.clientY / sizes.current.height;
 
-        // console.log('sizes', sizes.current);
+        // mouse.position.x = event.clientX / sizes.current.width
+        // mouse.position.y = event.clientY / sizes.current.height
+        // console.log('mouse pos', mouse);
       });
     }
   }, [])
-
+  console.log('galaxy1 grp: ', galaxy1.current);
   useFrame(() => {
     const elapsedTime = clock.getElapsedTime();
     const deltaTime = elapsedTime - previousTime;
@@ -174,16 +187,9 @@ const R3F = () => {
       (parallaxY - cameraGroup.current.position.y) * 5 * deltaTime;
 
     rimLight.current.position.y = (-scrollY.current / sizes.current.height) * objectsDistance;
-    // console.log('dof1', dof1.current);
-    // dof1.current.position.y = -scrollY * 0.0005;
-    //     // galaxy1.rotation.y += (parallaxX - cameraGroup.position.x) * 2 * deltaTime
-    //     dof1.current.rotation.z = scrollY * 0.0004;
-    //     dof1.current.rotation.x = -elapsedTime * 0.006;
-    if(galaxy1Group.current) {
-      galaxy1Group.current.rotation.z = scrollY * 0.0004;
-      galaxy1Group.current.rotation.x = -elapsedTime * 0.006;
-    }
-    // console.log('camg', camera.current.position);
+    // galaxy1.current.rotation.y = -elapsedTime * 0.005;
+    // console.log(dof2);
+    // debugger;
 
   });
 
@@ -201,29 +207,40 @@ const R3F = () => {
           rotation={[0, 0, 0]}
           castShadow
         />
-          <Galaxy dof={dof3} parameters={galaxy5Params} nucleus={true}  helper={true} position={[0,0,-20]} />
+
 
 
         <Stats />
       </group>
-
+      {/* <group ref={galaxy1} position={[0, -5, -20]}> */}
+        <Galaxy dof={dof} parameters={galaxy5Params} nucleus={false} helper={false} effects={true} position={[0, -5, -20]} />
+      {/* </group> */}
       <R3FSceneSection name="SectionOne" count={0}>
-          <Galaxy dof={dof1} parameters={galaxy1Params} position={[6, 0, -13]} rotation={[4.18, 4.15, 4.75]} />
+          <Galaxy dof={dof} parameters={galaxy1Params} position={[6, 0, -13]} rotation={[4.18, 4.15, 4.75]} />
       </R3FSceneSection>
 
       <R3FSceneSection name="SectionTwo" count={2}>
-        <Galaxy dof={dof2} parameters={galaxy2Params} position={[6, 0, -13]} />
-        <LuxVox route='/cv#artist-luxumbra' position={[2.5, -2, -1]} />
+        <Galaxy dof={dof} parameters={galaxy2Params} position={[6, 0, 0]} />
+        {/* <LuxVox route='/cv#artist-luxumbra' position={[2.5, -2, -1]} /> */}
       </R3FSceneSection>
 
       <R3FSceneSection name="SectionTwo" count={4}>
+        <Galaxy dof={dof} parameters={galaxy2Params} position={[6, 0, 0]} />
+
         <NomadVox route='/cv' position={[2, -1, -0.8]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
+      </R3FSceneSection>
+
+      <R3FSceneSection name="SectionSix" count={5}>
+        <OctoPetVox route='/cv' position={[0, -.8, 0]} animate={true} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
+        <BabyEarthVox route='/cv' position={[-1.5, -.8, -2]} animate={true} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
+
+        {/* <Shader /> */}
       </R3FSceneSection>
 
       <R3FSceneSection name="SectionSeven" count={6}>
         <JetsetterVox route='/cv' position={[0, -1.8, 0]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
         {/* <Shader /> */}
-        <OctoEasterEggR3F position={[0, 0, 0]} />
+        {/* <OctoEasterEggR3F position={[0, 0, 0]} /> */}
       </R3FSceneSection>
     </>
   )

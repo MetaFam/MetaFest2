@@ -33,8 +33,9 @@ const LCanvas = ({ children }) => {
   return (
     <Canvas
       mode='concurrent'
-      linear
+      // linear
       // flat
+      // colorManagement={true}
       style={{
         position: 'fixed',
         top: 0,

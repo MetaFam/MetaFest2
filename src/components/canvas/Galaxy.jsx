@@ -6,19 +6,25 @@ import { useControls, folder } from 'leva'
 
 import { CanvasLoader } from '@/components/canvas/Loader'
 
-function Galaxy({ dof, parameters, nucleus = false, helper = false, effects = false, ...props }) {
+// eslint-disable-next-line react/display-name
+const Galaxy = forwardRef(({ dof, parameters, nucleus, helper, effects, ...props }) => {
   const group = useRef();
   const particles = useRef()
   //const [movement] = useState(() => new THREE.Vector3())
   const [temp] = useState(() => new THREE.Vector3())
   const [focus] = useState(() => new THREE.Vector3())
+  const clock = new THREE.Clock();
+  let previousTime = 0;
   // const { animationRef } = props
   useEffect(() => {
     generateGalaxy()
-    // console.log(animationRef);
+    // console.log(dof);
   })
 
   useFrame((state, delta) => {
+        const elapsedTime = clock.getElapsedTime();
+    const deltaTime = elapsedTime - previousTime;
+    previousTime = elapsedTime;
     //dof.current.target = focus.lerp(particles.current.position, 0.05)
     //movement.lerp(temp.set(state.mouse.x, state.mouse.y * 0.2, 0), 0.2)
     if (dof.current) {
@@ -29,6 +35,18 @@ function Galaxy({ dof, parameters, nucleus = false, helper = false, effects = fa
       dof.current.target = new THREE.Vector3(parameters.focusX, parameters.focusY, parameters.focusZ)
       dof.current.blendMode.opacity.value = parameters.opacity
     }
+    if (particles.current) {
+      if (parameters.type == 3) {
+        particles.current.position.y = scrollY * 0.0004;
+        particles.current.rotation.y = Math.cos(elapsedTime * 0.05) * Math.PI * 0.05;
+      } else if (parameters.type === 1) {
+        particles.current.position.y = -scrollY * 0.0005;
+        // galaxy1.rotation.y += (parallaxX - cameraGroup.position.x) * 2 * deltaTime
+        particles.current.rotation.z = scrollY * 0.0004;
+       particles.current.rotation.x = -elapsedTime * 0.006;
+      }
+    }
+
   })
 
   const generateGalaxy = () => {
@@ -207,7 +225,7 @@ function Galaxy({ dof, parameters, nucleus = false, helper = false, effects = fa
 
     </>
   )
-}
+})
 
 export default Galaxy
 
@@ -225,22 +243,6 @@ export default Galaxy
 //  );
 //}
 
-export const galaxyColors = {
-  inside: '#462080',
-  outside: '#FF61E6'
-}
-export const galaxy2Colors = {
-  inside: '#462080',
-  outside: '#7C56FF'
-}
-export const galaxy3Colors = {
-  inside: '#76EBF2',
-  outside: '#7C56FF'
-}
-export const galaxy4Colors = {
-  inside: '#462080',
-  outside: '#7C56FF'
-}
 
 export function Nucleus({ size }) {
   const nucleusRef = useRef()
@@ -286,3 +288,128 @@ export const Effects = forwardRef((props, ref) => {
     </EffectComposer>
   )
 })
+
+
+export const galaxyColors = {
+    inside: '#462080',
+    outside: '#FF61E6'
+}
+export const galaxy2Colors = {
+    inside: '#462080',
+    outside: '#7C56FF'
+}
+export const galaxy3Colors = {
+    inside: '#76EBF2',
+    outside: '#7C56FF'
+}
+export const galaxy4Colors = {
+    inside: '#462080',
+    outside: '#7C56FF'
+}
+/**
+ * Galaxy
+ */
+export const galaxy1Params = {
+    count: 500000,
+    size: 0.033,
+    radius: 4.86,
+    branches: 8,
+    spin: 8,
+    randomness: 1,
+    randomnessPower: 8,
+    insideColor: galaxyColors.inside,
+    outsideColor: galaxyColors.outside,
+    type: 1,
+    opacity: 1,
+    focusDistance: 0.05,
+    focalLength: 0.05,
+    width: 480,
+    height: 480,
+    focusX: 0,
+    focusY: 0,
+    focusZ: 0,
+}
+export const galaxy2Params = {
+    count: 2000000,
+    size: 0.01,
+    radius: 12,
+    branches: 8,
+    spin: 8,
+    randomness: 9,
+    randomnessPower: 8,
+    insideColor: galaxy2Colors.inside,
+    outsideColor: galaxy2Colors.outside,
+    type: 2,
+    opacity: 1,
+    focusDistance: 0.05,
+    focalLength: 0.05,
+    width: 480,
+    height: 480,
+    focusX: 0,
+    focusY: 0,
+    focusZ: 0,
+}
+// gui.addColor(galaxy2Params, 'insideColor').onFinishChange()
+
+export const galaxy3Params = {
+    count: 600000,
+    size: 0.01,
+    radius: 1.86,
+    branches: 3,
+    spin: 32,
+    randomness: 13,
+    randomnessPower: 20,
+    insideColor: galaxy3Colors.inside,
+    outsideColor: galaxy3Colors.outside,
+    type: 3,
+    opacity: 1,
+    focusDistance: 0.05,
+    focalLength: 0.05,
+    width: 480,
+    height: 480,
+    focusX: 0,
+    focusY: 0,
+    focusZ: 0,
+}
+
+export const galaxy4Params = {
+    count: 100000,
+    size: 0.005,
+    radius: 1,
+    branches: 8,
+    spin: 5,
+    randomness: 4,
+    randomnessPower: 20,
+    insideColor: galaxy4Colors.inside,
+    outsideColor: galaxy4Colors.outside,
+    type: 4,
+    opacity: 1,
+    focusDistance: 0.05,
+    focalLength: 0.05,
+    width: 480,
+    height: 480,
+    focusX: 0,
+    focusY: 0,
+    focusZ: 0,
+}
+
+export const galaxy5Params = {
+    count: 35000,
+    size: 0.03,
+    radius: 5,
+    branches: 8,
+    spin: 5,
+    randomness: 4,
+    randomnessPower: 20,
+    insideColor: galaxy4Colors.inside,
+    outsideColor: galaxy4Colors.outside,
+    type: 3,
+    opacity: 1,
+    focusDistance: 0.05,
+    focalLength: 0.05,
+    width: 480,
+    height: 480,
+    focusX: 0,
+    focusY: 0,
+    focusZ: 0,
+}
