@@ -17,7 +17,8 @@
     "build": "next build",
     "export": "EXPORT=true next build && EXPORT=true next export",
     "analyze": "ANALYZE=true next build",
-    "start": "next start"
+    "start": "next start",
+    "fleek:deploy": "EXPORT=true next build && EXPORT=true next export && fleek site:deploy"
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.17.0",
@@ -36,9 +37,14 @@
     "global": "^4.4.0",
     "glsl-random": "^0.0.5",
     "gsap": "^3.5.1",
+    "imagemin-gifsicle": "^7.0.0",
+    "imagemin-mozjpeg": "^10.0.0",
+    "imagemin-optipng": "^8.0.0",
     "leva": "^0.9.23",
     "lil-gui": "^0.11.0",
     "next": "^12.1.4",
+    "next-optimized-images": "^2.6.2",
+    "next-seo": "^5.4.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-helmet": "^6.1.0",
@@ -71,11 +77,16 @@
     "file-loader": "^6.2.0",
     "glslify": "^7.1.1",
     "glslify-loader": "^2.0.0",
+    "html-webpack-plugin": "^5.5.0",
+    "image-trace-loader": "^1.0.2",
+    "jimp": "^0.16.1",
     "next-compose-plugins": "^2.2.1",
     "next-offline": "^5.0.5",
     "postcss": "^8.4.12",
     "prettier": "^2.6.2",
     "raw-loader": "^4.0.2",
-    "url-loader": "^4.1.1"
+    "responsive-loader": "^2.3.0",
+    "url-loader": "^4.1.1",
+    "webp-loader": "^0.6.0"
   }
 }

@@ -186,7 +186,7 @@ const R3F = () => {
   return (
     <>
       <group ref={cameraGroup}>
-        <PerspectiveCamera ref={camera} makeDefault position={[0, 0, 6]} layers={section.current} />
+        <PerspectiveCamera ref={camera} makeDefault position={[0, 0, 6]} />
         <rectAreaLight
           ref={rimLight}
           width={6}
@@ -221,29 +221,29 @@ const R3F = () => {
         <Stats />
       </group>
 
-      <R3FSceneSection name="SectionOne" count={0} layers={0}>
+      <Galaxy
+        dof={dof}
+        parameters={galaxy5Params}
+        nucleus={false} helper={false}
+        position={[0, -3, -20]} />
+
+      <R3FSceneSection name="SectionOne" count={0} >
         {/* <JetsetterVox route='/' position={[1, -2.4, -2]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} /> */}
       </R3FSceneSection>
 
-      <R3FSceneSection name="SectionTwo" count={1} layers={3}>
-        {/* <Galaxy
-          dof={dof}
-          parameters={galaxy3Params}
-          nucleus={true}
-          // effects={true}
-          position={[1, -0.4, 3]}
-          rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]}
-        /> */}
+      <R3FSceneSection name="SectionTwo" count={1} >
+
         <LuxVox route='/' position={[-3.5, -1.5, -1.5]} rotation={[-Math.PI / 0.51, Math.PI / 3.25, 0]} />
         <OctoPetVox route='/' position={[-3, -2, -2]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
-        <BabyEarthVox route='/' position={[-2, -1, -0.25]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
+        <BabyEarthVox route='/' animate={true} position={[-2, -1, -0.25]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
         <NomadVox route='/' position={[-1.5, 0, -2]} rotation={[-Math.PI / 0.51, Math.PI / 3.5, 0]} />
         <HouseholdVox route='/' position={[2, 2, -4]} rotation={[-Math.PI / 0.55, Math.PI / 3, 0]} />
         <JetsetterVox route='/' position={[1, -2.4, -3]} rotation={[-Math.PI / 0.51, Math.PI / 2.75, 0]} />
         <IndustrialVox route='/' position={[5, -1.4, -3]} rotation={[-Math.PI / 0.55, Math.PI / 3, 0]} />
 
       </R3FSceneSection>
-      <R3FSceneSection name="SectionThree" count={2} layers={3}>
+      <R3FSceneSection name="SectionThree" count={2}>
+        <Galaxy dof={dof} parameters={galaxy2Params} position={[0, -6, -20]} />
         {/* <group position={[5, 0, 3]} rotation={[0, 0.1, 0]}>
         <directionalLight
           intensity={0.3}

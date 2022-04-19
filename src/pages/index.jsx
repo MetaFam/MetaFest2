@@ -2,6 +2,7 @@ import React, { createRef, useEffect, useLayoutEffect, useMemo, useRef } from "r
 import * as THREE from "three";
 import { useFrame, useThree, extend } from '@react-three/fiber'
 import { PerspectiveCamera, Stats } from '@react-three/drei'
+import gsap from "gsap";
 import dynamic from 'next/dynamic'
 
 
@@ -23,22 +24,15 @@ import {
   galaxy4Params,
   galaxy5Params,
 } from '@/components/canvas/galaxies';
-import { OctoEasterEggR3F } from '@/components/canvas/EasterEgg.r3f';
-import { Effects, Nucleus } from "@/components/canvas/Galaxy";
-import { starfieldParams } from "@/components/canvas/Starfield";
+
+
 
 
 // Dynamic import is used to prevent a payload when the website start that will include threejs r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
 // If something goes wrong go back to a static import to show the error.
 // https://github.com/pmndrs/react-three-next/issues/49
-const Shader = dynamic(() => import('@/components/canvas/Shader/Shader'), {
-  ssr: false,
-})
 const NomadVox = dynamic(() => import('@/components/canvas/Nomad'), {
-  ssr: false,
-})
-const LuxVox = dynamic(() => import('@/components/canvas/Lux'), {
   ssr: false,
 })
 const JetsetterVox = dynamic(() => import('@/components/canvas/Jetsetter'), {
@@ -50,7 +44,7 @@ const BabyEarthVox = dynamic(() => import('@/components/canvas/BabyEarth'), {
 const OctoPetVox = dynamic(() => import('@/components/canvas/OctoPet'), {
   ssr: false,
 })
-const Starfield = dynamic(() => import('@/components/canvas/Starfield'), {
+const OctoEasterEgg = dynamic(() => import('@/components/canvas/EasterEgg'), {
   ssr: false,
 })
 const Galaxy = dynamic(() => import('@/components/canvas/Galaxy'), {
@@ -80,7 +74,9 @@ export const R3FSceneSection = ({ name, count, children, ...props }) => {
   // useLayoutEffect(() => {
   //   group.current.layers.enable(layers);
   // }, [layers])
-
+  if (group.current) {
+    console.log('section grp cur: ', group.current);
+  }
   return (
     <group ref={group} name={name} position={[0, -objectsDistance * count, 0]} {...props}>{children}</group>
   )
@@ -96,8 +92,8 @@ const R3F = () => {
   const dof3 = useRef(null);
   const dof4 = useRef(null);
   const galaxy1 = useRef(null);
-  const camera = useRef({ x: 0, y: 0 });
-  const cameraGroup = useRef({ x: 0, y: 0 });
+  const camera = useRef();
+  const cameraGroup = useRef();
   const rimLight = useRef({ x: 0, y: 0 });
   const rimLight2 = useRef({ x: 0, y: 0 });
   const scrollY = useRef(0)
@@ -148,10 +144,125 @@ const R3F = () => {
         if (newSection !== currentSection) {
           currentSection = newSection;
           console.log('Current section:', currentSection);
+          if (cameraGroup.current) {
+            switch (currentSection) {
+              case 0:
+                gsap.to(cameraGroup.current.rotation, {
+                  duration: 1.5,
+                  ease: "power2.inOut",
+                  x: "0",
+                  y: "0",
+                  z: "0",
+                });
+                gsap.to(cameraGroup.current.position, {
+                  duration: 1.5,
+                  ease: "power2.inOut",
+                  z: 0,
+                });
+                break;
+
+              // Schedule
+              case 1:
+                gsap.to(cameraGroup.current.rotation, {
+                  duration: 1.5,
+                  ease: "power2.inOut",
+                  x: 0,
+                  y: "0.33",
+                  z: "0",
+                });
+                gsap.to(cameraGroup.current.position, {
+                  duration: 1.5,
+                  ease: "power2.inOut",
+                  z: -10,
+                });
+                break;
+
+              // Workshops
+              case 2:
+                gsap.to(cameraGroup.current.rotation, {
+                  duration: 1.5,
+                  ease: "power2.inOut",
+                  x: 0,
+                  y: "0.55",
+                  z: "0",
+                });
+                gsap.to(cameraGroup.current.position, {
+                  duration: 1.5,
+                  ease: "power2.inOut",
+                  z: -10,
+                });
+                break;
+
+              // Speakers
+              case 3:
+                gsap.to(cameraGroup.current.rotation, {
+                  duration: 1.5,
+                  ease: "power2.inOut",
+                  x: 0,
+                  y: "0.22",
+                  z: "0.1",
+                });
+                gsap.to(cameraGroup.current.position, {
+                  duration: 1.5,
+                  ease: "power2.inOut",
+                  z: 0,
+                });
+                break;
+
+              // Metaverse
+              case 4:
+                gsap.to(cameraGroup.current.rotation, {
+                  duration: 1.5,
+                  ease: "power2.inOut",
+                  x: 0,
+                  y: "0",
+                  z: "0",
+                });
+                gsap.to(cameraGroup.current.position, {
+                  duration: 1.5,
+                  ease: "power2.inOut",
+                  z: 0,
+                });
+                break;
+
+              // Chat
+              case 5:
+                gsap.to(cameraGroup.current.rotation, {
+                  duration: 1.5,
+                  ease: "power2.inOut",
+                  x: Math.PI * 0.35,
+                  y: 0,
+                  z: 0,
+                });
+                gsap.to(cameraGroup.current.position, {
+                  duration: 1.5,
+                  ease: "power2.inOut",
+                  z: -1,
+                });
+                break;
+
+              // Chat
+              case 6:
+                gsap.to(cameraGroup.current.rotation, {
+                  duration: 1.5,
+                  ease: "power2.inOut",
+                  x: 0,
+                  y: 0,
+                  z: 0,
+                });
+                gsap.to(cameraGroup.current.position, {
+                  duration: 1.5,
+                  ease: "power2.inOut",
+                  z: 0,
+                });
+                break;
+            }
+
+          }
         }
       });
 
-            // Mouse move
+      // Mouse move
       window.addEventListener("mousemove", (event) => {
         cursor.current.x = (event.clientX / sizes.current.width) - 0.3;
         cursor.current.y = -(event.clientY / sizes.current.height) - 0.3;
@@ -169,78 +280,85 @@ const R3F = () => {
       });
     }
   }, [])
-  console.log('galaxy1 grp: ', galaxy1.current);
+
   useFrame(() => {
     const elapsedTime = clock.getElapsedTime();
     const deltaTime = elapsedTime - previousTime;
     previousTime = elapsedTime;
 
-    // const galaxy2Angle = elapsedTime * 0.3;
     const parallaxX = cursor.current.x * 0.5;
     const parallaxY = cursor.current.y * 0.5;
-    // camera.updateMatrixWorld();
-    // Animate camera
+
+
     camera.current.position.y = (-scrollY.current / sizes.current.height) * objectsDistance;
     cameraGroup.current.position.x +=
       (parallaxX - cameraGroup.current.position.x) * 5 * deltaTime;
     cameraGroup.current.position.y +=
       (parallaxY - cameraGroup.current.position.y) * 5 * deltaTime;
 
-    rimLight.current.position.y = (-scrollY.current / sizes.current.height) * objectsDistance;
-    // galaxy1.current.rotation.y = -elapsedTime * 0.005;
-    // console.log(dof2);
-    // debugger;
+    rimLight.current.position.y = cameraGroup.current.position.y;
 
   });
 
   return (
     <>
       <group ref={cameraGroup}>
-        <PerspectiveCamera ref={camera} makeDefault aspect={sizes.width / sizes.height} position={[0, 0, 6]}/>
+        <PerspectiveCamera ref={camera} makeDefault aspect={sizes.width / sizes.height} position={[0, 0, 6]} far={1000} filmGauge={53} />
         <rectAreaLight
           ref={rimLight}
           width={6}
           height={2}
-          intensity={6}
+          intensity={3}
           color="pink"
           position={[0, 0, 1.5]}
           rotation={[0, 0, 0]}
           castShadow
         />
 
-
+        <ambientLight
+          intensity={0.2}
+          color="pink"
+          castShadow
+        />
 
         <Stats />
       </group>
-      {/* <group ref={galaxy1} position={[0, -5, -20]}> */}
-        <Galaxy dof={dof} parameters={galaxy5Params} nucleus={false} helper={false} effects={true} position={[0, -5, -20]} />
-      {/* </group> */}
+
+      <Galaxy
+        dof={dof}
+        parameters={galaxy5Params}
+        nucleus={false} helper={false}
+        position={[0, -3, -20]} />
+
       <R3FSceneSection name="SectionOne" count={0}>
-          <Galaxy dof={dof} parameters={galaxy1Params} position={[6, 0, -13]} rotation={[4.18, 4.15, 4.75]} />
+        <OctoEasterEgg animate={true} />
+        <Galaxy dof={dof} parameters={galaxy1Params} position={[6, 0, -13]} rotation={[4.8, 4.15, 4.75]} />
       </R3FSceneSection>
 
-      <R3FSceneSection name="SectionTwo" count={2}>
-        <Galaxy dof={dof} parameters={galaxy2Params} position={[6, 0, 0]} />
-        {/* <LuxVox route='/cv#artist-luxumbra' position={[2.5, -2, -1]} /> */}
+      <R3FSceneSection name="SectionTwo" count={1}>
+
       </R3FSceneSection>
 
-      <R3FSceneSection name="SectionTwo" count={4}>
-        <Galaxy dof={dof} parameters={galaxy2Params} position={[6, 0, 0]} />
+      <R3FSceneSection name="SectionThree" count={2}>
+        <Galaxy dof={dof} parameters={galaxy2Params} position={[0, -3, -15]} />
+      </R3FSceneSection>
 
-        <NomadVox route='/cv' position={[2, -1, -0.8]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
+      <R3FSceneSection name="SectionFour" count={3}>
+
+      </R3FSceneSection>
+
+      <R3FSceneSection name="SectionFive" count={4}>
+        <NomadVox animate={true} position={[2, -1, 0.3]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
       </R3FSceneSection>
 
       <R3FSceneSection name="SectionSix" count={5}>
         <OctoPetVox route='/cv' position={[0, -.8, 0]} animate={true} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
         <BabyEarthVox route='/cv' position={[-1.5, -.8, -2]} animate={true} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
-
-        {/* <Shader /> */}
+        <Galaxy dof={dof} parameters={galaxy3Params} position={[6, -6.5, -15]} />
       </R3FSceneSection>
 
       <R3FSceneSection name="SectionSeven" count={6}>
-        <JetsetterVox route='/cv' position={[0, -1.8, 0]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
-        {/* <Shader /> */}
-        {/* <OctoEasterEggR3F position={[0, 0, 0]} /> */}
+        <JetsetterVox route='/cv' animate={false} position={[-2, -1.8, 0]} rotation={[-Math.PI / .1, Math.PI / 6.5, 0]} />
       </R3FSceneSection>
     </>
   )

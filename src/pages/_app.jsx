@@ -6,6 +6,7 @@ import { HeadComponent } from "@/components/dom/HeadComponent";
 import Dom from '@/components/layout/dom'
 import partition from '@/helpers/partition'
 import dynamic from 'next/dynamic'
+import { settings } from '@/seo.config';
 import SocialImg from "@/static/assets/img/social.png";
 
 import { ChakraProvider, CSSReset, extendTheme } from "@chakra-ui/react";
@@ -71,7 +72,7 @@ const theme = extendTheme({
       h3: {
         fontSize: { base: "4vmin", md: "1.5vmax" },
         fontWeight: 500,
-        mt: {base: 2, md: 5},
+        mt: { base: 2, md: 5 },
         "& + p": {
           fontSize: { base: "2.8vmin", md: "1vmax" },
           lineHeight: { base: "1.2", md: "inherit" },
@@ -97,7 +98,7 @@ const theme = extendTheme({
         w: '100vw',
         m: 0,
         py: 0,
-        px: {base: 4, lg: '10%'},
+        px: { base: 4, lg: '10%' },
         zIndex: 2000,
       },
       ".__content__body": {
@@ -192,7 +193,7 @@ function App({ Component, pageProps = { title: 'index' } }) {
       const getHostname = () => {
         if (typeof window !== "undefined") {
           curURL.current = window.location.origin;
-          console.log(window.location);
+          // console.log(window.location);
           // return host;
           return null;
         }
@@ -210,13 +211,11 @@ function App({ Component, pageProps = { title: 'index' } }) {
 
   return (
     <>
-      {/* <Header title={pageProps.title} />
-      <Balance child={child} /> */}
       <CSSReset />
       <ChakraProvider theme={theme}>
-        <HeadComponent url={host} img={`${host}${SocialImg}`} />
+        <HeadComponent />
         <Balance child={child} />
-    </ChakraProvider>
+      </ChakraProvider>
     </>
   )
 }

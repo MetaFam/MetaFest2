@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import * as THREE from "three";
 // import { useFrame, useThree } from "@react-three/fiber";
 import gsap from "gsap";
-// import * as dat from "lil-gui";
 import {
   // galaxyColors,
   generateGalaxy,

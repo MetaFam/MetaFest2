@@ -1,53 +1,105 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import { useRouter } from 'next/router';
+import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 
-export const HeadComponent = ({
-  title = 'MetaFest2. Powered by MetaGame',
-  description = 'A virtual festival/conference/hackathon with the goal of helping you level up & manifest a better future.',
-  url = 'https://metafest2.metagame.wtf/',
-  img = 'https://metafest2.metagame.wtf/static/media/social.bc426e19.png',
-}) => (
-  <Helmet>
-    <title>{title}</title>
-    <meta
-      name="viewport"
-      property="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
-    <meta name="title" property="title" content={title} />
-    <meta name="description" property="description" content={description} />
-    <meta name="theme-color" property="theme-color" content="#5a32e6" />
+import { settings } from '@/seo.config';
 
-    <meta name="og:type" property="og:type" content="website" />
-    <meta name="og:site_name" property="og:site_name" content="MetaFest2" />
-    <meta name="og:locale" property="og:locale" content="en_US" />
+export const HeadComponent = (props) => {
+  const { title, description, image } = props;
+  const router = useRouter();
+  // console.log(router);
 
-    <meta name="og:title" property="og:title" content={title} />
-    <meta
-      name="og:description"
-      property="og:description"
-      content={description}
-    />
-    <meta name="og:url" property="og:url" content={url} />
-    <meta name="og:image" property="og:image" content={img} />
+  return (
 
-    <meta name="twitter:card" property="twitter:card" content="summary" />
-    <meta name="twitter:url" property="twitter:url" content={url} />
-    <meta name="twitter:site" property="twitter:site" content="@MetaFam" />
-    <meta name="twitter:title" property="twitter:title" content={title} />
-    <meta
-      name="twitter:description"
-      property="twitter:description"
-      content={description}
-    />
-    <meta name="twitter:image" property="twitter:image" content={img} />
+    <Head>
+      <title>{title}</title>
+      <meta
+        name="viewport"
+        property="viewport"
+        content="width=device-width, initial-scale=1.0"
+      />
+      <meta name="title" property="title" content={title} />
+      <meta name="description" property="description" content={description} />
+      <meta itemProp="name" content={title} />
+      <meta itemProp="description" content={description} />
+      <meta itemProp="image" content={image} />
+      <meta name="theme-color" property="theme-color" content="#5a32e6" />
 
-    <link rel="icon" href={`${url}/favicon.ico`} />
+      {socialTags(props).map(({ name, content }) => {
+        return <meta key={name} name={name} content={content} />;
+      })}
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;500;700&amp;display=swap" rel="stylesheet" />
-  </Helmet>
-);
+      <link rel="icon" href="/favicon.ico" />
 
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+      <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;500;700&amp;display=swap" rel="stylesheet" />
+    </Head>
+
+  );
+}
+
+HeadComponent.defaultProps = {
+  title: settings && settings.meta && settings.meta.title,
+  description: settings && settings.meta && settings.meta.description,
+  image:
+    settings &&
+    settings.meta &&
+    settings.meta.social &&
+    settings.meta.social.graphic,
+};
+
+const socialTags = ({
+  openGraphType,
+  url,
+  title,
+  description,
+  image,
+  createdAt,
+  updatedAt,
+}) => {
+  const metaTags = [
+    { name: "twitter:card", content: "summary_large_image" },
+    {
+      name: "twitter:site",
+      content:
+        settings &&
+        settings.meta &&
+        settings.meta.social &&
+        settings.meta.social.twitter,
+    },
+    { name: "twitter:title", content: title },
+    { name: "twitter:description", content: description },
+    {
+      name: "twitter:creator",
+      content:
+        settings &&
+        settings.meta &&
+        settings.meta.social &&
+        settings.meta.social.twitter,
+    },
+    { name: "twitter:image:src", content: image },
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "og:title", content: title },
+    { name: "og:type", content: openGraphType },
+    { name: "og:url", content: url },
+    { name: "og:image", content: image },
+    { name: "og:description", content: description },
+    {
+      name: "og:site_name",
+      content: settings && settings.meta && settings.meta.title,
+    },
+    {
+      name: "og:published_time",
+      content: createdAt || new Date().toISOString(),
+    },
+    {
+      name: "og:modified_time",
+      content: updatedAt || new Date().toISOString(),
+    },
+  ];
+
+  return metaTags;
+};
 

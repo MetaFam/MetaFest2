@@ -7,7 +7,7 @@ import {
 } from '@chakra-ui/react'
 
 
-export function AlphaNotice() {
+export const AlphaNotice = () => {
   const [toggle, setToggle] = useState(true);
   const ref = useRef(null);
   return (

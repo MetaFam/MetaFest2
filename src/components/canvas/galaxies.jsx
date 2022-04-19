@@ -28,8 +28,8 @@ export const galaxy4Colors = {
     outside: '#7C56FF'
 }
 export const galaxy5Colors = {
-    inside: '#76EBF2',
-    outside: '#FF61E6'
+    inside: '#7C56FF',
+    outside: '#462080'
 }
 /**
  * Galaxy
@@ -57,11 +57,11 @@ export const galaxy1Params = {
 export const galaxy2Params = {
     count: 200000,
     size: 0.01,
-    radius: 12,
+    radius: 20,
     branches: 8,
     spin: 8,
     randomness: 9,
-    randomnessPower: 8,
+    randomnessPower: 1,
     insideColor: galaxy2Colors.inside,
     outsideColor: galaxy2Colors.outside,
     type: 2,
@@ -79,7 +79,7 @@ export const galaxy2Params = {
 export const galaxy3Params = {
     count: 100000,
     size: 0.01,
-    radius: 1.86,
+    radius: 20,
     branches: 3,
     spin: 32,
     randomness: 13,
@@ -119,17 +119,17 @@ export const galaxy4Params = {
 }
 
 export const galaxy5Params = {
-    count: 35000,
+    count: 75000,
     size: 0.03,
     radius: 35,
     branches: 8,
     spin: 5,
-    randomness: 16,
-    randomnessPower: 20,
-    insideColor: galaxy4Colors.inside,
-    outsideColor: galaxy4Colors.outside,
+    randomness: 1.7,
+    randomnessPower: 10,
+    insideColor: galaxy5Colors.inside,
+    outsideColor: galaxy5Colors.outside,
     type: 3,
-    opacity: 1,
+    opacity: 0.1,
     focusDistance: 0.05,
     focalLength: 0.05,
     width: 480,
@@ -193,7 +193,7 @@ export const generateGalaxy = (params) => {
             const i3 = i * 3
             const radius = Math.random() * params.radius
             const spinAngle = radius * params.spin
-            const branchAngle = (i % params.branches) / params.branches * Math.PI * 2
+            const branchAngle = (i % params.branches) / params.branches * Math.PI * 0.5
 
             const randomX = Math.pow(Math.random(), params.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)
             const randomY = Math.pow(Math.random(), params.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)

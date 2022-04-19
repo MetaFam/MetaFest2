@@ -76,7 +76,7 @@ export const MetaverseSection = () => {
         <Box className="__content__body--no-firstof" textAlign="right" mt={6}>
           <Text as="h2">MetaFest-a-verse</Text>
           <Text className="gradient">
-            The MetaFest Booth: MetaFam&apos;s HQ in the Metaverse.
+            Metafest 2 full dive: MetaFam&apos;s HQ in the Metaverse.
           </Text>
           <Text>
             From scavenger hunts to gigs, come explore our virtual HQ!{" "}
