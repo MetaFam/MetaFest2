@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import React, { useRef, useState, useMemo } from "react";
+import React, { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import * as THREE from "three";
@@ -18,6 +18,21 @@ const OctoEasterEgg = (props) => {
   alphaTexture.minFilter = THREE.NearestFilter;
   alphaTexture.magFilter = THREE.NearestFilter;
   alphaTexture.generateMipmaps = true;
+
+  const toggleActive = useCallback(() => {
+    setActive(!active);
+  }, [setActive, active])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const easterEgg1 = document.querySelectorAll(".ee1");
+      if (active) {
+        easterEgg1[0].classList.toggle("found");
+        toggleActive()
+      }
+    }
+
+  }, [active, toggleActive]);
 
   useFrame(() => {
     const elapsedTime = clock.getElapsedTime();

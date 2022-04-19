@@ -5,7 +5,8 @@ import {
 } from "@chakra-ui/react";
 import {SiteHeader} from "@/components/dom/Header";
 import { SiteFooter } from "@/components/dom/Footer";
-// import { AlphaNotice } from '@/components/dom/AlphaNotice';
+import { AlphaNotice } from '@/components/dom/AlphaNotice';
+import { EasterEgg } from '@/components/dom/EasterEgg';
 
 const Dom = ({ children }) => {
   const ref = useRef(null)
@@ -34,8 +35,9 @@ const Dom = ({ children }) => {
     >
       <SiteHeader />
       {children}
-      {/* <AlphaNotice /> */}
       <SiteFooter />
+      <AlphaNotice />
+      <EasterEgg />
     </Box>
   )
 }

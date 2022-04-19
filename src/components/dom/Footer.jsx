@@ -2,13 +2,11 @@ import React, {useRef} from "react";
 import {
   Box,
   Flex,
-  Image,
   Link,
   Text,
 } from "@chakra-ui/react";
 import { useOnScreen } from "@/utils/hooks";
 import { BoxedNextImage } from "@/components/dom/BoxedNextImage";
-// import { HamburgerIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
 import OctopusImg from "@/static/assets/img/octopus.png";
 // import MetaGameLogo from '../static/assets/img/logo.png'
 

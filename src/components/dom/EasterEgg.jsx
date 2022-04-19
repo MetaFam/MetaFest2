@@ -4,13 +4,13 @@ import {
   Button,
   Image,
   IconButton,
-  CloseIcon,
   Container,
   Box,
   Link,
   useBreakpointValue
 } from '@chakra-ui/react'
-import { ExternalLinkIcon } from '@chakra-ui/icons'
+import { CloseIcon, ExternalLinkIcon } from '@chakra-ui/icons'
+import { BoxedNextImage } from "@/components/dom/BoxedNextImage";
 
 import BabyOctoGif from "@/static/assets/img/baby_octo_alpha.gif";
 
@@ -45,7 +45,7 @@ export const EasterEgg = () => {
         textAlign="center"
         height={{base: '150px', md: "auto"}}
         opacity={0}
-        // transform="translateY(100px)"
+        transform="translateY(100px)"
         transition="transform 0.3s 0.2s ease-in-out, opacity 0.3s 0.3s ease-in-out"
         zIndex={0}
         overflowX="clip"
@@ -88,9 +88,9 @@ export const EasterEgg = () => {
           maxW={{base: '100%', md: "5xl"}}
           py={3}
         >
-          <Image src={BabyOctoGif} alt="Baby Octo mascot" boxSize={{base: '35px', xl:"100px"}} objectFit="cover" />
+          <BoxedNextImage src={BabyOctoGif} alt="Baby Octo mascot" boxSize={{base: '35px', xl:"100px"}} objectFit="cover" />
           <Box flex={1}>
-            <Text as="h4">
+            <Text as="h3">
               <span role="img" aria-label="Octo emoji">
                 🐙
               </span>{" "}
@@ -125,7 +125,7 @@ export const EasterEgg = () => {
             </Button>
           </Box>
 
-          <Image src={BabyOctoGif} alt="Baby Octo mascot" boxSize={{base: '35px', xl:"100px"}} objectFit="cover" />
+          <Box src={BabyOctoGif} alt="Baby Octo mascot" boxSize={{base: '35px', xl:"100px"}} objectFit="cover" />
           <IconButton
             onClick={handleToggle}
             colorScheme="ghost"

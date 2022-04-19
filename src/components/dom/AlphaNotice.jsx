@@ -1,18 +1,18 @@
-import React, { useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import {
   Text,
   IconButton,
-  CloseIcon,
   Box,
 } from '@chakra-ui/react'
+import { CloseIcon } from '@chakra-ui/icons'
 
-
-export const AlphaNotice = () => {
+export function AlphaNotice() {
   const [toggle, setToggle] = useState(true);
-  const ref = useRef(null);
+  const notice= useRef(null);
+
   return (
     <Box
-      ref={ref}
+      ref={notice}
       // display="none"
       bg="linear-gradient(90.24deg, #640DFB80 0.3%, rgba(100, 13, 251, 0.1) 80.16%)"
       backdropFilter="blur(7px)"
