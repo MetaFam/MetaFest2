@@ -56,7 +56,7 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
         particles.current.rotation.z = scrollY * 0.0004;
         particles.current.rotation.x = -elapsedTime * 0.006;
       } else if (parameters.type === 2) {
-        particles.current.rotation.y = -elapsedTime * 0.05;
+        particles.current.rotation.y = -elapsedTime * 0.007;
       } else if (parameters.type == 3) {
         particles.current.position.y = scrollY * 0.0004;
         particles.current.rotation.y = Math.cos(elapsedTime * 0.03) * Math.PI * 0.05;

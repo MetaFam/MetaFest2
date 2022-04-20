@@ -65,7 +65,7 @@ export const galaxy2Params = {
     insideColor: galaxy2Colors.inside,
     outsideColor: galaxy2Colors.outside,
     type: 2,
-    opacity: 1,
+    opacity: 0.1,
     focusDistance: 0.05,
     focalLength: 0.05,
     width: 480,
