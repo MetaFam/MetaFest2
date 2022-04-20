@@ -20,8 +20,8 @@ const BoxComponent = ({ route }) => {
       <mesh
         ref={mesh}
         onClick={() => router.push(route)}
-        onPointerOver={() => setHover(true)}
-        onPointerOut={() => setHover(false)}
+        onPointerOver={(e) => setHover(true)}
+        onPointerOut={(e) => setHover(false)}
         scale={hovered ? 1.1 : 1}
       >
         <boxBufferGeometry args={[1, 1, 1]} />
