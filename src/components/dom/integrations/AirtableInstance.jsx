@@ -30,6 +30,14 @@ export function AirtablePerformerInstance () {
       </Suspense>
   )
 }
+export function AirtableSponsorInstance () {
+  return (
+    <Suspense fallback={<DOMLoader />}>
+      <Script src="https://static.airtable.com/js/embed/embed_snippet_v1.js"></Script>
+      <iframe title="Sponsor MetaFest2" className="airtable-embed airtable-dynamic-height" src="https://airtable.com/embed/shr2kuLumbj9Wnka8?backgroundColor=blue" frameBorder="0" onmousewheel="" width="100%" height="3185" style={{background: 'transparent', border: '0'}}></iframe>
+      </Suspense>
+  )
+}
 
 export function AirtableFairInstance () {
   return (

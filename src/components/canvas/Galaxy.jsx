@@ -295,7 +295,7 @@ export function Nucleus({ size }) {
   color.setHSL(Math.random(), 0.7, Math.random() * 0.2 + 0.05)
 
   return (
-    <mesh ref={nucleusRef} position={[0, 0, 0]} scale={[size, size, size]} layers={THREE.BLOOM_SCENE}>
+    <mesh ref={nucleusRef} position={[0, 0, 0]} scale={[size, size, size]}>
       <sphereBufferGeometry attach="geometry" args={[0.5, 32, 32, 0, 6.4, 0, 6.3]} />
       <meshBasicMaterial attach="material" color={'#fff'} />
     </mesh>
