@@ -17,14 +17,17 @@ import {
   AirtableContributorInstance,
   AirtablePerformerInstance,
   AirtableSponsorInstance,
+  AirtableFairInstance,
 } from "../integrations/AirtableInstance";
 import { useOnScreen } from "@/utils/hooks";
 import { BoxedNextImage } from "@/components/dom/BoxedNextImage";
-import { BiUserVoice } from 'react-icons/bi';
+
 import SpeakerIcon from "@/static/assets/img/icons/forum.svg"
 import ContributorIcon from "@/static/assets/img/icons/players.svg"
 import PerformerIcon from "@/static/assets/img/icons/xpearned.svg"
 import SponsorIcon from "@/static/assets/img/icons/patrons.svg"
+import FairIcon from "@/static/assets/img/icons/welcometometagame.svg"
+import { BsFillPinMapFill } from 'react-icons/bs';
 
 
 export const ApplySection = () => {
@@ -38,7 +41,7 @@ export const ApplySection = () => {
     false
   );
   const [openSponsorApplication, setOpenSponsorApplication] = useState(false);
-
+const [openFairApplication, setOpenFairApplication] = useState(false);
   return (
     <Box as="section" id="apply" position="relative">
       <Box
@@ -138,6 +141,14 @@ export const ApplySection = () => {
                     text={"Sponsors"}
                     call={() =>
                       setOpenSponsorApplication(!openSponsorApplication)
+                    }
+                    />
+                                        <Feature
+                      icon={FairIcon}
+                    iconBg={"purple.900"}
+                    text={"Job Fair"}
+                    call={() =>
+                      setOpenFairApplication(!openFairApplication)
                     }
                   />
                 </Stack>
@@ -314,6 +325,47 @@ export const ApplySection = () => {
           </Box>
         </>
       )}
+            {openFairApplication && (
+        <>
+          <Button
+            aria-label="Open the Job Fair application form"
+            position="absolute"
+            bottom={{base: 10, md: 20}}
+            right={6}
+            colorScheme="pink"
+            bg="#FF61E6"
+            boxShadow="0 0 10px rgba(0, 0, 0, 0.6)"
+            size="sm"
+            transition="all 0.3s 0.8s ease"
+            transform={`translateY(${openFairApplication ? 0 : "-70px"})`}
+            onClick={() => setOpenFairApplication(!openFairApplication)}
+            zIndex={2005}
+          >
+            Close form
+          </Button>
+          <Box
+            ref={ref}
+            position="absolute"
+            top="12.5vh"
+            left={0}
+            height="75vh"
+            minH="75vh"
+            width="100vw"
+            textAlign="center"
+            sx={{
+              bg: "rgba(25,0,50,0.4)",
+              backdropFilter: "blur(7px)",
+            }}
+            boxShadow="0 0 30px rgba(0,0,0,0.8)"
+            opacity={onScreen ? 1 : 0}
+            transition="opacity 1.2s 0.8s ease-in-out"
+            zIndex={2001}
+            overflowY="scroll"
+          >
+            <AirtableFairInstance />
+          </Box>
+        </>
+      )}
     </Box>
   );
 };
@@ -330,9 +382,9 @@ export const Feature = ({ text, icon, iconBg, call }) => {
         rounded={"full"}
         // bg={iconBg}
       >
-        <BoxedNextImage src={icon} alt={text} />
+        <BoxedNextImage src={icon} alt={text} boxSize={{base: '30px', lg: '75px'}} className="gradient" />
       </Flex>
-      <Text fontWeight={500} fontSize={{base: '2.8vmin', md: '1.2vmax'}} flex={1}>
+      <Text fontWeight={500} fontSize={{base: '4vmin', md: '1.2vmax'}} flex={1}>
         {text}
       </Text>
       <Button onClick={() => call()} colorScheme="pink" bg="#FF61E6" size={responsiveSize} justifySelf="right">

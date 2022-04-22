@@ -1,6 +1,7 @@
 import { PerspectiveCamera, Stats } from '@react-three/drei'
-import React, { useEffect, useMemo, useRef, forwardRef, useLayoutEffect } from "react";
+import React, { useEffect, useMemo, useRef, forwardRef, useLayoutEffect, Suspense } from "react";
 import * as THREE from "three";
+import gsap from "gsap";
 import { useFrame, extend } from '@react-three/fiber'
 import dynamic from 'next/dynamic'
 
@@ -19,6 +20,7 @@ import {
   galaxy5Params,
 } from '@/components/canvas/galaxies';
 import { Effects, Nucleus } from "@/components/canvas/Galaxy";
+import { CanvasLoader } from '@/components/canvas/Loader';
 
 const NomadVox = dynamic(() => import('@/components/canvas/Nomad'), {
   ssr: false,
@@ -44,6 +46,21 @@ const OctoPetVox = dynamic(() => import('@/components/canvas/OctoPet'), {
 const Galaxy = dynamic(() => import('@/components/canvas/Galaxy'), {
   ssr: false,
 })
+// Musashi
+const Robe = dynamic(() => import('@/components/canvas/musashi/Robe'), {
+  ssr: false,
+})
+const Robe2 = dynamic(() => import('@/components/canvas/musashi/Robe2'), {
+  ssr: false,
+})
+const ILB = dynamic(() => import('@/components/canvas/musashi/Ilb'), {
+  ssr: false,
+})
+const MolochPet1 = dynamic(() => import('@/components/canvas/musashi/MolochPet1'), {
+  ssr: false,
+})
+
+
 
 export const objectsDistance = 4;
 
@@ -88,11 +105,20 @@ const R3F = () => {
   const mouse = new THREE.Vector2();
   const rayMouse = new THREE.Vector2();
   const section = useRef(0);
+
+  // Model groups
+  const musashiGroup = useRef(null);
+  const ilbRef = useRef(null);
+  const molochPet1 = useRef(null);
+
+  const luxGroup = useRef(null);
+
   /**
    * Animate
    */
   const clock = new THREE.Clock();
   let previousTime = 0;
+  const isOdd = (num) => !!num % 2;
   /**
          * Cursor / Mouse
          */
@@ -132,8 +158,107 @@ const R3F = () => {
           // camera.current.layers.set(section.current);
 
           console.log('Current section: ', section.current);
+          if (musashiGroup.current) {
+            let tl = gsap.timeline();
+            switch (currentSection) {
+              // Workshops
+              case 2:
+                tl.to(musashiGroup.current.position, {
+                  duration: 1.5,
+                  ease: "power2.inOut",
+                  y: 0,
+                  z: 0,
+                });
+                break;
+
+              default:
+                tl.to(musashiGroup.current.position, {
+                  duration: 1.5,
+                  ease: "power2.inOut",
+                  y: -10,
+                  z: 0,
+                });
+                break;
+            }
+          }
+
+          if (luxGroup.current) {
+            let tl2 = gsap.timeline();
+            switch (currentSection) {
+              // Workshops
+              case 1:
+                tl2.to(luxGroup.current.position, {
+                  duration: 1.5,
+                  delay: 0.3,
+                  ease: "power2.inOut",
+                  y: 0,
+                  z: 0,
+                });
+                break;
+
+              default:
+                tl2.to(luxGroup.current.position, {
+                  duration: 1.5,
+                  delay: 0.3,
+                  ease: "power2.inOut",
+                  y: 0,
+                  z: -10,
+                });
+                break;
+            }
+          }
         }
       });
+
+      if (musashiGroup.current) {
+        let tl = gsap.timeline();
+        switch (section.current) {
+          // Workshops
+          case 2:
+            tl.to(musashiGroup.current.position, {
+              duration: 1.5,
+              ease: "power2.inOut",
+              y: 0,
+              z: 0,
+            });
+            break;
+
+          default:
+            tl.to(musashiGroup.current.position, {
+              duration: 1.5,
+              ease: "power2.inOut",
+              y: -10,
+              z: 0,
+            });
+            break;
+        }
+      }
+
+      if (luxGroup.current) {
+        let tl2 = gsap.timeline();
+        switch (currentSection) {
+          // Workshops
+          case 1:
+            tl2.to(luxGroup.current.position, {
+              duration: 1.5,
+              delay: 0.3,
+              ease: "power2.inOut",
+              y: 0,
+              z: 0,
+            });
+            break;
+
+          default:
+            tl2.to(luxGroup.current.position, {
+              duration: 1.5,
+              delay: 0.3,
+              ease: "power2.inOut",
+              y: 0,
+              z: -10,
+            });
+            break;
+        }
+      }
 
       // Mouse move
       window.addEventListener("mousemove", (event) => {
@@ -146,7 +271,6 @@ const R3F = () => {
         // console.log('mousePos', mousePos.current);
         rayMousePos.current.x = event.clientX / sizes.current.width;
         rayMousePos.current.y = event.clientY / sizes.current.height;
-
         // mouse.position.x = event.clientX / sizes.current.width
         // mouse.position.y = event.clientY / sizes.current.height
         // console.log('mouse pos', mouse.position);
@@ -172,91 +296,106 @@ const R3F = () => {
     cameraGroup.current.position.y +=
       (parallaxY - cameraGroup.current.position.y) * 5 * deltaTime;
 
-    rimLight.current.position.y = (-scrollY.current / sizes.current.height) * objectsDistance;
-    rimLight2.current.position.y = (-scrollY.current / sizes.current.height) * objectsDistance;
-    // rimLight3.current.position.y = (-scrollY.current / sizes.current.height) * objectsDistance;
-    // rimLight.current.position.x +=
-    //   (parallaxX - rimLight.current.position.x) ;
-    // rimLight.current.position.y =
-    //   (parallaxY - rimLight.current.position.y);
+    // rimLight.current.position.y = (-scrollY.current / sizes.current.height) * objectsDistance;
+    // rimLight2.current.position.y = (-scrollY.current / sizes.current.height) * objectsDistance;
 
-    // console.log('camg', rimLight.current.position);
+    if (ilbRef.current) {
+      ilbRef.current.position.x = 1 + Math.sin(elapsedTime * 0.8) * Math.PI * 0.03;
+      ilbRef.current.position.y = 1 - Math.cos(elapsedTime * 0.1) * Math.PI * 0.3;
+      // group.current.position.z = -0.25 - Math.cos(elapsedTime * 0.1) * Math.PI * 0.3;
+
+      // ilbRef.current.rotation.z = -0.5 - Math.sin(elapsedTime * 0.3) * Math.PI * 0.03;
+      ilbRef.current.rotation.y = -elapsedTime * 0.006;
+    }
+
+    if (molochPet1.current) {
+      molochPet1.current.position.x = -1 + Math.sin(elapsedTime * 0.6) * Math.PI * 0.03;
+      molochPet1.current.position.y = 1 + Math.cos(elapsedTime * 0.07) * Math.PI * 0.5;
+      // group.current.position.z = -0.25 - Math.cos(elapsedTime * 0.1) * Math.PI * 0.3;
+
+      molochPet1.current.rotation.z = -0.05 - Math.sin(elapsedTime * 0.3) * Math.PI * 0.03;
+      // molochPet1.current.rotation.y = elapsedTime * 0.03;
+    }
+
+    if (luxGroup.current) {
+      luxGroup.current.children.map((child, i) => {
+        // console.log(child);
+        if (child.name === 'LuxVoxGroup' || child.name === 'OctoPetGroup' || child.name === 'BabyEarthGroup') {
+        } else {
+          // console.log(child.name)
+          child.position.y = -1.5 - Math.cos(elapsedTime * (0.1)) * Math.PI * (0.05 - i*0.1) ;
+          child.position.z = isOdd(i) ? -2 : -4;
+          // group.current.rotation.y = elapsedTime * 0.03;
+          child.rotation.z = 0.2 - Math.sin(elapsedTime * 0.3) * Math.PI * (0.03 - i * 0.001);
+        }
+      })
+      // console.log(luxGroup.current.children);
+
+    }
 
   });
+
+
   return (
     <>
       <group ref={cameraGroup}>
         <PerspectiveCamera ref={camera} makeDefault position={[0, 0, 6]} />
-        <rectAreaLight
-          ref={rimLight}
-          width={6}
-          height={2}
-          intensity={2}
-          color="#fffccc'"
-          position={[0, 0, 1.5]}
-          rotation={[0, 0, 0]}
-          castShadow
-        />
-        <rectAreaLight
-          ref={rimLight2}
-          width={6}
-          height={2}
-          intensity={5}
-          color="blue"
-          position={[0, 0, 1.5]}
-          rotation={[0, 0, 0]}
-          castShadow
-        />
-        <rectAreaLight
-          ref={rimLight3}
-          width={1}
-          height={1}
-          intensity={2}
-          color="#76EBF2"
-          position={[-1.6, -1, 0.5]}
-          rotation={[0, 0, 0]}
-          castShadow
-        />
-        <axesHelper />
-        <Stats />
+
+        {/* <Stats /> */}
       </group>
 
+      <Suspense fallback={<CanvasLoader />}>
       <Galaxy
         dof={dof}
         parameters={galaxy5Params}
-        nucleus={false} helper={false}
-        position={[0, -3, -20]} />
+        position={[0, -3, -10]}
+        rotation={[Math.PI * 0.3, 0, 0]}
+      />
 
       <R3FSceneSection name="SectionOne" count={0} >
         {/* <JetsetterVox route='/' position={[1, -2.4, -2]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} /> */}
       </R3FSceneSection>
 
       <R3FSceneSection name="SectionTwo" count={1} >
-
-        <LuxVox route='/' position={[-3.5, -1.5, -1.5]} rotation={[-Math.PI / 0.51, Math.PI / 3.25, 0]} />
-        <OctoPetVox route='/' position={[-3, -2, -2]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
-        <BabyEarthVox route='/' animate={true} position={[-2, -1, -0.25]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
-        <NomadVox route='/' position={[-1.5, 0, -2]} rotation={[-Math.PI / 0.51, Math.PI / 3.5, 0]} />
-        <HouseholdVox route='/' position={[2, 2, -4]} rotation={[-Math.PI / 0.55, Math.PI / 3, 0]} />
-        <JetsetterVox route='/' position={[1, -2.4, -3]} rotation={[-Math.PI / 0.51, Math.PI / 2.75, 0]} />
-        <IndustrialVox route='/' position={[5, -1.4, -3]} rotation={[-Math.PI / 0.55, Math.PI / 3, 0]} />
-
+        <group ref={luxGroup} name="LuxGroup" position={[0, 0, -10]}>
+          <group name="LuxVoxGroup">
+            <LuxVox route='/' position={[-3.5, -1.5, -1.5]} rotation={[-Math.PI / 0.51, Math.PI / 3.25, 0]} />
+          </group>
+          <group name="OctoPetGroup">
+            <OctoPetVox route='/' position={[-3, -2, -2]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
+          </group>
+          <group name="BabyEarthGroup">
+            <BabyEarthVox route='/' animate={true} position={[-2, -1, -0.25]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
+          </group>
+          <group name="NomadGroup">
+            <NomadVox route='/' position={[-1.5, 0, -2]} rotation={[-Math.PI / 0.51, Math.PI / 3.5, 0]} />
+          </group>
+          <group name="HouseholdGroup">
+            <HouseholdVox route='/' position={[2, 2, -4]} rotation={[-Math.PI / 0.55, Math.PI / 3, 0]} />
+          </group>
+          <group name="JetsetterGroup">
+            <JetsetterVox route='/' position={[1, -2.4, -3]} rotation={[-Math.PI / 0.51, Math.PI / 2.75, 0]} />
+          </group>
+          <group name="IndustrialGroup">
+            <IndustrialVox route='/' position={[5, -1.4, -3]} rotation={[-Math.PI / 0.55, Math.PI / 3, 0]} />
+          </group>
+        </group>
       </R3FSceneSection>
+
       <R3FSceneSection name="SectionThree" count={2}>
         <Galaxy dof={dof} parameters={galaxy2Params} position={[0, -6, -20]} />
-        {/* <group position={[5, 0, 3]} rotation={[0, 0.1, 0]}>
-        <directionalLight
-          intensity={0.3}
-            decay={2}
-            color="cyan"
-          rotation={[0, 0, 0]}
-        />
-        <axesHelper />
-      </group> */}
-        {/* <LuxVox route='/' position={[-3, -2, -1]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
-        <NomadVox route='/' position={[3, -1.5, -0.5]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
-        <JetsetterVox route='/' position={[1, -2.4, -3]} rotation={[-Math.PI / 0.55, Math.PI / 3, 0]} /> */}
-      </R3FSceneSection>
+        <group ref={musashiGroup} name="MusashiGroup" position={[0, 0, 0]}>
+          <Robe route='/' animate={false} position={[-2.25, -2, 0]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
+          <Robe2 route='/' animate={false} position={[-2.25, -2, 0]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
+          <group ref={ilbRef}>
+            <ILB position={[2, -2.5, -1]} rotation={[0, 0, 0]} />
+          </group>
+          <group ref={molochPet1}>
+            <MolochPet1 position={[1, -2.5, 0]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
+          </group>
+        </group>
+        </R3FSceneSection>
+        </Suspense>
     </>
   )
 }
@@ -293,7 +432,7 @@ export const artists = [
     slug: 'musashi',
     name: 'Musashi',
     strapline: 'Some voxels made by Musashi',
-    description: 'to follow...',
+    description: 'Member of MG writers guild and bridgebuilder & cross-pollination extraordinaire',
   }
 ];
 

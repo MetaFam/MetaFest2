@@ -25,7 +25,7 @@ export default function HouseholdVox(props) {
     }
   })
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={group} {...props} name="Household" dispose={null}>
       <mesh
         castShadow
         receiveShadow

@@ -25,7 +25,7 @@ export default function IndustrialVox(props) {
     }
   })
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={group} {...props} name="Industrial" dispose={null}>
       <mesh
         castShadow
         receiveShadow

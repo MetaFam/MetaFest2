@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-page-custom-font */
 import React from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
@@ -34,7 +35,7 @@ export const HeadComponent = (props) => {
 
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
-      <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;500;700&amp;display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;700&amp;display=swap" rel="stylesheet" />
     </Head>
 
   );

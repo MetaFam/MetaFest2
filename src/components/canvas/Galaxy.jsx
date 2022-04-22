@@ -54,11 +54,14 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
         particles.current.position.y = -scrollY * 0.0005;
         // galaxy1.rotation.y += (parallaxX - cameraGroup.position.x) * 2 * deltaTime
         particles.current.rotation.z = scrollY * 0.0004;
-        particles.current.rotation.x = -elapsedTime * 0.006;
+        particles.current.rotation.y = -elapsedTime * 0.006;
       } else if (parameters.type === 2) {
         particles.current.rotation.y = -elapsedTime * 0.007;
       } else if (parameters.type == 3) {
         particles.current.position.y = scrollY * 0.0004;
+        particles.current.rotation.y = Math.cos(elapsedTime * 0.03) * Math.PI * 0.05;
+      } else if (parameters.type == 4) {
+        particles.current.position.z = -scrollY * 0.0004;
         particles.current.rotation.y = Math.cos(elapsedTime * 0.03) * Math.PI * 0.05;
       }
     }
@@ -156,7 +159,7 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
         positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + randomZ
 
         const mixedColor = colorInside.clone()
-        mixedColor.lerp(colorOutside, radius / parameters.radius * 1.05)
+        mixedColor.lerp(colorOutside, radius / parameters.radius * 2)
 
         colors[i3 + 0] = mixedColor.r
         colors[i3 + 1] = mixedColor.g
@@ -228,7 +231,7 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
     particles.current.geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
     particles.current.geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
 
-    if (parameters.type === 5) {
+    if (parameters.type === 3) {
 
       material.current.map = planeColorTexture
       material.current.alphaMap = planeAlphaTexture
@@ -237,6 +240,12 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
       material.current.opacity = parameters.opacity
 
     }
+    // if (parameters.type === 3) {
+    //   material.current.transparent = true
+    //   material.current.sizeAttenuation = true
+    //   material.current.opacity = parameters.opacity
+
+    // }
   }
 
   return (
@@ -312,17 +321,6 @@ export function Nucleus({ size }) {
 
 // eslint-disable-next-line react/display-name
 export const Effects = forwardRef((props, ref) => {
-  const bokehScale = {
-    min: 0,
-    max: 10,
-    value: 1,
-  };
-
-  return (
-    <EffectComposer multisampling={0}>
-      <DepthOfField ref={ref} bokehScale={bokehScale} />
-    </EffectComposer>
-  )
 })
 
 

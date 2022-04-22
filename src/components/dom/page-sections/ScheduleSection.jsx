@@ -5,6 +5,7 @@ import {
   IconButton,
   Link,
   Text,
+  Tabs, TabList, TabPanels, Tab, TabPanel, useDisclosure
 } from "@chakra-ui/react";
 import { CalendarIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 import CalendarInstance from "@/components/dom/integrations/CalendarInstance";
@@ -25,6 +26,8 @@ export const ScheduleSection = () => {
       id="schedule"
       flexFlow="row nowrap"
       justifyContent="space-between"
+      alignItems="flex-start"
+      pt="10%"
     >
       {openCal && (
         <Button
@@ -72,26 +75,21 @@ export const ScheduleSection = () => {
             alignSelf="center"
             filter="drop-shadow(0 0 15px #FF61E6)"
           />
-          <Text flex="1 0 100%" width="100%" alignSelf="flex-end" justifySelf="flex-start" fontWeight={500}>
+          {/* <Text flex="1 0 100%" width="100%" alignSelf="flex-end" justifySelf="flex-start" fontWeight={500}>
             Our community members are busy rn, booking guests &amp; organising
             workshops. <br /> Watch this space
             <Text as="span" className="gradient2">
               ...it&apos;s gonna blow your mind!
             </Text>
-          </Text>
+          </Text> */}
         </Box>
 
         <Box className="__content__body">
 
-          <Box
-            d="flex"
-            alignContent="flex-start"
-            justifyContent="space-between"
-            flexFlow="row wrap"
-            w="100%"
-          >
-            {timeBlocks.map((block, i) => <DayBlock key={`dayBlock-${i}`} block={block} />)}
-          </Box>
+
+          {/* {timeBlocks.map((block, i) => <DayBlock key={`dayBlock-${i}`} block={block} />)} */}
+          <WeekTabs blocks={timeBlocks} />
+
           <Box mt={5}>
             <Text>
               To enter MetaFest2, you will have to{" "}
@@ -184,29 +182,97 @@ export const ScheduleSection = () => {
 };
 
 
-export const DayBlock = ({ block }) => {
-  const { dates, title, strapline, description, extra } = block
+export const WeekTabs = ({ blocks }) => {
+  const [tabIndex, setTabIndex] = useState(0);
+  const week1 = blocks.filter(block => block.week === 1)
+  const week2 = blocks.filter(block => block.week === 2)
+  return (
+    <Tabs
+      mt={0}
+      maxW={{ base: 'full', lg: 'full' }}
+      height="-webkit-fit-content"
+      defaultIndex={0}
+      variant="unstyled"
+      isFitted
+      onChange={(index) => setTabIndex(index)}
+    >
+      <TabList fontSize={{ base: '2.6vmin', lg: '2vmax' }} w="50%" flex="0 0 50%" justifyContent="flex-start" justifyItems="center" borderBottom="none">
+        <Box p={5} pl={0}>
+          <Tab
+            borderBottom={tabIndex === 0 ? "4px solid #640DFB99" : "2px solid transparent"}
+          >
+            <Text as="h3" className="gradient2" my={0}>Week One</Text></Tab>
+        </Box>
+        <Box p={5} pl={0}>
+          <Tab  borderBottom={tabIndex === 1 ? "4px solid #640DFB99" : "2px solid transparent"}><Text as="h3" className="gradient2" my={0}>Week Two</Text></Tab>
+        </Box>
+
+      </TabList>
+
+      <TabPanels>
+        <TabPanel >
+          <Box
+            d="flex"
+            alignContent="flex-start"
+            justifyContent="space-between"
+            flexFlow="row wrap"
+            w="100%"
+            opacity={tabIndex === 0 ? 1 : 0}
+            transform={tabIndex === 0 ? 'translateX(0)' : 'translateX(-200px)'}
+            transition="transform 0.3s 1s ease-in-out,  opacity 0.3s 1.1s ease-in-out"
+          >
+            {
+              week1 && week1.map((day, i) => (
+                <DayBlock key={i} day={day} />
+              ))
+            }
+          </Box>
+        </TabPanel>
+        <TabPanel>
+          <Box
+            d="flex"
+            alignContent="flex-start"
+            justifyContent="space-between"
+            flexFlow="row wrap"
+            w="100%"
+            opacity={tabIndex === 1 ? 1 : 0}
+            transform={tabIndex === 1 ? 'translateX(0)' : 'translateX(-200px)'}
+            transition="transform 0.3s 1s ease-in-out,  opacity 0.3s 1.1s ease-in-out"
+          >
+            {
+              week2 && week2.map((day, i) => (
+                <DayBlock key={i} day={day} />
+              ))
+            }
+          </Box>
+        </TabPanel>
+
+      </TabPanels>
+    </Tabs>
+  )
+}
+
+
+export const DayBlock = ({ day }) => {
+  const { dates, title, strapline, description, extra } = day
   return (
     <Box className="time-block"
       sx={{
-        'h3 + p': {
-          fontSize: { base: "2.6vmin", md: "1vmax" },
-        },
         flex: {
-          base: '0 0 50%', xl: '0 0 32%'
+          base: '0 0 49%', xl: '0 0 32%'
         },
-        W: { base: '50%', xl: '32%' }
+        W: { base: '49%', xl: '32%' }
       }}
     >
       <Box d="inline-block">
         <Text as="span" className="fest-dates">
           <span>{dates}</span>
         </Text>
-        <Text as="h3" className="gradient2" my={0}>
+        <Text as="h4" className="gradient2" my={0}>
           <span>{title}</span>
         </Text>
       </Box>
-      <Text fontSize={{ base: "2.6vmin", md: "1vmax" }} fontWeight={500}>{strapline}</Text>
+      <Text fontSize={{ base: "2.6vmin", md: "1vmax" }} fontWeight={500} mb={1}>{strapline}</Text>
       <Text>{description}</Text>
       {!extra && <Text>{extra}</Text>}
     </Box>
@@ -215,6 +281,7 @@ export const DayBlock = ({ block }) => {
 
 const timeBlocks = [
   {
+    week: 1,
     dates: 'Thursday June 9th',
     title: 'Opening Ceremonies!',
     strapline: 'Get ready for a jam-packed 2 weeks! 55+ plus speakers, panels, workshops, and more...',
@@ -222,6 +289,7 @@ const timeBlocks = [
     extra: `If you missed out last year, I can feel your <span className="gradient">FOMO</span> from here!!`
   },
   {
+    week: 1,
     dates: 'Friday-Saturday June 10th-11th',
     title: 'Tooling Days',
     strapline: 'How do you stay organized and productive?',
@@ -229,13 +297,15 @@ const timeBlocks = [
     extra: `If you missed out last year, I can feel your <span className="gradient">FOMO</span> from here!!`
   },
   {
+    week: 1,
     dates: 'Sunday-Monday June 12th-13th',
     title: 'Metaverse Days',
     strapline: 'Whoa, the MetaVerse, what’s that?',
-    description: 'There’s a lot happening in the MetaVerse.  MetaGamers have a presence in Neos, Cryptovoxels, Atlantis World, Decentraland, Aavegotchi Gotchiverse, and more.  Come join us and see what we’ve been building!  Learn some new skills to start playing in your MetaVerse of choice.  It may be a new trend word, but we’ve been digging in for than a year. :)',
+    description: 'There’s a lot happening in the MetaVerse.  MetaGamers have a presence in Neos, Cryptovoxels, Atlantis World, Decentraland, Aavegotchi Gotchiverse, and more.  Come join us and see what we’ve been building!  Learn some new skills to start playing in your MetaVerse of choice.  It may be a new trend word, but we’ve been digging in for more than a year. :)',
     extra: `If you missed out last year, I can feel your <span className="gradient">FOMO</span> from here!!`
   },
   {
+    week: 2,
     dates: 'Tuesday-Friday June 14th-17th',
     title: 'MetaAlliance and Regen Days',
     strapline: 'Speakers! Panels! Workshops!',
@@ -243,6 +313,7 @@ const timeBlocks = [
     extra: `If you missed out last year, I can feel your <span className="gradient">FOMO</span> from here!!`
   },
   {
+    week: 2,
     dates: 'Saturday June 18th',
     title: 'Tooling Follow-up Presentations',
     strapline: 'Well I got this shiny new toolbox, now what?',
@@ -250,13 +321,15 @@ const timeBlocks = [
     extra: `If you missed out last year, I can feel your <span className="gradient">FOMO</span> from here!!`
   },
   {
+    week: 2,
     dates: 'Sunday June 19th',
     title: 'Sunday Funday: Live Concerts & Entertainment',
     strapline: 'All work and no play, makes Nova swim in circles.',
-    description: 'Sunday Funday is our weekend day of play and entertainment.  Join us for live events in MetaVerse worlds, games, possible Poaps, and more!',
+    description: 'Sunday Funday is our weekend day of play and entertainment. Join us for live events in MetaVerse worlds, games, possible Poaps, and more!',
     extra: `If you missed out last year, I can feel your <span className="gradient">FOMO</span> from here!!`
   },
   {
+    week: 2,
     dates: 'Monday June 20th',
     title: 'DeFi Day',
     strapline: 'We know, we could do a whole Fest on just DeFi.  But look at how much we’ve stacked in one day!',
@@ -264,6 +337,7 @@ const timeBlocks = [
     extra: `If you missed out last year, I can feel your <span className="gradient">FOMO</span> from here!!`
   },
   {
+    week: 2,
     dates: 'Tuesday-Wednesday June 21st-22nd',
     title: 'Job Fair and Meta-Days',
     strapline: 'So, how do I start working in a DAO?',
@@ -271,10 +345,11 @@ const timeBlocks = [
     extra: `If you missed out last year, I can feel your <span className="gradient">FOMO</span> from here!!`
   },
   {
+    week: 2,
     dates: 'Thursday June 23rd',
     title: 'Closing Ceremonies and Awards',
     strapline: 'Well that was fun!  Can we stay here forever??',
-    description: 'Whoa, so much was covered.  How do we wrap this up?  Awards!  You get an Oprah nft, you get a Octo, you get the point.  If you came for the Poap, don’t miss this day.',
+    description: 'Whoa, so much was covered.  How do we wrap this up?  Awards!  You get an Oprah NFT, you get a Octo, you get the point.  If you came for the POAP, don’t miss this day.',
     extra: `If you missed out last year, I can feel your <span className="gradient">FOMO</span> from here!!`
   },
 ]

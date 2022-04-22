@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 // import TimezonePicker from 'react-timezone'
 import styled from '@emotion/styled'
 
@@ -15,6 +15,8 @@ const InstanceContainer = styled.div`
 
 function CalendarInstance () {
   const [timezone, changeTimezone] = useState('Europe/London')
+  const [viewTip, setViewTip] = useState(false)
+
   return (
     <>
       <iframe
@@ -27,9 +29,31 @@ function CalendarInstance () {
           border: '0px'
         }}
       />
-      <p style={{ color: '#65CBF6', marginTop: '1rem' }}>
+      <Box
+      bg="linear-gradient(90.24deg, #640DFB99 0.3%, rgba(100, 13, 251, 0.9) 80.16%)"
+        borderRadius="0 8px 8px 0"
+        boxShadow="0 0 5px rgba(0,0,0,0.6)"
+        p={2}
+        w="auto"
+        maxW="200px"
+        mt={3}
+        textAlign="center">
+      <Text sx={{ color: '#fff', fontWeight: 500}}>
         All times are in UTC
-      </p>
+      </Text>
+
+      </Box>
+      <Box
+        bg="linear-gradient(90.24deg, #640DFB99 0.3%, rgba(100, 13, 251, 0.9) 80.16%)"
+        borderRadius="0 8px 8px 0"
+        boxShadow="0 0 5px rgba(0,0,0,0.6)"
+        p={2}
+        position="fixed"
+        top="12%"
+        left={0}
+        maxW="225px">
+        <Text fontSize="sm" fontWeight={500}>Google fail. Click &#39;Look for more&#39; to view the calendar dates for MetaFest2. <br />We will improve this UX soon <span role="img" aria-label="trademark">™️</span></Text>
+      </Box>
       {/* <TimezonePicker
         value={timezone}
         onChange={picktimezone => changeTimezone(picktimezone)}

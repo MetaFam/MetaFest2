@@ -51,9 +51,9 @@ export function AlphaNotice() {
           <span role="img" aria-label="watchful eyes">
             👀
           </span>{" "}
-          We&apos;re still working on content, there&apos;s no Web3 connectivity and there
+          We&apos;re still working on content, there&apos;s no Web3 connectivity (or is there...?) and there
           are some bugs. <br /> We&apos;re working to get it
-          all ship shape for June!
+          all ship shape ASAP!
         </Text>
         {/* <Image src={BabyOctoGif} boxSize="35px" objectFit="cover" /> */}
         <IconButton

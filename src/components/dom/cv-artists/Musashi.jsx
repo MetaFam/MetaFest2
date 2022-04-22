@@ -13,7 +13,7 @@ export const ArtistMusashi = ({artist}) => {
   return (
     <Box
       as="section"
-      id={`artist-${artist}`}
+      id={`artist-${slug}`}
       justifyContent={{base: 'flex-end', lg: 'inherit'}}
     >
       <Box
@@ -28,7 +28,7 @@ export const ArtistMusashi = ({artist}) => {
       >
         <Box className="__content__body--no-firstof" textAlign="right" mt={6}>
           <Text as="h2">{name}</Text>
-          <Text className="gradient">
+          <Text fontWeight={700}>
             {strapline}
           </Text>
           <Text>

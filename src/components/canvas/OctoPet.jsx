@@ -23,17 +23,18 @@ export default function OctoPetVox(props) {
       group.current.position.y = 4 - Math.cos(elapsedTime * 0.1) * Math.PI * 0.5;
       group.current.position.z = -2.5 - Math.cos(elapsedTime * 0.1) * Math.PI * 0.3;
       group.current.rotation.y = elapsedTime * 0.005;
-      group.current.rotation.z = -elapsedTime * 0.05;
+      // group.current.rotation.z = -elapsedTime * 0.05;
     }
   })
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={group} {...props} name="OctoPet" dispose={null}>
       <mesh
         castShadow
         receiveShadow
         geometry={nodes["cuteocto-pet"].geometry}
         material={materials['palette.004']}
         rotation={[Math.PI * 0.5, 0, 0]}
+        scale={0.5}
         onClick={() => router.push(route)}
         // onPointerOver={(e) => setHover(true)}
         // onPointerOut={(e) => setHover(false)}

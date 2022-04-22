@@ -39,11 +39,6 @@ const OctoEasterEgg = (props) => {
     const deltaTime = elapsedTime - previousTime;
     previousTime = elapsedTime;
 
-    if (mesh.current && animate) {
-        mesh.current.position.x = -3.5 + Math.sin(elapsedTime * 0.9) * Math.PI * 0.05;
-        mesh.current.position.y = -1.5 - Math.cos(elapsedTime * 0.1) * Math.PI * 0.5;
-        mesh.current.rotation.z = -elapsedTime * 0.06;
-    }
   })
   if (material.current) {
     material.current.map = mapTexture;

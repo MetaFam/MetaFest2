@@ -13,3 +13,4 @@ export const BoxedNextImage = ({ src, alt, ...props }) => (
     <NextImage {...{ src, alt }} layout="fill" objectFit="contain" />
   </Box>
 );
+

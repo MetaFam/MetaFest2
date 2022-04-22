@@ -125,7 +125,7 @@ export const EasterEgg = () => {
             </Button>
           </Box>
 
-          <Box src={BabyOctoGif} alt="Baby Octo mascot" boxSize={{base: '35px', xl:"100px"}} objectFit="cover" />
+          <BoxedNextImage src={BabyOctoGif} alt="Baby Octo mascot" boxSize={{base: '35px', xl:"100px"}} objectFit="cover" />
           <IconButton
             onClick={handleToggle}
             colorScheme="ghost"

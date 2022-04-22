@@ -11,7 +11,7 @@ import {
   useDisclosure,
   Stack,
 } from "@chakra-ui/react";
-import { BiWalletAlt } from 'react-icons/bi'
+import { BiWalletAlt, BiJoystick } from 'react-icons/bi'
 import { BoxedNextImage } from "@/components/dom/BoxedNextImage";
 import { useDisabledGeneralNotify, useOnScreen } from "@/utils/hooks";
 
@@ -36,7 +36,7 @@ const Links = [
     href: "#speakers",
   },
   {
-    name: "MetaFest-a-verse",
+    name: "MetaFest-a-Verse",
     href: "#metafest-verse",
   },
   {
@@ -203,29 +203,45 @@ export function SiteHeader() {
           </HStack>
           <Flex alignItems="center" justifyContent="end" width={{ base: "25%", md: 'auto' }}>
             {screenSize !== 'base' ? (
-              <Button
-                variant={"solid"}
-                colorScheme={"purple"}
+              <Link
+                href="https://metagame.wtf"
+                px={5}
+                py={2}
+                color={"white"}
                 bg="#927CFF"
                 boxShadow="0 0 10px rgba(0, 0, 0, 0.6)"
                 size="sm"
                 mr={0}
-                onClick={disabledGenNotify}
+                borderRadius="md"
+                isExternal
               >
-                Connect
-              </Button>
+                Join MetaGame
+              </Link>
             ) : (
+                              <Link
+                href="https://metagame.wtf"
+                px={0}
+                py={0}
+                // color={"white"}
+                bg="transparent"
+                boxShadow="0 0 10px rgba(0, 0, 0, 0.6)"
+                size="sm"
+                mr={0}
+                borderRadius="md"
+                isExternal
+              >
               <IconButton
-              icon={<BiWalletAlt />}
-              aria-label="Connect Web3 wallet"
+              icon={<BiJoystick />}
+              aria-label="Join MetaGame"
               flex={0}
               fontSize={{base: '12vmin', lg: "2vmax"}}
               colorScheme="ghost"
               color="#927CFF"
-              onClick={disabledGenNotify}
               alignSelf="center"
               // filter="drop-shadow(0 0 15px #FF61E6)"
             />
+              </Link>
+
             )}
           </Flex>
         </Flex>

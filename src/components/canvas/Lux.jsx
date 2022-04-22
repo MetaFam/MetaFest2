@@ -28,7 +28,7 @@ export default function LuxVox(props) {
     }
   })
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={group} {...props} name="Lux" dispose={null}>
       <mesh
         castShadow
         receiveShadow

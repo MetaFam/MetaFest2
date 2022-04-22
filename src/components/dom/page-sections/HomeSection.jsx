@@ -59,7 +59,7 @@ export const HomeSection = () => {
           >
             MetaFest2
           </Text>
-          <span className="fest-dates">9th - 23rd JUNE</span>
+          <span className="fest-dates">9th - 23rd June</span>
         </Box>
         <Box className="__content__body" maxW={{base: '66vw', lg: 'unset'}}>
           <Text as="p" fontWeight={300} mt={-2}>

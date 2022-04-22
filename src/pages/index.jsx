@@ -1,7 +1,7 @@
-import React, { createRef, useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import React, { createRef, Suspense, useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { useFrame, useThree, extend } from '@react-three/fiber'
-import { PerspectiveCamera, Stats } from '@react-three/drei'
+import { PerspectiveCamera, Stats, useProgress } from '@react-three/drei'
 import gsap from "gsap";
 import dynamic from 'next/dynamic'
 
@@ -15,7 +15,6 @@ import {
   ChatSection,
   ApplySection,
 } from "@/components/dom/page-sections";
-import useStore from '@/helpers/store'
 
 import {
   galaxy1Params,
@@ -24,8 +23,7 @@ import {
   galaxy4Params,
   galaxy5Params,
 } from '@/components/canvas/galaxies';
-
-
+import { CanvasLoader } from "@/components/canvas/Loader";
 
 
 // Dynamic import is used to prevent a payload when the website start that will include threejs r3f etc..
@@ -74,9 +72,9 @@ export const R3FSceneSection = ({ name, count, children, ...props }) => {
   // useLayoutEffect(() => {
   //   group.current.layers.enable(layers);
   // }, [layers])
-  if (group.current) {
-    console.log('section grp cur: ', group.current);
-  }
+  // if (group.current) {
+  //   console.log('section grp cur: ', group.current);
+  // }
   return (
     <group ref={group} name={name} position={[0, -objectsDistance * count, 0]} {...props}>{children}</group>
   )
@@ -92,6 +90,9 @@ const R3F = () => {
   const dof3 = useRef(null);
   const dof4 = useRef(null);
   const galaxy1 = useRef(null);
+  const nomad = useRef(null);
+  const jetsetter = useRef(null);
+  const octoEasterEgg = useRef(null);
   const camera = useRef();
   const cameraGroup = useRef();
   const rimLight = useRef({ x: 0, y: 0 });
@@ -237,7 +238,7 @@ const R3F = () => {
                 gsap.to(cameraGroup.current.position, {
                   duration: 1.5,
                   ease: "power2.inOut",
-                  z: -1,
+                  z: -0.2,
                 });
                 break;
 
@@ -296,7 +297,26 @@ const R3F = () => {
     cameraGroup.current.position.y +=
       (parallaxY - cameraGroup.current.position.y) * 5 * deltaTime;
 
-    rimLight.current.position.y = cameraGroup.current.position.y;
+    // rimLight.current.position.y = (-scrollY.current / sizes.current.height) * objectsDistance;
+
+    if (nomad.current) {
+      nomad.current.position.y = -1.5 - Math.cos(elapsedTime * 0.1) * Math.PI * 0.05;
+
+      // group.current.rotation.y = elapsedTime * 0.03;
+      nomad.current.rotation.z = -0.05 - Math.sin(elapsedTime * 0.3) * Math.PI * 0.03;
+    }
+
+    if (jetsetter.current) {
+      jetsetter.current.position.y = -1 - Math.cos(elapsedTime * 0.1) * Math.PI * 0.05;
+
+      // group.current.rotation.y = elapsedTime * 0.03;
+      jetsetter.current.rotation.z = -0.05 - Math.sin(elapsedTime * 0.3) * Math.PI * 0.03;
+    }
+    if (octoEasterEgg.current) {
+        octoEasterEgg.current.position.x = -3.5 + Math.sin(elapsedTime * 0.9) * Math.PI * 0.05;
+        octoEasterEgg.current.position.y = -1.5 - Math.cos(elapsedTime * 0.1) * Math.PI * 0.5;
+        octoEasterEgg.current.rotation.z = -elapsedTime * 0.06;
+    }
 
   });
 
@@ -304,34 +324,20 @@ const R3F = () => {
     <>
       <group ref={cameraGroup}>
         <PerspectiveCamera ref={camera} makeDefault aspect={sizes.width / sizes.height} position={[0, 0, 6]} far={1000} filmGauge={53} />
-        <rectAreaLight
-          ref={rimLight}
-          width={6}
-          height={2}
-          intensity={3}
-          color="pink"
-          position={[0, 0, 1.5]}
-          rotation={[0, 0, 0]}
-          castShadow
-        />
 
-        <ambientLight
-          intensity={0.2}
-          color="pink"
-          castShadow
-        />
-
-        <Stats />
+        {/* <Stats /> */}
       </group>
-
+      <Suspense fallback={<CanvasLoader />}>
       <Galaxy
         dof={dof}
         parameters={galaxy5Params}
         nucleus={false} helper={false}
-        position={[0, -3, -20]} />
+        position={[0, -3, -17]} />
 
       <R3FSceneSection name="SectionOne" count={0}>
-        <OctoEasterEgg animate={true} />
+        <group ref={octoEasterEgg}>
+          <OctoEasterEgg/>
+        </group>
         <Galaxy dof={dof} parameters={galaxy1Params} position={[6, 0, -13]} rotation={[4.8, 4.15, 4.75]} />
       </R3FSceneSection>
 
@@ -348,18 +354,25 @@ const R3F = () => {
       </R3FSceneSection>
 
       <R3FSceneSection name="SectionFive" count={4}>
-        <NomadVox animate={true} position={[2, -1, 0.3]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
+        <group ref={nomad} receiveShadow>
+          <NomadVox route='/cv' position={[1.75, 0.5, 0.3]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
+        </group>
       </R3FSceneSection>
 
       <R3FSceneSection name="SectionSix" count={5}>
-        <OctoPetVox route='/cv' position={[0, -.8, 0]} animate={true} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
-        <BabyEarthVox route='/cv' position={[-1.5, -.8, -2]} animate={true} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
+        <OctoPetVox  position={[0, -1.8, 0]} animate={true} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
+        <BabyEarthVox position={[-1.5, -.8, -2]} animate={true} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
         <Galaxy dof={dof} parameters={galaxy3Params} position={[6, -6.5, -15]} />
       </R3FSceneSection>
 
       <R3FSceneSection name="SectionSeven" count={6}>
-        <JetsetterVox route='/cv' animate={false} position={[-2, -1.8, 0]} rotation={[-Math.PI / .1, Math.PI / 6.5, 0]} />
-      </R3FSceneSection>
+        <group ref={jetsetter}>
+          <JetsetterVox animate={true} position={[-2, -1.8, 0]} rotation={[-Math.PI / .1, Math.PI / 6.5, 0]}
+          />
+        </group>
+        <Galaxy dof={dof} parameters={galaxy4Params} position={[3, -1.5, -2]} />
+        </R3FSceneSection>
+        </Suspense>
     </>
   )
 }
@@ -367,7 +380,6 @@ const R3F = () => {
 const Page = () => {
   return (
     <>
-
       <DOM />
       {/* @ts-ignore */}
       <R3F r3f />

@@ -68,7 +68,7 @@ export const WorkshopsSection = () => {
             folks to help with <strong className="gradient">Innkeeping</strong>. */}
             </Text>
             <Text>
-              Check the <Link href="#schedule">Schedule page</Link> for the
+              Check the <Link href="#apply">Applications page</Link> for the
               contributors application form and as always, you can always{" "}
               <Link href="https://discord.gg/invite/metagame" isExternal>
                 join our Discord

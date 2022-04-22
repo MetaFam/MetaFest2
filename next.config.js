@@ -1,4 +1,5 @@
 const plugins = require('next-compose-plugins')
+const withImages = require('next-images');
 // const withOptimizedImages = require('next-optimized-images');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
@@ -46,6 +47,22 @@ if (process.env.EXPORT !== 'true') {
     defaultLocale: 'en-US',
   }
 }
+// module.exports = withImages({
+//   images: {
+//     loader: "custom",
+//     path: "/public/",
+//     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+//     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+//     nextImageExportOptimizer: {
+//       imageFolderPath: "public",
+//       exportFolderPath: "out",
+//       quality: 75,
+//     },
+//   },
+//   env: {
+//     storePicturesInWEBP: true,
+//   },
+// })
 
 module.exports = plugins(
   [
@@ -79,7 +96,7 @@ module.exports = plugins(
         },
       },
     ],
-    // withOptimizedImages,
+    // withImages,
     withBundleAnalyzer,
   ],
   nextConfig

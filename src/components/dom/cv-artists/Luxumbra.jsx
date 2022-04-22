@@ -28,7 +28,7 @@ export const ArtistLuxumbra = () => {
       >
         <Box className="__content__body--no-firstof" textAlign="right" mt={6}>
           <Text as="h2">luxumbra</Text>
-          <Text className="gradient">
+          <Text fontWeight={700}>
             Some Voxels by lux.
           </Text>
           <Text>

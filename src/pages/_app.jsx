@@ -24,12 +24,26 @@ const theme = extendTheme({
         color: "#ffeded",
         fontFamily: '"Exo 2", sans-serif',
         fontSize: "16px",
-        fontWeight: 300,
+        fontWeight: 400,
         p: 0,
         m: '0 auto',
         minH: "100vh",
-        width: '100%'
+        width: '100%',
         // overflowY: "auto",
+        '.loading-canvas': {
+          '.dom-loader': {
+            opacity: 1,
+            zIndex: 4000,
+          }
+        },
+        '.dom-loader': {
+          position: 'fixed',
+          opacity: 0,
+          top: 0,
+          left: 0,
+          zIndex: -200,
+          transition: 'all 0.5s ease'
+        }
       },
       // "body *": {
       //   outline: "1px solid red",
@@ -62,6 +76,16 @@ const theme = extendTheme({
           fontSize: "4vmax",
           fontWeight: 700,
         },
+        '& + .fest-dates': {
+          fontWeight: 700,
+          justifyContent: "right",
+          opacity: 1,
+          transform: {
+            base: "translateY(5px)",
+            lg: "translateY(9px)",
+            "2xl": "translateY(10px)",
+        },
+        }
       },
       h2: {
         color: "#fff",
@@ -86,7 +110,7 @@ const theme = extendTheme({
         fontWeight: 500,
       },
       p: {
-        fontSize: { base: "2.6vmin", md: ".9vmax" },
+        fontSize: { base: "2.6vmin", md: ".8vmax" },
         textShadow: "0 0 5px rgba(0, 0, 0, 0.6)",
       },
       section: {
@@ -111,7 +135,7 @@ const theme = extendTheme({
             fontSize: { base: "2.6vmin", md: "0.9vmax" },
             fontWeight: 500,
             "& + p": {
-              fontWeight: 300,
+              fontWeight: 400,
             },
           },
         },
@@ -121,9 +145,10 @@ const theme = extendTheme({
         display: "inline-block",
         background: "linear-gradient(90deg, #FF61E6 -29.22%, #7C56FF 107.53%)",
         backgroundClip: "text",
-        // WebkitTextFillColor: "transparent",
-        // textFillColor: "transparent",
-        // filter: "drop-shadow(0 0 5px rgba(0,0,0,0.6))",
+        WebkitTextFillColor: "transparent",
+        textFillColor: "transparent",
+        textShadow: 'unset',
+        filter: "drop-shadow(0 0 5px rgba(0,0,0,0.6))",
       },
       ".gradient2": {
         display: "inline-block",
@@ -134,6 +159,7 @@ const theme = extendTheme({
         backgroundClip: "text",
         textFillColor: "transparent",
         WebkitTextFillColor: "transparent",
+        textShadow: 'unset',
         filter: "drop-shadow(0 0 5px rgba(0,0,0,0.6))",
       },
       ".gradient-cone": {
@@ -146,6 +172,7 @@ const theme = extendTheme({
         textFillColor: "transparent",
         WebkitTextFillColor: "transparent",
         transition: "background 0.3s ease",
+        textShadow: 'unset',
         filter: "drop-shadow(0 0 5px rgba(0,0,0,0.6))",
       },
       ".highlight": {},
@@ -154,8 +181,9 @@ const theme = extendTheme({
         width: "100%",
         color: "#FF61E6",
         fontSize: { base: "2.2vmin", md: "0.7vmax" },
-        fontWeight: 700,
+        fontWeight: 500,
         justifyContent: "left",
+        opacity: 0.8,
         pr: 0.5,
         transform: {
           base: "translateY(7px)",

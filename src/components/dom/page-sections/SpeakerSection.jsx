@@ -33,22 +33,22 @@ export const SpeakersSection = () => {
           <Flex alignItems="flex-start" justifyContent="space-between">
             <Box flex="0 0 48%" w="48%">
               <Text as="h3" className="gradient2">
-                Metaverse Week
+                Week One
               </Text>
               <Text>Want to take part in Metaverse Week?</Text>
               <Text>
                 Find the application forms on the{" "}
-                <Link href="#schedule">Schedule page</Link>
+                <Link href="#apply">Applications page</Link>
               </Text>
             </Box>
             <Box flex="0 0 48%" w="48%">
               <Text as="h3" className="gradient2">
-                DAO Week
+                Week Two
               </Text>
               <Text>Want to take part in DAO Week?</Text>
               <Text>
                 Find the application forms on the{" "}
-                <Link href="#schedule">Schedule page</Link>
+                <Link href="#apply">Applications page</Link>
               </Text>
             </Box>
           </Flex>

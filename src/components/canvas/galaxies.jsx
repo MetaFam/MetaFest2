@@ -16,7 +16,7 @@ export const galaxyColors = {
     outside: '#FF61E6'
 }
 export const galaxy2Colors = {
-    inside: '#462080',
+    inside: '#FF61E6',
     outside: '#7C56FF'
 }
 export const galaxy3Colors = {
@@ -25,18 +25,18 @@ export const galaxy3Colors = {
 }
 export const galaxy4Colors = {
     inside: '#462080',
-    outside: '#7C56FF'
+    outside: '#FF61E6'
 }
 export const galaxy5Colors = {
-    inside: '#7C56FF',
-    outside: '#462080'
+    inside: '#ffffff',
+    outside: '#FF61E6'
 }
 /**
  * Galaxy
  */
 export const galaxy1Params = {
     count: 100000,
-    size: 0.033,
+    size: 0.03,
     radius: 4.86,
     branches: 8,
     spin: 8,
@@ -61,7 +61,7 @@ export const galaxy2Params = {
     branches: 8,
     spin: 8,
     randomness: 9,
-    randomnessPower: 1,
+    randomnessPower: 10,
     insideColor: galaxy2Colors.inside,
     outsideColor: galaxy2Colors.outside,
     type: 2,
@@ -99,16 +99,16 @@ export const galaxy3Params = {
 
 export const galaxy4Params = {
     count: 100000,
-    size: 0.005,
-    radius: 1,
+    size: 0.01,
+    radius: 8,
     branches: 8,
     spin: 5,
-    randomness: 4,
-    randomnessPower: 20,
+    randomness: 1.5,
+    randomnessPower: 1,
     insideColor: galaxy4Colors.inside,
     outsideColor: galaxy4Colors.outside,
     type: 4,
-    opacity: 1,
+    opacity: 0.5,
     focusDistance: 0.05,
     focalLength: 0.05,
     width: 480,
@@ -119,17 +119,17 @@ export const galaxy4Params = {
 }
 
 export const galaxy5Params = {
-    count: 75000,
-    size: 0.03,
+    count: 100000,
+    size: 0.05,
     radius: 35,
     branches: 8,
     spin: 5,
-    randomness: 1.7,
+    randomness: 2.5,
     randomnessPower: 10,
     insideColor: galaxy5Colors.inside,
     outsideColor: galaxy5Colors.outside,
     type: 3,
-    opacity: 0.1,
+    opacity: 0.5,
     focusDistance: 0.05,
     focalLength: 0.05,
     width: 480,
@@ -232,7 +232,7 @@ export const generateGalaxy = (params) => {
             positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + randomZ
 
             const mixedColor = colorInside.clone()
-            mixedColor.lerp(colorOutside, radius / params.radius * 1.05)
+            mixedColor.lerp(colorOutside, radius / params.radius * 2)
 
             colors[i3 + 0] = mixedColor.r
             colors[i3 + 1] = mixedColor.g

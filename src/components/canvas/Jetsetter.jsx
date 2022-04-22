@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useFrame } from '@react-three/fiber'
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
@@ -7,6 +7,7 @@ import useStore from '@/helpers/store'
 
 export default function JetsetterVox(props) {
   const router = useStore((s) => s.router)
+  const [originalPos, setOriginalPos] = useState(null)
   const group = useRef();
   const [hovered, setHover] = useState(false)
   const { nodes, materials } = useGLTF("/assets/models/jetsetter-vox.glb");
@@ -14,38 +15,49 @@ export default function JetsetterVox(props) {
   const clock = new THREE.Clock();
   let previousTime = 0;
 
+
+  const storeOriginalPos = useCallback((pos) => {
+
+    if (originalPos !== null) return;
+    setOriginalPos(pos)
+  }, [originalPos, setOriginalPos])
+
   useFrame((state, delta) => {
     const elapsedTime = clock.getElapsedTime();
     const deltaTime = elapsedTime - previousTime;
     previousTime = elapsedTime;
-
-    if (group.current && animate && !route) {
-      // group.current.position.x = -3.5 + Math.sin(elapsedTime * 0.9) * Math.PI * 1;
-      // group.current.position.y = -1.5 - Math.cos(elapsedTime * 0.1) * Math.PI * 0.5;
-      // group.current.position.z = -1.5 - Math.cos(elapsedTime * 0.1) * Math.PI * 3;
-      group.current.rotation.y = elapsedTime * 0.3;
+    if (group.current && animate) {
+      group.current.rotation.y = (Math.PI * 0.4) + elapsedTime * 0.03
     }
   })
 
+// useEffect(() => {
+//   let z = null;
+//   if (group.current) {
+//     storeOriginalPos(group.current.position)
+
+//     if (hovered) {
+//       console.log('origpos', originalPos.z);
+//       gsap.to(group.current.position, {
+//         duration: 1.5,
+//         ease: "power2.inOut",
+//         z: 1
+//       })
+//     }
+//       console.log(originalPos);
+//       gsap.to(group.current.position, {
+//         duration: 1.5,
+//         ease: "power2.inOut",
+//         z: 0
+//       })
+
+//   }
+
+// }, [group, hovered, originalPos, storeOriginalPos]);
   // gsap
-  if (group.current && animate === false) {
-    if (hovered) {
-      gsap.to(group.current.position, {
-        duration: 1.5,
-        ease: "power2.inOut",
-        z: 1
-      })
-    } else {
-      gsap.to(group.current.position, {
-        duration: 1.5,
-        ease: "power2.inOut",
-        z: 0
-      })
-    }
-  }
 
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={group} {...props} name="Jetsetter" dispose={null}>
       <mesh
         castShadow
         receiveShadow

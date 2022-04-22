@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 import { Canvas } from '@react-three/fiber'
 import * as THREE from "three";
-import { OrbitControls, Preload } from '@react-three/drei'
+import { Environment, OrbitControls, Preload } from '@react-three/drei'
 import {
   Box
 } from '@chakra-ui/react'
@@ -33,7 +33,7 @@ const LCanvas = ({ children }) => {
   return (
     <Canvas
       mode='concurrent'
-      // shadows
+      shadow="true"
       style={{
         position: 'fixed',
         top: 0,
@@ -48,6 +48,7 @@ const LCanvas = ({ children }) => {
       <Preload all />
       <Suspense fallback={<CanvasLoader />}>
         {children}
+        <Environment preset="forest" />
       </Suspense>
     </Canvas>
   )
