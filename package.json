@@ -35,7 +35,6 @@
     "babel-plugin-glsl": "^1.0.0",
     "cloudinary-build-url": "^0.2.4",
     "framer-motion": "4.1.17",
-    "global": "^4.4.0",
     "glsl-random": "^0.0.5",
     "gsap": "^3.5.1",
     "leva": "^0.9.23",
@@ -86,7 +85,6 @@
     "prettier": "^2.6.2",
     "raw-loader": "^4.0.2",
     "responsive-loader": "^2.3.0",
-    "url-loader": "^4.1.1",
-    "webp-loader": "^0.6.0"
+    "url-loader": "^4.1.1"
   }
 }

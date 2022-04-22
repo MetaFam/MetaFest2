@@ -1,16 +1,15 @@
-import { Box } from '@chakra-ui/react';
-import NextImage from 'next/image';
+import { Box, Image } from '@chakra-ui/react';
 import React from 'react';
 
 export const BoxedNextImage = ({ src, alt, ...props }) => (
   <Box
     pos="relative"
+  display="inline-flex"
     {...props}
     style={{
       objectFit: 'contain',
     }}
   >
-    <NextImage {...{ src, alt }} layout="fill" objectFit="contain" />
+    <Image {...{ src, alt }} layout="fill" objectFit="contain" />
   </Box>
 );
-

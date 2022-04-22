@@ -175,7 +175,7 @@ export function SiteHeader() {
           <HStack spacing={8} alignItems={"center"}>
             <Link href="/#home" flex={{base: 1}}>
               <BoxedNextImage
-                src={MF2Logo}
+                src={'assets/img/mf2-logo.png'}
                 alt="MetaGame Logo"
                 boxSize={{ base: "65px", md: "95px" }}
                 objectFit="cover"

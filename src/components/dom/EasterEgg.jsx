@@ -88,7 +88,7 @@ export const EasterEgg = () => {
           maxW={{base: '100%', md: "5xl"}}
           py={3}
         >
-          <BoxedNextImage src={BabyOctoGif} alt="Baby Octo mascot" boxSize={{base: '35px', xl:"100px"}} objectFit="cover" />
+          <BoxedNextImage src={'assets/img/baby_octo_alpha.gif'} alt="Baby Octo mascot" boxSize={{base: '35px', xl:"100px"}} objectFit="cover" />
           <Box flex={1}>
             <Text as="h3">
               <span role="img" aria-label="Octo emoji">
@@ -125,7 +125,7 @@ export const EasterEgg = () => {
             </Button>
           </Box>
 
-          <BoxedNextImage src={BabyOctoGif} alt="Baby Octo mascot" boxSize={{base: '35px', xl:"100px"}} objectFit="cover" />
+          <BoxedNextImage src={'assets/img/baby_octo_alpha.gif'} alt="Baby Octo mascot" boxSize={{base: '35px', xl:"100px"}} objectFit="cover" />
           <IconButton
             onClick={handleToggle}
             colorScheme="ghost"

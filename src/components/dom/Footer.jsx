@@ -36,7 +36,7 @@ export function SiteFooter() {
         }}
       >
         <BoxedNextImage
-          src={OctopusImg}
+          src={'assets/img/octopus.png'}
           boxSize={{base: '90px', md: "150px"}}
           position="absolute"
           bottom={0}

@@ -112,7 +112,7 @@ const [openFairApplication, setOpenFairApplication] = useState(false);
                 </Text>
                 <Stack spacing={4} divider={<StackDivider />}>
                     <Feature
-                      icon={SpeakerIcon}
+                      icon={'assets/img/icons/forum.svg'}
                     iconBg={"yellow.900"}
                     text={"Speakers"}
                     call={() =>
@@ -120,7 +120,7 @@ const [openFairApplication, setOpenFairApplication] = useState(false);
                     }
                   />
                     <Feature
-                      icon={ContributorIcon}
+                      icon={'assets/img/icons/players.svg'}
                     iconBg={"green.900"}
                     text={"Contributors"}
                     call={() =>
@@ -128,7 +128,7 @@ const [openFairApplication, setOpenFairApplication] = useState(false);
                     }
                   />
                     <Feature
-                      icon={PerformerIcon}
+                      icon={'assets/img/icons/xpearned.svg'}
                     iconBg={"purple.900"}
                     text={"Performers"}
                     call={() =>
@@ -136,7 +136,7 @@ const [openFairApplication, setOpenFairApplication] = useState(false);
                     }
                   />
                     <Feature
-                      icon={SponsorIcon}
+                      icon={'assets/img/icons/patrons.svg'}
                     iconBg={"purple.900"}
                     text={"Sponsors"}
                     call={() =>
@@ -144,7 +144,7 @@ const [openFairApplication, setOpenFairApplication] = useState(false);
                     }
                     />
                                         <Feature
-                      icon={FairIcon}
+                      icon={'assets/img/icons/welcometometagame.svg'}
                     iconBg={"purple.900"}
                     text={"Job Fair"}
                     call={() =>
