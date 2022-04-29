@@ -95,22 +95,22 @@ const theme = extendTheme({
       },
       h3: {
         fontSize: { base: "4vmin", md: "1.5vmax" },
-        fontWeight: 500,
+        fontWeight: 700,
         mt: { base: 2, md: 5 },
         "& + p": {
-          fontSize: { base: "2.8vmin", md: "1vmax" },
+          fontSize: { base: "2.8vmin", md: "1.1vmax", '2xl': "1vmax" },
           lineHeight: { base: "1.2", md: "inherit" },
-          fontWeight: 500,
+          fontWeight: 700,
           mt: 0,
           mb: 1,
         },
       },
       h4: {
-        fontSize: { base: "3vmin", md: "1vmax" },
-        fontWeight: 500,
+        fontSize: { base: "3vmin", md: "1.1vmax", '2xl': "1vmax" },
+        fontWeight: 700,
       },
       p: {
-        fontSize: { base: "2.6vmin", md: ".8vmax" },
+        fontSize: { base: "2.6vmin", md: '1vmax', '2xl': ".8vmax" },
         textShadow: "0 0 5px rgba(0, 0, 0, 0.6)",
       },
       section: {
@@ -180,7 +180,7 @@ const theme = extendTheme({
         d: "inline-flex",
         width: "100%",
         color: "#FF61E6",
-        fontSize: { base: "2.2vmin", md: "0.7vmax" },
+        fontSize: { base: "2.2vmin", md: "0.8vmax", '2xl': "0.7vmax" },
         fontWeight: 500,
         justifyContent: "left",
         opacity: 0.8,

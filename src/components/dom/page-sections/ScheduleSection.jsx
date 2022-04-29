@@ -273,7 +273,7 @@ export const DayBlock = ({ day }) => {
           <span>{title}</span>
         </Text>
       </Box>
-      <Text fontSize={{ base: "2.6vmin", md: "1vmax" }} fontWeight={500} mb={1}>{strapline}</Text>
+      <Text fontSize={{ base: "2.6vmin", md: "1vmax", '2xl': "1vmax" }} fontWeight={700} mb={1}>{strapline}</Text>
       <Text>{description}</Text>
       {!extra && <Text>{extra}</Text>}
     </Box>
@@ -326,7 +326,7 @@ const timeBlocks = [
     dates: 'Sunday June 19th',
     title: 'Sunday Funday: Live Concerts & Entertainment',
     strapline: 'All work and no play, makes Nova swim in circles.',
-    description: 'Sunday Funday is our weekend day of play and entertainment. Join us for live events in MetaVerse worlds, games, possible Poaps, and more!',
+    description: 'Sunday Funday is our weekend day of play and entertainment. Join us for live events in MetaVerse worlds, games, possible POAPs, and more!',
     extra: `If you missed out last year, I can feel your <span className="gradient">FOMO</span> from here!!`
   },
   {

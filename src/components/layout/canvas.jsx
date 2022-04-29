@@ -119,7 +119,7 @@ export const Effect = ({ on }) => {
     <EffectComposer>
       <Vignette eskil={false} offset={0.004} darkness={on ? 1.2 : 1} />
 
-      <Glitch active={true} ratio={0.89} delay={[0.5, 25]} duration={[0.1, 0.3]} strength={[0.1, 0.5]} mode={GlitchMode.SPORADIC} />
+      <Glitch active={true} ratio={0.89} delay={[0.5, 35]} duration={[0.1, 0.3]} strength={[0.1, 0.5]} mode={GlitchMode.SPORADIC} />
       {on && (
         <Scanline density={on ? 3.5 : 50} blendFunction={BlendFunction.OVERLAY} />,
         <DepthOfField focusDistance={2} focalLength={0.5} bokehScale={6} />,
