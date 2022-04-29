@@ -12,18 +12,21 @@ import {
 import { CloseIcon, ExternalLinkIcon } from '@chakra-ui/icons'
 import { BoxedNextImage } from "@/components/dom/BoxedNextImage";
 
-import BabyOctoGif from "@/static/assets/img/baby_octo_alpha.gif";
-
-export const EasterEgg = () => {
+export const EasterEggGlitch = () => {
   const [toggle, setToggle] = useState(false);
   const [openClaim, setOpenClaim] = useState(false);
-  const ee1Ref = useRef(null);
-  const claim1Ref = useRef(null);
+  const ee2Ref = useRef(null);
+  const claim2Ref = useRef(null);
   const responsiveButtonSize = useBreakpointValue({base: 'sm', lg: 'md'})
   const handleToggle = () => {
     if (typeof window !== "undefined") {
-      setToggle(!toggle);
-      ee1Ref.current.classList.remove("found");
+      setToggle(false);
+      const el = ee2Ref.current
+      if (el.classList.contains('found')) {
+        el.classList.remove('found')
+      } else {
+        el.classList.add('found')
+      }
     }
   }
 
@@ -31,8 +34,8 @@ export const EasterEgg = () => {
   return (
     <>
       <Box
-        ref={ee1Ref}
-        className="ee1"
+        ref={ee2Ref}
+        className="ee2"
         bg="rgba(0,0,0,0.3)"
         boxShadow="0 0 15px rgba(0,0,0,0.6)"
         backdropFilter="blur(7px)"
@@ -44,10 +47,10 @@ export const EasterEgg = () => {
         maxW="100vw"
         textAlign="center"
         height={{base: '150px', md: "auto"}}
-        opacity={0}
-        transform="translateY(100px)"
+        opacity={toggle ? 1 : 0}
+        transform={toggle ? "translateY(0)" : "translateY(100px)"}
         transition="transform 0.3s 0.2s ease-in-out, opacity 0.3s 0.3s ease-in-out"
-        zIndex={0}
+        zIndex={toggle ? 2003 : 0}
         overflowX="clip"
         sx={{
           h4: {
@@ -94,7 +97,7 @@ export const EasterEgg = () => {
               <span role="img" aria-label="Octo emoji">
                 🐙
               </span>{" "}
-              Nova&apos;s blessings!!{" "}
+              Nova&apos;s glitchin!!{" "}
               <span role="img" aria-label="Octo emoji">
                 🐙
               </span>
@@ -105,12 +108,12 @@ export const EasterEgg = () => {
                 🍻
               </span>
               <br />
-              You noticed little octo, all alone in space.{" "}
+              You managed to glitch the site.{" "}
               <span role="img" aria-label="Loved up emoji">
-                🥰
+                🤖
               </span>{" "}
-              <br /> For that Nova will bestow wonderment upon you! Do you wish
-              to accept the gift?
+              <br /> You win a MetaFest2 Glitch NFT! Do you wish
+              to accept your prize?
               <br />
             </Text>
             <Button
@@ -141,7 +144,7 @@ export const EasterEgg = () => {
       </Box>
       {openClaim ? (
         <Box
-          ref={claim1Ref}
+          ref={claim2Ref}
           position="fixed"
           top="12.5vh"
           left={0}
@@ -198,7 +201,7 @@ export const MinterInstance = () => {
   return (
     <iframe
       title="Claim Easter Egg NFT"
-      src="https://gateway.ipfscdn.io/ipfs/QmQpHkDDWGJPBHFKkpX1DsfzvwZXQYNVoaW4R1Lhenp6T5/bundledrop.html?contract=0x91BBa1e0EE2DCC8d78Fa017588614f328d6d1885&amp;chainId=80001&amp;tokenId=0"
+      src="https://gateway.ipfscdn.io/ipfs/QmQpHkDDWGJPBHFKkpX1DsfzvwZXQYNVoaW4R1Lhenp6T5/bundledrop.html?contract=0x91BBa1e0EE2DCC8d78Fa017588614f328d6d1885&amp;chainId=80001&amp;tokenId=1"
       width="100%"
       height="100%"
       frameBorder="0"

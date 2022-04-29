@@ -9,7 +9,7 @@ import dynamic from 'next/dynamic'
 import { settings } from '@/seo.config';
 import SocialImg from "@/static/assets/img/social.png";
 
-import { ChakraProvider, CSSReset, extendTheme } from "@chakra-ui/react";
+import { ChakraProvider, CSSReset, extendTheme, useBreakpointValue } from "@chakra-ui/react";
 
 
 const theme = extendTheme({
@@ -106,7 +106,7 @@ const theme = extendTheme({
         },
       },
       h4: {
-        fontSize: "1vmax",
+        fontSize: { base: "3vmin", md: "1vmax" },
         fontWeight: 500,
       },
       p: {
@@ -191,6 +191,16 @@ const theme = extendTheme({
           "2xl": "translateY(8px)",
         },
         zIndex: 2001,
+        '& > span': {
+          bg: 'rgba(25,0,50,1)',
+          backdropFilter: 'blur(7px)',
+          borderRadius: 'md',
+          display: 'block',
+          mb: 1,
+          py: 0.5,
+          px: 1,
+          width: 'auto',
+        }
       },
     },
   },
@@ -202,11 +212,12 @@ const LCanvas = dynamic(() => import('@/components/layout/canvas'), {
 
 const Balance = ({ child }) => {
   const [r3f, dom] = partition(child, (c) => c.props.r3f === true)
+  const mobile = useBreakpointValue({ base: true, lg: false });
 
   return (
     <>
       <Dom>{dom}</Dom>
-      <LCanvas>{r3f}</LCanvas>
+      <LCanvas isMobile={mobile}>{r3f}</LCanvas>
     </>
   )
 }

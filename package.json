@@ -44,6 +44,7 @@
     "next-images": "^1.8.4",
     "next-optimized-images": "^2.6.2",
     "next-seo": "^5.4.0",
+    "postprocessing": "^6.26.3",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-helmet": "^6.1.0",

@@ -44,8 +44,8 @@ export function AlphaNotice() {
         {/* <Image src={BabyOctoGif} boxSize="25px" objectFit="cover" /> */}
         <Text fontSize={{base: "2vmin", lg: '0.7vmax'}} fontWeight={700}>
           The site is in{" "}
-          <Text as="span" color="#76EBF2" fontWeight="700">
-            Alpha
+          <Text as="span" color="cyan" fontWeight="700">
+            Beta
           </Text>
           .{" "}
           <span role="img" aria-label="watchful eyes">
@@ -64,7 +64,7 @@ export function AlphaNotice() {
           bottom={3}
           right={{base: 2, lg: 6}}
           size="sm"
-          aria-label="Close easter egg"
+          aria-label="Close notice"
           icon={<CloseIcon />}
           zIndex={2001}
         />

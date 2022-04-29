@@ -53,6 +53,7 @@ export const ScheduleSection = () => {
         transform={`translate3d(${onScreen ? 0 : "-70px"}, 0, 0)`}
         opacity={onScreen ? 1 : 0}
         transition="transform 0.3s 0.4s ease-in-out, opacity 0.6s 0.5s ease-in"
+        pt={{base: 8, lg: 0}}
       >
         <Box
           position="relative"
@@ -196,7 +197,7 @@ export const WeekTabs = ({ blocks }) => {
       isFitted
       onChange={(index) => setTabIndex(index)}
     >
-      <TabList fontSize={{ base: '2.6vmin', lg: '2vmax' }} w="50%" flex="0 0 50%" justifyContent="flex-start" justifyItems="center" borderBottom="none">
+      <TabList fontSize={{ base: '2.6vmin', lg: '2vmax' }} w={{base: '100%', xl: "50%"}} flex={{base: '0 0 100%', xl: "0 0 50%"}} justifyContent="flex-start" justifyItems="center" borderBottom="none">
         <Box p={5} pl={0}>
           <Tab
             borderBottom={tabIndex === 0 ? "4px solid #640DFB99" : "2px solid transparent"}
@@ -210,7 +211,7 @@ export const WeekTabs = ({ blocks }) => {
       </TabList>
 
       <TabPanels>
-        <TabPanel >
+        <TabPanel px={{base: 0, lg: 4}}>
           <Box
             d="flex"
             alignContent="flex-start"
@@ -228,7 +229,7 @@ export const WeekTabs = ({ blocks }) => {
             }
           </Box>
         </TabPanel>
-        <TabPanel>
+        <TabPanel px={{base: 0, lg: 4}}>
           <Box
             d="flex"
             alignContent="flex-start"
@@ -259,12 +260,12 @@ export const DayBlock = ({ day }) => {
     <Box className="time-block"
       sx={{
         flex: {
-          base: '0 0 49%', xl: '0 0 32%'
+          base: '0 0 48%', xl: '0 0 32%'
         },
-        W: { base: '49%', xl: '32%' }
+        W: { base: '48%', xl: '32%' }
       }}
     >
-      <Box d="inline-block">
+      <Box d="flex" flexFlow="column wrap">
         <Text as="span" className="fest-dates">
           <span>{dates}</span>
         </Text>

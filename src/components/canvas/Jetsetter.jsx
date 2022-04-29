@@ -11,7 +11,7 @@ export default function JetsetterVox(props) {
   const group = useRef();
   const [hovered, setHover] = useState(false)
   const { nodes, materials } = useGLTF("/assets/models/jetsetter-vox.glb");
-  const { route, animate } = props
+  const { route, animate, isExternal } = props
   const clock = new THREE.Clock();
   let previousTime = 0;
 
@@ -22,6 +22,21 @@ export default function JetsetterVox(props) {
     setOriginalPos(pos)
   }, [originalPos, setOriginalPos])
 
+  const handleClick = (url, isExternal) => {
+    if(!url) return
+    if (url && isExternal) {
+      if (typeof window !== 'undefined') {
+        window.open(url, '_blank')
+      }
+      return
+    }
+    if (url && !isExternal) {
+      () => router.push(url)
+      return
+    }
+
+  }
+
   useFrame((state, delta) => {
     const elapsedTime = clock.getElapsedTime();
     const deltaTime = elapsedTime - previousTime;
@@ -31,30 +46,6 @@ export default function JetsetterVox(props) {
     }
   })
 
-// useEffect(() => {
-//   let z = null;
-//   if (group.current) {
-//     storeOriginalPos(group.current.position)
-
-//     if (hovered) {
-//       console.log('origpos', originalPos.z);
-//       gsap.to(group.current.position, {
-//         duration: 1.5,
-//         ease: "power2.inOut",
-//         z: 1
-//       })
-//     }
-//       console.log(originalPos);
-//       gsap.to(group.current.position, {
-//         duration: 1.5,
-//         ease: "power2.inOut",
-//         z: 0
-//       })
-
-//   }
-
-// }, [group, hovered, originalPos, storeOriginalPos]);
-  // gsap
 
   return (
     <group ref={group} {...props} name="Jetsetter" dispose={null}>
@@ -64,9 +55,9 @@ export default function JetsetterVox(props) {
         geometry={nodes.jetsetter.geometry}
         material={materials.palette}
         rotation={[Math.PI / 2, 0, 0]}
-        onClick={() => router.push(route)}
-        onPointerOver={(e) => setHover(true)}
-        onPointerOut={(e) => setHover(false)}
+        onClick={(e) => handleClick(route, isExternal)}
+        // onPointerOver={(e) => setHover(true)}
+        // onPointerOut={(e) => setHover(false)}
       />
     </group>
   );

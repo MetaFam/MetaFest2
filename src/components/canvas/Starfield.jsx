@@ -45,7 +45,7 @@ export default function Starfield({ parameters, ...props }) {
       positions[i3 + 2] = (Math.random() - 0.5) * 10;
     }
     // if (particles.current) {
-      console.log('pc:', particles);
+      // console.log('pc:', particles);
       particles.current.geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
       particles.current.geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
 

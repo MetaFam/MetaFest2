@@ -6,12 +6,12 @@ import gsap from "gsap";
 import useStore from '@/helpers/store'
 
 export default function BabyEarthVox(props) {
-  const router = useStore((s) => s.router)
+  // const router = useStore((s) => s.router)
   const group = useRef();
   const material = useRef();
   const [hovered, setHover] = useState(false)
   const { nodes, materials } = useGLTF("/assets/models/babyearth-vox.glb");
-  const { route, animate } = props
+  const { animate } = props
   const clock = new THREE.Clock();
   let previousTime = 0;
 
@@ -30,7 +30,7 @@ export default function BabyEarthVox(props) {
 
 
   return (
-    <group ref={group} {...props} name="BabyEarthVox" dispose={null}>
+    <group ref={group} {...props} name="VoxelEarth" dispose={null}>
       <mesh
         castShadow
         receiveShadow

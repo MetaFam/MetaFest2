@@ -111,9 +111,9 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
         colors[i3 + 2] = mixedColor.b
 
 
-        if (i < 20) {
-          console.log(i, branchAngle)
-        }
+        // if (i < 20) {
+        //   console.log(i, branchAngle)
+        // }
       }
     } else if (parameters.type === 2) {
       for (let i = 0; i < parameters.count; i++) {
@@ -138,9 +138,9 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
         colors[i3 + 2] = mixedColor.b
 
 
-        if (i < 20) {
-          console.log(i, branchAngle)
-        }
+        // if (i < 20) {
+        //   console.log(i, branchAngle)
+        // }
       }
 
     } else if (parameters.type === 3) {
@@ -166,9 +166,9 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
         colors[i3 + 2] = mixedColor.b
 
 
-        if (i < 20) {
-          console.log(i, branchAngle)
-        }
+        // if (i < 20) {
+        //   console.log(i, branchAngle)
+        // }
       }
     } else if (parameters.type === 4) {
       for (let i = 0; i < parameters.count; i++) {
@@ -193,9 +193,9 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
         colors[i3 + 2] = mixedColor.b
 
 
-        if (i < 20) {
-          console.log(i, branchAngle)
-        }
+        // if (i < 20) {
+        //   console.log(i, branchAngle)
+        // }
       }
     } else if (parameters.type === 5) {
       for (let i = 0; i < parameters.count; i++) {
@@ -222,9 +222,9 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
         colors[i3 + 2] = mixedColor.b
 
 
-        if (i < 20) {
-          console.log(i, branchAngle)
-        }
+        // if (i < 20) {
+        //   console.log(i, branchAngle)
+        // }
       }
     }
 
