@@ -13,7 +13,7 @@ export default function NomadVox(props) {
   const { route } = props
   useEffect(() => {
     if (group.current.children) {
-      console.log(group.current.children);
+      // console.log(group.current.children);
       // group.current.children[0].geometry.computeFaceNormals();
       // group.current.children[0].geometry.computeVertextNormals();
       // group.current.children[0].geometry.normalsNeedUpdate = true;

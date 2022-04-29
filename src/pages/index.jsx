@@ -26,6 +26,7 @@ import {
 import { CanvasLoader } from "@/components/canvas/Loader";
 
 
+
 // Dynamic import is used to prevent a payload when the website start that will include threejs r3f etc..
 // WARNING ! errors might get obfuscated by using dynamic import.
 // If something goes wrong go back to a static import to show the error.
@@ -66,6 +67,7 @@ const DOM = () => {
 
 export const objectsDistance = 4;
 
+
 export const R3FSceneSection = ({ name, count, children, ...props }) => {
   const group = useRef(null);
   // const { layers } = props;
@@ -104,14 +106,19 @@ const R3F = () => {
   const rayMousePos = useRef(new THREE.Vector2())
   const mouse = new THREE.Vector2();
   const rayMouse = new THREE.Vector2();
+
+
+
   /**
    * Animate
    */
   const clock = new THREE.Clock();
   let previousTime = 0;
+
   /**
-         * Cursor / Mouse
-         */
+   * Cursor / Mouse
+   */
+
   // const cursor = useMemo({
   //   x: 0,
   //   y: 0
@@ -300,7 +307,9 @@ const R3F = () => {
     // rimLight.current.position.y = (-scrollY.current / sizes.current.height) * objectsDistance;
 
     if (nomad.current) {
-      nomad.current.position.y = -1.5 - Math.cos(elapsedTime * 0.1) * Math.PI * 0.05;
+      // console.log('mob?', isMobile);
+
+        nomad.current.position.y = -1.5 - Math.cos(elapsedTime * 0.1) * Math.PI * 0.05;
 
       // group.current.rotation.y = elapsedTime * 0.03;
       nomad.current.rotation.z = -0.05 - Math.sin(elapsedTime * 0.3) * Math.PI * 0.03;

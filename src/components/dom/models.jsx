@@ -26,7 +26,7 @@ const debug = new dat.GUI()
   gltfLoader.load(
     '/models/OCT_02_fileEXPS.gltf',
     (gltf) => {
-      console.log(gltf)
+      // console.log(gltf)
 
       // Create new mixer
       mixer = new THREE.AnimationMixer(gltf.scene)

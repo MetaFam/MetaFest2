@@ -16,9 +16,9 @@ export const CanvasLoader = () => {
 
   useEffect(() => {
     if (ratioLoaded < 1) {
-      console.log(ratioLoaded);
+      // console.log(ratioLoaded);
       if (loadingBar.current) {
-        console.log(loadingBar.current);
+        // console.log(loadingBar.current);
         // loadingBar.current.style.transform = `scaleX(${ratioLoaded})`
 
       }

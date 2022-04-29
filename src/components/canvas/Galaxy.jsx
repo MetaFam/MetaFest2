@@ -23,7 +23,7 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
    * Textures
    */
   const planeColorTexture = useLoader(TextureLoader, '/assets/textures/particles/seed_logo.png');
-  const planeAlphaTexture = useLoader(TextureLoader, '/assets/textures/particles/seed_logo.png');
+  const planeAlphaTexture = useLoader(TextureLoader, '/assets/textures/particles/seed_logo_alpha_map.png');
   planeAlphaTexture.minFilter = THREE.NearestFilter;
   planeAlphaTexture.magFilter = THREE.NearestFilter;
   planeAlphaTexture.generateMipmaps = true;
@@ -111,9 +111,9 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
         colors[i3 + 2] = mixedColor.b
 
 
-        if (i < 20) {
-          console.log(i, branchAngle)
-        }
+        // if (i < 20) {
+        //   console.log(i, branchAngle)
+        // }
       }
     } else if (parameters.type === 2) {
       for (let i = 0; i < parameters.count; i++) {
@@ -138,9 +138,9 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
         colors[i3 + 2] = mixedColor.b
 
 
-        if (i < 20) {
-          console.log(i, branchAngle)
-        }
+        // if (i < 20) {
+        //   console.log(i, branchAngle)
+        // }
       }
 
     } else if (parameters.type === 3) {
@@ -166,9 +166,9 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
         colors[i3 + 2] = mixedColor.b
 
 
-        if (i < 20) {
-          console.log(i, branchAngle)
-        }
+        // if (i < 20) {
+        //   console.log(i, branchAngle)
+        // }
       }
     } else if (parameters.type === 4) {
       for (let i = 0; i < parameters.count; i++) {
@@ -193,9 +193,9 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
         colors[i3 + 2] = mixedColor.b
 
 
-        if (i < 20) {
-          console.log(i, branchAngle)
-        }
+        // if (i < 20) {
+        //   console.log(i, branchAngle)
+        // }
       }
     } else if (parameters.type === 5) {
       for (let i = 0; i < parameters.count; i++) {
@@ -222,9 +222,9 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
         colors[i3 + 2] = mixedColor.b
 
 
-        if (i < 20) {
-          console.log(i, branchAngle)
-        }
+        // if (i < 20) {
+        //   console.log(i, branchAngle)
+        // }
       }
     }
 
@@ -238,7 +238,6 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
       material.current.transparent = true
       material.current.sizeAttenuation = true
       material.current.opacity = parameters.opacity
-
     }
     // if (parameters.type === 3) {
     //   material.current.transparent = true

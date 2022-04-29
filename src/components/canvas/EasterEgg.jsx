@@ -59,7 +59,7 @@ const OctoEasterEgg = (props) => {
     >
       <planeBufferGeometry attach="geometry" args={[1, 1]} />
       <meshBasicMaterial attach="material" ref={material}  />
-    </mesh>
+      </mesh>
   )
 };
 

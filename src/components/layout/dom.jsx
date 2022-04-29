@@ -7,6 +7,7 @@ import {SiteHeader} from "@/components/dom/Header";
 import { SiteFooter } from "@/components/dom/Footer";
 import { AlphaNotice } from '@/components/dom/AlphaNotice';
 import { EasterEgg } from '@/components/dom/EasterEgg';
+import { EasterEggGlitch } from '@/components/dom/EasterEggGlitch';
 
 const Dom = ({ children }) => {
   const ref = useRef(null)
@@ -38,6 +39,7 @@ const Dom = ({ children }) => {
       <SiteFooter />
       <AlphaNotice />
       <EasterEgg />
+      <EasterEggGlitch />
     </Box>
   )
 }

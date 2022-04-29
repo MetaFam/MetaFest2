@@ -60,7 +60,7 @@ export function SiteHeader() {
   const disabledGenNotify = useDisabledGeneralNotify();
   const handleToggle = () => (isOpen ? onClose() : onOpen());
   const screenSize = useBreakpoint()
-  console.log('s',screenSize);
+  console.log('Chakra breakpoint: ', screenSize);
 
   const NavLink = ({ href, children, offset }) => (
     <Link
@@ -208,6 +208,7 @@ export function SiteHeader() {
                 px={5}
                 py={2}
                 color={"white"}
+                fontWeight={700}
                 bg="#927CFF"
                 boxShadow="0 0 10px rgba(0, 0, 0, 0.6)"
                 size="sm"
@@ -224,7 +225,6 @@ export function SiteHeader() {
                 py={0}
                 // color={"white"}
                 bg="transparent"
-                boxShadow="0 0 10px rgba(0, 0, 0, 0.6)"
                 size="sm"
                 mr={0}
                 borderRadius="md"

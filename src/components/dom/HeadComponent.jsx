@@ -33,6 +33,21 @@ export const HeadComponent = (props) => {
 
       <link rel="icon" href="/favicon.ico" />
 
+          <script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=G-0YZ0KDRZ7J`}
+          />
+          <script
+            type="text/javascript"
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag() { dataLayer.push(arguments) }
+                gtag('js', new Date());
+                gtag('config', 'G-0YZ0KDRZ7J');
+              `,
+            }}
+          />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
       <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;700&amp;display=swap" rel="stylesheet" />
