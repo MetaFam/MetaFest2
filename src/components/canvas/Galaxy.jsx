@@ -23,7 +23,7 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
    * Textures
    */
   const planeColorTexture = useLoader(TextureLoader, '/assets/textures/particles/seed_logo.png');
-  const planeAlphaTexture = useLoader(TextureLoader, '/assets/textures/particles/seed_logo.png');
+  const planeAlphaTexture = useLoader(TextureLoader, '/assets/textures/particles/seed_logo_alpha_map.png');
   planeAlphaTexture.minFilter = THREE.NearestFilter;
   planeAlphaTexture.magFilter = THREE.NearestFilter;
   planeAlphaTexture.generateMipmaps = true;
@@ -238,7 +238,6 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
       material.current.transparent = true
       material.current.sizeAttenuation = true
       material.current.opacity = parameters.opacity
-
     }
     // if (parameters.type === 3) {
     //   material.current.transparent = true
