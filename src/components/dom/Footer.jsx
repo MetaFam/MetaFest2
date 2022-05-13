@@ -17,7 +17,8 @@ export function SiteFooter() {
   return (
       <Box
         ref={ref}
-        as="footer"
+      as="footer"
+      className="ui"
         bg="transparent"
         position="absolute"
         bottom={0}
