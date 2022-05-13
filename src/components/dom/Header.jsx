@@ -297,13 +297,15 @@ export const UIToggles = () => {
   const [uiOn, setUiOn] = useState(true);
   const [canvasOn, setCanvasOn] = useState(true)
   const { dom } = useStore()
-  const homeBg = 'assets/img/home-bg.png'
-  const scheduleBg = 'assets/img/schedule-bg.png'
-  const workshopsBg = 'assets/img/workshops-bg.png'
-  const speakersBg = 'assets/img/speakers-bg.png'
-  const metaverseBg = 'assets/img/metaverse-bg.png'
-  const chatBg = 'assets/img/chat-bg.png'
-  const applyBg = 'assets/img/apply-bg.png'
+  const screenSize = useBreakpoint()
+  const mob = screenSize === 'base' ? '-mob' : ''
+  const homeBg = `assets/img/home-bg${mob}.jpg`
+  const scheduleBg = `assets/img/schedule-bg${mob}.jpg`
+  const workshopsBg = `assets/img/workshops-bg${mob}.jpg`
+  const speakersBg = `assets/img/speakers-bg${mob}.jpg`
+  const metaverseBg = `assets/img/metaverse-bg${mob}.jpg`
+  const chatBg = `assets/img/chat-bg${mob}.jpg`
+  const applyBg = `assets/img/apply-bg${mob}.jpg`
 
   const toggleUI = () => {
     if (typeof window !== 'undefined') {
@@ -339,13 +341,13 @@ export const UIToggles = () => {
       if (canvas.style.display === 'block') {
         canvas.style.display = 'none'
 
-        content[0].style.background = `url(${homeBg}) fixed`
-        content[1].style.background = `url(${scheduleBg}) fixed`
-        content[2].style.background = `url(${workshopsBg}) fixed`
-        content[3].style.background = `url(${speakersBg}) fixed`
-        content[4].style.background = `url(${metaverseBg}) fixed`
-        content[5].style.background = `url(${chatBg}) fixed`
-        content[6].style.background = `url(${applyBg}) fixed`
+        content[0].style.backgroundImage = `url(${homeBg})`
+        content[1].style.backgroundImage = `url(${scheduleBg}) `
+        content[2].style.backgroundImage = `url(${workshopsBg}) `
+        content[3].style.backgroundImage = `url(${speakersBg}) `
+        content[4].style.backgroundImage = `url(${metaverseBg})`
+        content[5].style.backgroundImage = `url(${chatBg})`
+        content[6].style.backgroundImage = `url(${applyBg})`
 
       } else {
         canvas.style.display = 'block'
@@ -358,7 +360,7 @@ export const UIToggles = () => {
   }
 
   return (
-    <HStack fontSize={{ base: '3vw', lg: '0.7vw' }} fontWeight={500} mr={3} position="fixed" bottom={5} right={5} opacity={0.5} transition="opacity 0.3s ease" _hover={{
+    <HStack fontSize={{ base: '3vw', lg: '0.7vw' }} fontWeight={500} position="fixed" bottom={5} right={{base: 3, lg: 5}} opacity={0.5} transition="opacity 0.3s ease" _hover={{
       opacity: 1
     }}>
       <VStack spacing={0}>
