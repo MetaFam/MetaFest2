@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Box,
   Flex,
@@ -64,7 +64,6 @@ export function SiteHeader() {
   const disabledGenNotify = useDisabledGeneralNotify();
   const handleToggle = () => (isOpen ? onClose() : onOpen());
   const screenSize = useBreakpoint()
-  console.log('Chakra breakpoint: ', screenSize);
 
   const NavLink = ({ href, children, offset }) => (
     <Link
@@ -312,7 +311,7 @@ export const UIToggles = () => {
       const ui = document.querySelectorAll('.ui')
       const content = document.querySelectorAll('section')
       ui.forEach((item, i) => {
-        item.style.transition = 'opacity 0.3s 0.3s ease'
+        item.style.transition = 'transform 0.3s 0.1s ease, opacity 0.3s 0.2s'
         console.log(item);
         if (uiOn) {
           item.style.opacity = 0
@@ -358,6 +357,10 @@ export const UIToggles = () => {
       setCanvasOn(!canvasOn)
     }
   }
+
+  useEffect(() => {
+
+  }, []);
 
   return (
     <HStack fontSize={{ base: '3vw', lg: '0.7vw' }} fontWeight={500} position="fixed" bottom={5} right={{base: 3, lg: 5}} opacity={0.5} transition="opacity 0.3s ease" _hover={{
