@@ -30,6 +30,12 @@ const theme = extendTheme({
         minH: "100vh",
         width: '100%',
         // overflowY: "auto",
+        'canvas': {
+          display: 'block',
+          '&.off': {
+            display: 'none'
+          }
+        },
         '.loading-canvas': {
           '.dom-loader': {
             opacity: 1,
@@ -117,6 +123,9 @@ const theme = extendTheme({
         position: "relative",
         display: 'flex',
         // display: 'none',
+        backgroundAttachment: 'fixed',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
         alignItems: "center",
         height: '100vh',
         w: '100vw',

@@ -1,8 +1,9 @@
-import React, {useRef} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Box,
   Flex,
   HStack,
+  VStack,
   Link,
   IconButton,
   Button,
@@ -10,10 +11,13 @@ import {
   useBreakpoint,
   useDisclosure,
   Stack,
+  Text,
 } from "@chakra-ui/react";
 import { BiWalletAlt, BiJoystick } from 'react-icons/bi'
+import { FaToggleOn, FaToggleOff } from 'react-icons/fa'
 import { BoxedNextImage } from "@/components/dom/BoxedNextImage";
 import { useDisabledGeneralNotify, useOnScreen } from "@/utils/hooks";
+import useStore from '@/helpers/store'
 
 import MF2Logo from "@/static/assets/img/mf2-logo.png";
 // import MetaGameLogo from '../static/assets/img/logo.png'
@@ -60,7 +64,6 @@ export function SiteHeader() {
   const disabledGenNotify = useDisabledGeneralNotify();
   const handleToggle = () => (isOpen ? onClose() : onOpen());
   const screenSize = useBreakpoint()
-  console.log('Chakra breakpoint: ', screenSize);
 
   const NavLink = ({ href, children, offset }) => (
     <Link
@@ -99,7 +102,7 @@ export function SiteHeader() {
         px={4}
         w="100%"
         maxW="100vw"
-        h={{base: '75px', md: "100px"}}
+        h={{ base: '75px', md: "100px" }}
         // transform={`translate3d(0, ${onScreen ? 0 : "-70px"}, 0)`}
         opacity={onScreen ? 1 : 0}
         transition="transform 0.3s 1s ease-in-out, opacity 0.6s 0.8s ease-in"
@@ -111,15 +114,16 @@ export function SiteHeader() {
         }}
       >
         <Flex
-          h={{base: '75px', md: "100px"}}
+          h={{ base: '75px', md: "100px" }}
           alignItems={"center"}
           justifyContent={"space-between"}
         >
           <Box width={{ base: "25%" }} h="2.5rem" overflow="visible" sx={{
-            d: {base: 'inline-flex', md: 'none'},
+            d: { base: 'inline-flex', md: 'none' },
           }}>
             <Button
               onClick={handleToggle}
+              className="ui"
               sx={{
                 alignSelf: "center",
                 justifySelf: "right",
@@ -172,8 +176,8 @@ export function SiteHeader() {
               <MenuIcon2SVG toggle={isOpen} />
             </Button>
           </Box>
-          <HStack spacing={8} alignItems={"center"}>
-            <Link href="/#home" flex={{base: 1}}>
+          <HStack spacing={8} alignItems={"center"} className="ui">
+            <Link href="/#home" flex={{ base: 1 }}>
               <BoxedNextImage
                 src={'assets/img/mf2-logo.png'}
                 alt="MetaGame Logo"
@@ -190,6 +194,7 @@ export function SiteHeader() {
               />
             </Link>
             <HStack
+              className="ui"
               as={"nav"}
               spacing={4}
               display={{ base: "none", md: "flex" }}
@@ -202,8 +207,10 @@ export function SiteHeader() {
             </HStack>
           </HStack>
           <Flex alignItems="center" justifyContent="end" width={{ base: "25%", md: 'auto' }}>
+            <UIToggles />
             {screenSize !== 'base' ? (
               <Link
+                className="ui"
                 href="https://metagame.wtf"
                 px={5}
                 py={2}
@@ -219,7 +226,8 @@ export function SiteHeader() {
                 Join MetaGame
               </Link>
             ) : (
-                              <Link
+                <Link
+                  className="ui"
                 href="https://metagame.wtf"
                 px={0}
                 py={0}
@@ -230,58 +238,160 @@ export function SiteHeader() {
                 borderRadius="md"
                 isExternal
               >
-              <IconButton
-              icon={<BiJoystick />}
-              aria-label="Join MetaGame"
-              flex={0}
-              fontSize={{base: '12vmin', lg: "2vmax"}}
-              colorScheme="ghost"
-              color="#927CFF"
-              alignSelf="center"
-              // filter="drop-shadow(0 0 15px #FF61E6)"
-            />
+                <IconButton
+                  icon={<BiJoystick />}
+                  aria-label="Join MetaGame"
+                  flex={0}
+                  fontSize={{ base: '12vmin', lg: "2vmax" }}
+                  colorScheme="ghost"
+                  color="#927CFF"
+                  alignSelf="center"
+                // filter="drop-shadow(0 0 15px #FF61E6)"
+                />
               </Link>
 
             )}
+
           </Flex>
         </Flex>
 
         {/* {isOpen ? ( */}
-          <Box
-            display={{ base: "flex", md: "none" }}
-            position="fixed"
-            top={0}
-            left={0}
-            w="100%"
-            minW="100%"
-            minH="100vh"
-            alignItems="center"
-            justifyContent="center"
-            p={5}
-            pt="100px"
-            bg="linear-gradient(0deg, rgba(41,2,80,0.1) 0%, rgba(25,0,50,0.5) 40%)"
-            backdropFilter="blur(7px)"
+        <Box
+          className="ui"
+          display={{ base: "flex", md: "none" }}
+          position="fixed"
+          top={0}
+          left={0}
+          w="100%"
+          minW="100%"
+          minH="100vh"
+          alignItems="center"
+          justifyContent="center"
+          p={5}
+          pt="100px"
+          bg="linear-gradient(0deg, rgba(41,2,80,0.1) 0%, rgba(25,0,50,0.5) 40%)"
+          backdropFilter="blur(7px)"
           transition="transform 0.3s 0.1s ease, opacity 0.3s 0.2s"
           boxShadow="0 0 15px #00000070"
 
           opacity={isOpen ? 1 : 0}
-            transform={`translate3d(0, ${isOpen ? 0 : '-100vh'}, 0)`}
-            zIndex={-1}
-          >
-            <Stack as={"nav"} spacing={4} height="auto">
-              {Links.map((link) => (
-                <NavLink key={`mobile-${link.name}`} href={link.href}>
-                  {link.name}
-                </NavLink>
-              ))}
-            </Stack>
-          </Box>
+          transform={`translate3d(0, ${isOpen ? 0 : '-100vh'}, 0)`}
+          zIndex={-1}
+        >
+          <Stack as={"nav"} spacing={4} height="auto">
+            {Links.map((link) => (
+              <NavLink key={`mobile-${link.name}`} href={link.href}>
+                {link.name}
+              </NavLink>
+            ))}
+          </Stack>
+        </Box>
         {/* ) : null} */}
       </Box>
     </>
   );
 }
 
+export const UIToggles = () => {
+  const [uiOn, setUiOn] = useState(true);
+  const [canvasOn, setCanvasOn] = useState(true)
+  const { dom } = useStore()
+  const screenSize = useBreakpoint()
+  const mob = screenSize === 'base' ? '-mob' : ''
+  const homeBg = `assets/img/home-bg${mob}.jpg`
+  const scheduleBg = `assets/img/schedule-bg${mob}.jpg`
+  const workshopsBg = `assets/img/workshops-bg${mob}.jpg`
+  const speakersBg = `assets/img/speakers-bg${mob}.jpg`
+  const metaverseBg = `assets/img/metaverse-bg${mob}.jpg`
+  const chatBg = `assets/img/chat-bg${mob}.jpg`
+  const applyBg = `assets/img/apply-bg${mob}.jpg`
+
+  const toggleUI = () => {
+    if (typeof window !== 'undefined') {
+      const ui = document.querySelectorAll('.ui')
+      const content = document.querySelectorAll('section')
+      ui.forEach((item, i) => {
+        item.style.transition = 'transform 0.3s 0.1s ease, opacity 0.3s 0.2s'
+        console.log(item);
+        if (uiOn) {
+          item.style.opacity = 0
+        } else {
+          item.style.opacity = 1
+        }
+      })
+      content.forEach((item, i) => {
+        item.style.transition = 'opacity 0.3s 0.4s ease'
+        console.log(item);
+        if (uiOn) {
+          item.style.opacity = 0
+        } else {
+          item.style.opacity = 1
+        }
+      })
+      setUiOn(!uiOn)
+    }
+  }
+
+  const toggleCanvas = () => {
+    if (typeof window !== 'undefined') {
+      const canvas = document.querySelector('canvas')
+      const content = document.querySelectorAll('section')
+
+      if (canvas.style.display === 'block') {
+        canvas.style.display = 'none'
+
+        content[0].style.backgroundImage = `url(${homeBg})`
+        content[1].style.backgroundImage = `url(${scheduleBg}) `
+        content[2].style.backgroundImage = `url(${workshopsBg}) `
+        content[3].style.backgroundImage = `url(${speakersBg}) `
+        content[4].style.backgroundImage = `url(${metaverseBg})`
+        content[5].style.backgroundImage = `url(${chatBg})`
+        content[6].style.backgroundImage = `url(${applyBg})`
+
+      } else {
+        canvas.style.display = 'block'
+        content.forEach(item => {
+          item.style.background = `none`
+        })
+      }
+      setCanvasOn(!canvasOn)
+    }
+  }
+
+
+  return (
+    <HStack fontSize={{ base: '3vw', lg: '0.7vw' }} fontWeight={500} position="fixed" bottom={5} right={{base: 3, lg: 5}} opacity={0.5} transition="opacity 0.3s ease" _hover={{
+      opacity: 1
+    }}>
+      <VStack spacing={0}>
+        <IconButton
+          icon={uiOn ? <FaToggleOn /> : <FaToggleOff />}
+          aria-label="Toggle UI"
+          flex={0}
+          fontSize={{ base: '12vmin', lg: "2vmax" }}
+          colorScheme="ghost"
+          color={uiOn ? "#FF61E6" : "#7C56FF"}
+          alignSelf="center"
+          onClick={toggleUI}
+        />
+        <Text as="span">UI</Text>
+      </VStack>
+      <VStack spacing={0}>
+        <IconButton
+          icon={canvasOn ? <FaToggleOn /> : <FaToggleOff />}
+          aria-label="Toggle Effects"
+          flex={0}
+          fontSize={{ base: '12vmin', lg: "2vmax" }}
+          colorScheme="ghost"
+          color={canvasOn ? "#FF61E6" : "#7C56FF"}
+          alignSelf="center"
+          onClick={toggleCanvas}
+        />
+        <Text as="span">Effects</Text>
+      </VStack>
+    </HStack>
+  )
+}
 
 export const MenuIcon2SVG = ({ toggle }) => (
   <Box>
