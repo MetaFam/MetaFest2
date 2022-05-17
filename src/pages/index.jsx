@@ -126,7 +126,6 @@ const R3F = () => {
 
 
   useEffect(() => {
-
     if (typeof window !== "undefined") {
       sizes.current = {
         width: window.innerWidth,
@@ -152,121 +151,121 @@ const R3F = () => {
         if (newSection !== currentSection) {
           currentSection = newSection;
           console.log('Current section:', currentSection);
-          if (cameraGroup.current) {
-            switch (currentSection) {
-              case 0:
-                gsap.to(cameraGroup.current.rotation, {
-                  duration: 1.5,
-                  ease: "power2.inOut",
-                  x: "0",
-                  y: "0",
-                  z: "0",
-                });
-                gsap.to(cameraGroup.current.position, {
-                  duration: 1.5,
-                  ease: "power2.inOut",
-                  z: 0,
-                });
-                break;
+          // if (cameraGroup.current) {
+          //   switch (currentSection) {
+          //     case 0:
+          //       gsap.to(cameraGroup.current.rotation, {
+          //         duration: 1.5,
+          //         ease: "power2.inOut",
+          //         x: "0",
+          //         y: "0",
+          //         z: "0",
+          //       });
+          //       gsap.to(cameraGroup.current.position, {
+          //         duration: 1.5,
+          //         ease: "power2.inOut",
+          //         z: 0,
+          //       });
+          //       break;
 
-              // Schedule
-              case 1:
-                gsap.to(cameraGroup.current.rotation, {
-                  duration: 1.5,
-                  ease: "power2.inOut",
-                  x: 0,
-                  y: "0.33",
-                  z: "0",
-                });
-                gsap.to(cameraGroup.current.position, {
-                  duration: 1.5,
-                  ease: "power2.inOut",
-                  z: -10,
-                });
-                break;
+          //     // Schedule
+          //     case 1:
+          //       gsap.to(cameraGroup.current.rotation, {
+          //         duration: 1.5,
+          //         ease: "power2.inOut",
+          //         x: 0,
+          //         y: "0.33",
+          //         z: "0",
+          //       });
+          //       gsap.to(cameraGroup.current.position, {
+          //         duration: 1.5,
+          //         ease: "power2.inOut",
+          //         z: -10,
+          //       });
+          //       break;
 
-              // Workshops
-              case 2:
-                gsap.to(cameraGroup.current.rotation, {
-                  duration: 1.5,
-                  ease: "power2.inOut",
-                  x: 0,
-                  y: "0.55",
-                  z: "0",
-                });
-                gsap.to(cameraGroup.current.position, {
-                  duration: 1.5,
-                  ease: "power2.inOut",
-                  z: -10,
-                });
-                break;
+          //     // Workshops
+          //     case 2:
+          //       gsap.to(cameraGroup.current.rotation, {
+          //         duration: 1.5,
+          //         ease: "power2.inOut",
+          //         x: 0,
+          //         y: "0.55",
+          //         z: "0",
+          //       });
+          //       gsap.to(cameraGroup.current.position, {
+          //         duration: 1.5,
+          //         ease: "power2.inOut",
+          //         z: -10,
+          //       });
+          //       break;
 
-              // Speakers
-              case 3:
-                gsap.to(cameraGroup.current.rotation, {
-                  duration: 1.5,
-                  ease: "power2.inOut",
-                  x: 0,
-                  y: "0.22",
-                  z: "0.1",
-                });
-                gsap.to(cameraGroup.current.position, {
-                  duration: 1.5,
-                  ease: "power2.inOut",
-                  z: 0,
-                });
-                break;
+          //     // Speakers
+          //     case 3:
+          //       gsap.to(cameraGroup.current.rotation, {
+          //         duration: 1.5,
+          //         ease: "power2.inOut",
+          //         x: 0,
+          //         y: "0.22",
+          //         z: "0.1",
+          //       });
+          //       gsap.to(cameraGroup.current.position, {
+          //         duration: 1.5,
+          //         ease: "power2.inOut",
+          //         z: 0,
+          //       });
+          //       break;
 
-              // Metaverse
-              case 4:
-                gsap.to(cameraGroup.current.rotation, {
-                  duration: 1.5,
-                  ease: "power2.inOut",
-                  x: 0,
-                  y: "0",
-                  z: "0",
-                });
-                gsap.to(cameraGroup.current.position, {
-                  duration: 1.5,
-                  ease: "power2.inOut",
-                  z: 0,
-                });
-                break;
+          //     // Metaverse
+          //     case 4:
+          //       gsap.to(cameraGroup.current.rotation, {
+          //         duration: 1.5,
+          //         ease: "power2.inOut",
+          //         x: 0,
+          //         y: "0",
+          //         z: "0",
+          //       });
+          //       gsap.to(cameraGroup.current.position, {
+          //         duration: 1.5,
+          //         ease: "power2.inOut",
+          //         z: 0,
+          //       });
+          //       break;
 
-              // Chat
-              case 5:
-                gsap.to(cameraGroup.current.rotation, {
-                  duration: 1.5,
-                  ease: "power2.inOut",
-                  x: Math.PI * 0.35,
-                  y: 0,
-                  z: 0,
-                });
-                gsap.to(cameraGroup.current.position, {
-                  duration: 1.5,
-                  ease: "power2.inOut",
-                  z: -0.2,
-                });
-                break;
+          //     // Chat
+          //     case 5:
+          //       gsap.to(cameraGroup.current.rotation, {
+          //         duration: 1.5,
+          //         ease: "power2.inOut",
+          //         x: Math.PI * 0.35,
+          //         y: 0,
+          //         z: 0,
+          //       });
+          //       gsap.to(cameraGroup.current.position, {
+          //         duration: 1.5,
+          //         ease: "power2.inOut",
+          //         z: -0.2,
+          //       });
+          //       break;
 
-              // Chat
-              case 6:
-                gsap.to(cameraGroup.current.rotation, {
-                  duration: 1.5,
-                  ease: "power2.inOut",
-                  x: 0,
-                  y: 0,
-                  z: 0,
-                });
-                gsap.to(cameraGroup.current.position, {
-                  duration: 1.5,
-                  ease: "power2.inOut",
-                  z: 0,
-                });
-                break;
-            }
+          //     // Chat
+          //     case 6:
+          //       gsap.to(cameraGroup.current.rotation, {
+          //         duration: 1.5,
+          //         ease: "power2.inOut",
+          //         x: 0,
+          //         y: 0,
+          //         z: 0,
+          //       });
+          //       gsap.to(cameraGroup.current.position, {
+          //         duration: 1.5,
+          //         ease: "power2.inOut",
+          //         z: 0,
+          //       });
+          //       break;
+          //   }
 
-          }
+          // }
         }
       });
 
@@ -309,7 +308,7 @@ const R3F = () => {
     if (nomad.current) {
       // console.log('mob?', isMobile);
 
-        nomad.current.position.y = -1.5 - Math.cos(elapsedTime * 0.1) * Math.PI * 0.05;
+      nomad.current.position.y = -1.5 - Math.cos(elapsedTime * 0.1) * Math.PI * 0.05;
 
       // group.current.rotation.y = elapsedTime * 0.03;
       nomad.current.rotation.z = -0.05 - Math.sin(elapsedTime * 0.3) * Math.PI * 0.03;
@@ -322,9 +321,9 @@ const R3F = () => {
       jetsetter.current.rotation.z = -0.05 - Math.sin(elapsedTime * 0.3) * Math.PI * 0.03;
     }
     if (octoEasterEgg.current) {
-        octoEasterEgg.current.position.x = -3.5 + Math.sin(elapsedTime * 0.9) * Math.PI * 0.05;
-        octoEasterEgg.current.position.y = -1.5 - Math.cos(elapsedTime * 0.1) * Math.PI * 0.5;
-        octoEasterEgg.current.rotation.z = -elapsedTime * 0.06;
+      octoEasterEgg.current.position.x = -3.5 + Math.sin(elapsedTime * 0.9) * Math.PI * 0.05;
+      octoEasterEgg.current.position.y = -1.5 - Math.cos(elapsedTime * 0.1) * Math.PI * 0.5;
+      octoEasterEgg.current.rotation.z = -elapsedTime * 0.06;
     }
 
   });
@@ -334,20 +333,20 @@ const R3F = () => {
       <group ref={cameraGroup}>
         <PerspectiveCamera ref={camera} makeDefault aspect={sizes.width / sizes.height} position={[0, 0, 6]} far={1000} filmGauge={53} />
 
-        {/* <Stats /> */}
+        <Stats />
       </group>
-      <Suspense fallback={<CanvasLoader />}>
-      <Galaxy
+
+      {/* <Galaxy
         dof={dof}
         parameters={galaxy5Params}
         nucleus={false} helper={false}
-        position={[0, -3, -17]} />
+        position={[0, -3, -17]} /> */}
 
       <R3FSceneSection name="SectionOne" count={0}>
-        <group ref={octoEasterEgg}>
-          <OctoEasterEgg/>
+        <group ref={octoEasterEgg} dispose={null}>
+          <OctoEasterEgg />
         </group>
-        <Galaxy dof={dof} parameters={galaxy1Params} position={[6, 0, -13]} rotation={[4.8, 4.15, 4.75]} />
+        <Galaxy dof={dof1} parameters={galaxy1Params} position={[6, 0, -13]} rotation={[4.8, 4.15, 4.75]} />
       </R3FSceneSection>
 
       <R3FSceneSection name="SectionTwo" count={1}>
@@ -355,7 +354,7 @@ const R3F = () => {
       </R3FSceneSection>
 
       <R3FSceneSection name="SectionThree" count={2}>
-        <Galaxy dof={dof} parameters={galaxy2Params} position={[0, -3, -15]} />
+        {/* <Galaxy dof={dof2} parameters={galaxy2Params} position={[0, -3, -15]} /> */}
       </R3FSceneSection>
 
       <R3FSceneSection name="SectionFour" count={3}>
@@ -369,9 +368,9 @@ const R3F = () => {
       </R3FSceneSection>
 
       <R3FSceneSection name="SectionSix" count={5}>
-        <OctoPetVox  position={[0, -1.8, 0]} animate={true} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
-        <BabyEarthVox position={[-1.5, -.8, -2]} animate={true} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
-        <Galaxy dof={dof} parameters={galaxy3Params} position={[6, -6.5, -15]} />
+        <OctoPetVox position={[0, -1.8, 0]} animate={true} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
+        {/* <BabyEarthVox position={[-1.5, -.8, -2]} animate={true} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} /> */}
+        {/* <Galaxy dof={dof3} parameters={galaxy3Params} position={[6, -6.5, -15]} /> */}
       </R3FSceneSection>
 
       <R3FSceneSection name="SectionSeven" count={6}>
@@ -379,9 +378,8 @@ const R3F = () => {
           <JetsetterVox animate={true} position={[-2, -1.8, 0]} rotation={[-Math.PI / .1, Math.PI / 6.5, 0]}
           />
         </group>
-        <Galaxy dof={dof} parameters={galaxy4Params} position={[3, -1.5, -2]} />
-        </R3FSceneSection>
-        </Suspense>
+        {/* <Galaxy dof={dof4} parameters={galaxy4Params} position={[3, -1.5, -2]} /> */}
+      </R3FSceneSection>
     </>
   )
 }

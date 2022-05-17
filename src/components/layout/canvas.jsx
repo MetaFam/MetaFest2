@@ -57,7 +57,7 @@ const LCanvas = ({ children }) => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const el = dom.current
-      if(isMobile) return
+      if (isMobile) return
       el.addEventListener('pointerup', onPointerUp)
       el.addEventListener('pointerdown', onPointerDown)
 
@@ -88,11 +88,11 @@ const LCanvas = ({ children }) => {
       onCreated={(state) => state.events.connect(dom.current)}
     >
       {/* <LControl /> */}
-      <Preload all />
       <Suspense fallback={<CanvasLoader />}>
+        <Preload all />
         <Environment preset="forest" />
         {children}
-        <Effect on={on} />
+        {/* <Effect on={on} /> */}
       </Suspense>
     </Canvas>
   )
@@ -119,14 +119,14 @@ export const Effect = ({ on }) => {
     <EffectComposer>
       <Vignette eskil={false} offset={0.004} darkness={on ? 1.2 : 1} />
 
-      <Glitch active={true} ratio={0.89} delay={[0.5, 35]} duration={[0.1, 0.3]} strength={[0.1, 0.5]} mode={GlitchMode.SPORADIC} />
+      {/* <Glitch active={true} ratio={0.89} delay={[0.5, 35]} duration={[0.1, 0.3]} strength={[0.1, 0.5]} mode={GlitchMode.SPORADIC} /> */}
       {on && (
         <Scanline density={on ? 3.5 : 50} blendFunction={BlendFunction.OVERLAY} />,
         <DepthOfField focusDistance={2} focalLength={0.5} bokehScale={6} />,
         <Scanline density={on ? 3.5 : 0} blendFunction={on && BlendFunction.OVERLAY} />
-        )}
+      )}
 
-        <Glitch active={on} ratio={0.89} delay={[0.5, 2]} strength={[0.1, 0.5]} mode={GlitchMode.CONSTANT_WILD} />
+      <Glitch active={on} ratio={0.89} delay={[0.5, 2]} strength={[0.1, 0.5]} mode={GlitchMode.CONSTANT_WILD} />
     </EffectComposer>
 
   )

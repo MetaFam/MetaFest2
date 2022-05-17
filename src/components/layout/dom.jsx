@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react'
 import {
   Box,
 } from "@chakra-ui/react";
-import {SiteHeader} from "@/components/dom/Header";
+import { SiteHeader } from "@/components/dom/Header";
 import { SiteFooter } from "@/components/dom/Footer";
 import { AlphaNotice } from '@/components/dom/AlphaNotice';
 import { EasterEgg } from '@/components/dom/EasterEgg';
@@ -29,8 +29,8 @@ const Dom = ({ children }) => {
         m: 0,
         p: 0,
         section: {
-          scrollSnapAlign: { base: "start" },
-          scrollSnapStop: { base: "smooth" },
+          scrollSnapAlign: { base: "start", lg: 'unset' },
+          scrollSnapStop: { base: "smooth", lg: 'unset' },
         },
       }}
     >

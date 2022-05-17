@@ -54,12 +54,13 @@ const OctoEasterEgg = (props) => {
       ref={mesh}
       name="BabyOcto"
       // scale={active ? [2, 2, 2] : [1.5, 1.5, 1.5]}
-      rotation={[0,0,0]}
+      rotation={[0, 0, 0]}
       onClick={(e) => setActive(!active)}
+      dispose={null}
     >
       <planeBufferGeometry attach="geometry" args={[1, 1]} />
-      <meshBasicMaterial attach="material" ref={material}  />
-      </mesh>
+      <meshBasicMaterial attach="material" ref={material} />
+    </mesh>
   )
 };
 

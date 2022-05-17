@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Box,
   Flex,
@@ -226,8 +226,8 @@ export function SiteHeader() {
                 Join MetaGame
               </Link>
             ) : (
-                <Link
-                  className="ui"
+              <Link
+                className="ui"
                 href="https://metagame.wtf"
                 px={0}
                 py={0}
@@ -294,6 +294,7 @@ export function SiteHeader() {
 
 export const UIToggles = () => {
   const [uiOn, setUiOn] = useState(true);
+  const [os, setOS] = useState(null)
   const [canvasOn, setCanvasOn] = useState(true)
   const { dom } = useStore()
   const screenSize = useBreakpoint()
@@ -305,6 +306,7 @@ export const UIToggles = () => {
   const metaverseBg = `assets/img/metaverse-bg${mob}.jpg`
   const chatBg = `assets/img/chat-bg${mob}.jpg`
   const applyBg = `assets/img/apply-bg${mob}.jpg`
+  console.log(os);
 
   const toggleUI = () => {
     if (typeof window !== 'undefined') {
@@ -312,7 +314,7 @@ export const UIToggles = () => {
       const content = document.querySelectorAll('section')
       ui.forEach((item, i) => {
         item.style.transition = 'transform 0.3s 0.1s ease, opacity 0.3s 0.2s'
-        console.log(item);
+        // console.log(item);
         if (uiOn) {
           item.style.opacity = 0
         } else {
@@ -321,7 +323,7 @@ export const UIToggles = () => {
       })
       content.forEach((item, i) => {
         item.style.transition = 'opacity 0.3s 0.4s ease'
-        console.log(item);
+        // console.log(item);
         if (uiOn) {
           item.style.opacity = 0
         } else {
@@ -332,35 +334,53 @@ export const UIToggles = () => {
     }
   }
 
-  const toggleCanvas = () => {
+  const toggleCanvas = useCallback(() => {
     if (typeof window !== 'undefined') {
       const canvas = document.querySelector('canvas')
       const content = document.querySelectorAll('section')
 
-      if (canvas.style.display === 'block') {
-        canvas.style.display = 'none'
+      if (canvas) {
+        console.log(canvas);
+        if (canvas.style.display === 'block') {
+          canvas.style.display = 'none'
 
-        content[0].style.backgroundImage = `url(${homeBg})`
-        content[1].style.backgroundImage = `url(${scheduleBg}) `
-        content[2].style.backgroundImage = `url(${workshopsBg}) `
-        content[3].style.backgroundImage = `url(${speakersBg}) `
-        content[4].style.backgroundImage = `url(${metaverseBg})`
-        content[5].style.backgroundImage = `url(${chatBg})`
-        content[6].style.backgroundImage = `url(${applyBg})`
+          content[0].style.backgroundImage = `url(${homeBg})`
+          content[1].style.backgroundImage = `url(${scheduleBg}) `
+          content[2].style.backgroundImage = `url(${workshopsBg}) `
+          content[3].style.backgroundImage = `url(${speakersBg}) `
+          content[4].style.backgroundImage = `url(${metaverseBg})`
+          content[5].style.backgroundImage = `url(${chatBg})`
+          content[6].style.backgroundImage = `url(${applyBg})`
 
+        } else {
+          canvas.style.display = 'block'
+          content.forEach(item => {
+            item.style.background = `none`
+          })
+        }
+        setCanvasOn(!canvasOn)
       } else {
-        canvas.style.display = 'block'
-        content.forEach(item => {
-          item.style.background = `none`
-        })
-      }
-      setCanvasOn(!canvasOn)
-    }
-  }
 
+      }
+    }
+  }, [setCanvasOn, canvasOn])
+
+  useEffect(() => {
+    let os = null;
+    if (typeof window !== 'undefined') {
+      if (navigator.userAgent.indexOf('Mac') != -1) {
+        setOS('MacOS')
+        if (canvasOn) {
+          console.log('canvas: ', canvasOn);
+          toggleCanvas();
+        }
+      }
+
+    }
+  }, [canvasOn, toggleCanvas])
 
   return (
-    <HStack fontSize={{ base: '3vw', lg: '0.7vw' }} fontWeight={500} position="fixed" bottom={5} right={{base: 3, lg: 5}} opacity={0.5} transition="opacity 0.3s ease" _hover={{
+    <HStack fontSize={{ base: '3vw', lg: '0.7vw' }} fontWeight={500} position="fixed" bottom={5} right={{ base: 3, lg: 5 }} opacity={0.5} transition="opacity 0.3s ease" _hover={{
       opacity: 1
     }}>
       <VStack spacing={0}>

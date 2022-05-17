@@ -9,15 +9,18 @@ import { CanvasLoader } from '@/components/canvas/Loader'
 
 // eslint-disable-next-line react/display-name
 const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
+  console.log('DOF', dof);
+  let os = null;
   const group = useRef();
   const particles = useRef()
   const material = useRef()
+  const geometry = useRef()
+  const points = useRef()
   //const [movement] = useState(() => new THREE.Vector3())
   const [temp] = useState(() => new THREE.Vector3())
   const [focus] = useState(() => new THREE.Vector3())
   const clock = new THREE.Clock();
   let previousTime = 0;
-
 
   /**
    * Textures
@@ -31,9 +34,11 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
 
   // const { animationRef } = props
   useEffect(() => {
-    generateGalaxy()
+    if (navigator.userAgent.indexOf('Mac') != -1) os = 'MacOS'
+    console.log('os:', os);
+    if (!os) generateGalaxy()
     // console.log(dof);
-  })
+  }, [os])
 
   useFrame((state, delta) => {
     const elapsedTime = clock.getElapsedTime();
@@ -41,29 +46,29 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
     previousTime = elapsedTime;
     //dof.current.target = focus.lerp(particles.current.position, 0.05)
     //movement.lerp(temp.set(state.mouse.x, state.mouse.y * 0.2, 0), 0.2)
-    if (dof.current) {
-      dof.current.circleOfConfusionMaterial.uniforms.focusDistance.value = parameters.focusDistance
-      dof.current.circleOfConfusionMaterial.uniforms.focalLength.value = parameters.focalLength
-      dof.current.resolution.height = parameters.height
-      dof.current.resolution.width = parameters.width
-      dof.current.target = new THREE.Vector3(parameters.focusX, parameters.focusY, parameters.focusZ)
-      dof.current.blendMode.opacity.value = parameters.opacity
-    }
+    // if (dof.current) {
+    //   dof.current.circleOfConfusionMaterial.uniforms.focusDistance.value = parameters.focusDistance
+    //   dof.current.circleOfConfusionMaterial.uniforms.focalLength.value = parameters.focalLength
+    //   dof.current.resolution.height = parameters.height
+    //   dof.current.resolution.width = parameters.width
+    //   dof.current.target = new THREE.Vector3(parameters.focusX, parameters.focusY, parameters.focusZ)
+    //   dof.current.blendMode.opacity.value = parameters.opacity
+    // }
     if (particles.current) {
-      if (parameters.type === 1) {
-        particles.current.position.y = -scrollY * 0.0005;
-        // galaxy1.rotation.y += (parallaxX - cameraGroup.position.x) * 2 * deltaTime
-        particles.current.rotation.z = scrollY * 0.0004;
-        particles.current.rotation.y = -elapsedTime * 0.006;
-      } else if (parameters.type === 2) {
-        particles.current.rotation.y = -elapsedTime * 0.007;
-      } else if (parameters.type == 3) {
-        particles.current.position.y = scrollY * 0.0004;
-        particles.current.rotation.y = Math.cos(elapsedTime * 0.03) * Math.PI * 0.05;
-      } else if (parameters.type == 4) {
-        particles.current.position.z = -scrollY * 0.0004;
-        particles.current.rotation.y = Math.cos(elapsedTime * 0.03) * Math.PI * 0.05;
-      }
+      // if (parameters.type === 1) {
+      //   particles.current.position.y = -scrollY * 0.0005;
+      //   // galaxy1.rotation.y += (parallaxX - cameraGroup.position.x) * 2 * deltaTime
+      //   particles.current.rotation.z = scrollY * 0.0004;
+      //   particles.current.rotation.y = -elapsedTime * 0.006;
+      // } else if (parameters.type === 2) {
+      //   particles.current.rotation.y = -elapsedTime * 0.007;
+      // } else if (parameters.type == 3) {
+      //   particles.current.position.y = scrollY * 0.0004;
+      //   particles.current.rotation.y = Math.cos(elapsedTime * 0.03) * Math.PI * 0.05;
+      // } else if (parameters.type == 4) {
+      //   particles.current.position.z = -scrollY * 0.0004;
+      //   particles.current.rotation.y = Math.cos(elapsedTime * 0.03) * Math.PI * 0.05;
+      // }
     }
 
   })
@@ -74,7 +79,7 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
     const colorInside = new THREE.Color(parameters.insideColor)
     const colorOutside = new THREE.Color(parameters.outsideColor)
 
-    const sections = 6;
+    const sections = 7;
     const objectsDistance = 4;
 
 
@@ -249,24 +254,18 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
 
   return (
     <>
-      <Suspense fallback={<CanvasLoader />}>
-        <group ref={group} {...props}>
-          <points ref={particles}>
-            <bufferGeometry />
-            <pointsMaterial ref={material} size={parameters.size} sizeAttenuation={true} depthWrite={true} vertexColors={true} blending={THREE.AdditiveBlending} />
-          </points>
-          {nucleus && (
-            <Nucleus size={0.125} />
-          )}
-          {helper && (
-            <axesHelper args={[2, 2, 2]} />
-          )}
-        </group>
-      </Suspense>
-      {/* {effects && (
-        <Effects ref={dof} />
-      )} */}
-
+      <group ref={group} {...props} dispose={null}>
+        <points ref={particles}>
+          <bufferGeometry ref={geometry} />
+          <pointsMaterial ref={material} size={parameters.size} sizeAttenuation={true} depthWrite={true} vertexColors={true} blending={THREE.AdditiveBlending} />
+        </points>
+        {nucleus && (
+          <Nucleus size={0.125} />
+        )}
+        {helper && (
+          <axesHelper args={[2, 2, 2]} />
+        )}
+      </group>
     </>
   )
 }
