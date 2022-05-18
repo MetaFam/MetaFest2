@@ -114,7 +114,7 @@ const [openFairApplication, setOpenFairApplication] = useState(false);
                     <Feature
                       icon={'assets/img/icons/forum.svg'}
                     iconBg={"yellow.900"}
-                    text={"Speakers"}
+                    text={"Speakers/Workshops"}
                     call={() =>
                       setOpenSpeakerApplication(!openSpeakerApplication)
                     }
