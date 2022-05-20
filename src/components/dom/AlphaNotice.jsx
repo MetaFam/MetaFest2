@@ -5,18 +5,16 @@ import {
   Box,
 } from '@chakra-ui/react'
 import { CloseIcon } from '@chakra-ui/icons'
+import useStore from '@/helpers/store'
+import { useIsMac } from '@/utils/hooks';
 
 export function AlphaNotice() {
   const [toggle, setToggle] = useState(true);
   const notice = useRef(null);
-  const [os, setOS] = useState(null)
-  console.log(os);
-  useEffect(() => {
-    let os = null;
-    if (typeof window !== 'undefined') {
-      if (navigator.userAgent.indexOf('Mac') != -1) setOS('MacOS')
-    }
-  }, [])
+  const macOS = useIsMac();
+  // const localStore = useLocalStore();
+  // console.log('localStore', localStore);
+
 
   return (
     <Box
@@ -50,7 +48,7 @@ export function AlphaNotice() {
         py={3}
       >
         {/* <Image src={BabyOctoGif} boxSize="25px" objectFit="cover" /> */}
-        {os !== 'MacOS' ? (
+        {!macOS ? (
           <Text fontSize={{ base: "2vmin", lg: '0.7vmax' }} fontWeight={700}>
             The site is in{" "}
             <Text as="span" color="cyan" fontWeight="700">

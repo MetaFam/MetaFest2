@@ -35,7 +35,7 @@ export const galaxy5Colors = {
  * Galaxy
  */
 export const galaxy1Params = {
-    count: 5000,
+    count: 100000,
     size: 0.03,
     radius: 4.86,
     branches: 8,
