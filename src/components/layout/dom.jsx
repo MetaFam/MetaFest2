@@ -1,4 +1,4 @@
-import useStore from '@/helpers/store'
+import useStore, {getFromLS, saveToLS, localStore} from '@/helpers/store'
 import { useEffect, useRef, useState } from 'react'
 import {
   Box,
@@ -14,6 +14,7 @@ import { SiteFooter } from "@/components/dom/Footer";
 import { AlphaNotice } from '@/components/dom/AlphaNotice';
 import { EasterEgg } from '@/components/dom/EasterEgg';
 import { EasterEggGlitch } from '@/components/dom/EasterEggGlitch';
+import { useCallback } from 'react';
 
 const Dom = ({ children }) => {
   const ref = useRef(null)
@@ -61,15 +62,17 @@ const Dom = ({ children }) => {
 export default Dom
 
 export const UIToggles = () => {
-  const [uiOn, setUiOn] = useState(true);
   const macOS = useIsMac();
   const [canvasOn, setCanvasOn] = useState(macOS ? false : true)
-  const { dom } = useStore()
+  const { on } = localStore.get('MF2Effects') || { on: canvasOn };
+
+  const [uiOn, setUiOn] = useState(true);
 
   const toggleUI = () => {
     if (typeof window !== 'undefined') {
       const ui = document.querySelectorAll('.ui')
       const content = document.querySelectorAll('section')
+      if (!canvasOn) return;
       ui.forEach((item, i) => {
         item.style.transition = 'transform 0.3s 0.1s ease, opacity 0.3s 0.2s'
         // console.log(item);
@@ -93,12 +96,24 @@ export const UIToggles = () => {
     return
   }
 
-  const toggleCanvas = () => {
-    if(macOS) return
+  const toggleCanvas = useCallback(() => {
+    if (macOS || !uiOn) return
     setCanvasOn(!canvasOn)
     gracefulDegradation(canvasOn)
-  }
+    localStore.set('MF2Effects', { on: !canvasOn })
+  }, [canvasOn, macOS, uiOn])
 
+  useEffect(() => {
+    if(!on && !macOS ) {
+      setCanvasOn(on)
+      gracefulDegradation(!on)
+    } else {
+      if(!macOS) {
+        setCanvasOn(on)
+        gracefulDegradation(!on)
+      }
+    }
+  }, [on, canvasOn, macOS, toggleCanvas]);
 
   return (
     <HStack fontSize={{ base: '3vw', lg: '0.7vw' }} fontWeight={500} position="fixed" bottom={5} right={{ base: 3, lg: 5 }} opacity={0.5} transition="opacity 0.3s ease" zIndex={3000} _hover={{
@@ -114,7 +129,7 @@ export const UIToggles = () => {
           color={uiOn ? "#FF61E6" : "#7C56FF"}
           alignSelf="center"
           onClick={toggleUI}
-          isDisabled={macOS}
+          isDisabled={macOS || !canvasOn}
         />
         <Text as="span">UI</Text>
       </VStack>
@@ -127,8 +142,8 @@ export const UIToggles = () => {
           colorScheme="ghost"
           color={canvasOn && !macOS ? "#FF61E6" : "#7C56FF"}
           alignSelf="center"
-          onClick={toggleCanvas}
-          isDisabled={macOS}
+          onClick={() => toggleCanvas()}
+          isDisabled={macOS || !uiOn}
         />
         <Text as="span">Effects</Text>
       </VStack>

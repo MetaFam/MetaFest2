@@ -5,16 +5,25 @@ import {
   Box,
 } from '@chakra-ui/react'
 import { CloseIcon } from '@chakra-ui/icons'
-import useStore from '@/helpers/store'
+import {getFromLS, saveToLS, localStore} from '@/helpers/store'
 import { useIsMac } from '@/utils/hooks';
 
 export function AlphaNotice() {
-  const [toggle, setToggle] = useState(true);
+  const [toggle, setToggle] = useState(false);
+  const { dismiss } = localStore.get('MF2AlphaNotice') || { dismiss: toggle };
   const notice = useRef(null);
   const macOS = useIsMac();
-  // const localStore = useLocalStore();
-  // console.log('localStore', localStore);
 
+  const handleClick = () => {
+    setToggle(false);
+    localStore.set('MF2AlphaNotice', { dismiss: true });
+  }
+
+  useEffect(() => {
+    if (!dismiss) {
+      setToggle(true);
+    }
+  }, [dismiss]);
 
   return (
     <Box
@@ -78,7 +87,7 @@ export function AlphaNotice() {
         )}
         {/* <Image src={BabyOctoGif} boxSize="35px" objectFit="cover" /> */}
         <IconButton
-          onClick={() => setToggle(!toggle)}
+          onClick={handleClick}
           colorScheme="ghost"
           color="#927CFF"
           pos="fixed"

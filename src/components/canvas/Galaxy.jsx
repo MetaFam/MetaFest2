@@ -21,7 +21,7 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
   const [focus] = useState(() => new THREE.Vector3())
   const clock = new THREE.Clock();
   let previousTime = 0;
-  let galaxyCreated = useRef(false);
+  const galaxyCreated = useRef(false);
   /**
    * Textures
    */
@@ -37,7 +37,7 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
     if (!galaxyCreated.current) {
       generateGalaxy()
     }
-    console.log('gc: ', galaxyCreated.current);
+    console.log('Galaxy created: ', galaxyCreated.current);
 
   }, [galaxyCreated, generateGalaxy])
 
@@ -255,7 +255,6 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
 
     // }
     galaxyCreated.current = true;
-
   }, [parameters, planeAlphaTexture, planeColorTexture])
 
   return (

@@ -1,7 +1,7 @@
 import "@/styles/App.css";
 import { useRouter } from 'next/router'
 import useStore from '@/helpers/store'
-import { useIsMac } from "@/utils/hooks";
+import { useIsMac, useLocalStore } from "@/utils/hooks";
 import React, { useEffect, useRef, useState } from 'react'
 import { HeadComponent } from "@/components/dom/HeadComponent";
 import Dom from '@/components/layout/dom'
