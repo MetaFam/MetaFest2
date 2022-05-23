@@ -6,19 +6,22 @@ import { EffectComposer, DepthOfField } from '@react-three/postprocessing'
 import { useControls, folder } from 'leva'
 
 import { CanvasLoader } from '@/components/canvas/Loader'
+import { useCallback } from 'react'
+
 
 // eslint-disable-next-line react/display-name
 const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
   const group = useRef();
-  const particles = useRef()
+  const particles = useRef(null)
   const material = useRef()
+  const geometry = useRef()
+  const points = useRef()
   //const [movement] = useState(() => new THREE.Vector3())
   const [temp] = useState(() => new THREE.Vector3())
   const [focus] = useState(() => new THREE.Vector3())
   const clock = new THREE.Clock();
   let previousTime = 0;
-
-
+  const galaxyCreated = useRef(false);
   /**
    * Textures
    */
@@ -29,19 +32,22 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
   planeAlphaTexture.generateMipmaps = true;
 
 
-  // const { animationRef } = props
   useEffect(() => {
-    generateGalaxy()
-    // console.log(dof);
-  })
+
+    if (!galaxyCreated.current) {
+      generateGalaxy()
+    }
+    console.log('Galaxy created: ', galaxyCreated.current);
+
+  }, [galaxyCreated, generateGalaxy])
 
   useFrame((state, delta) => {
     const elapsedTime = clock.getElapsedTime();
     const deltaTime = elapsedTime - previousTime;
     previousTime = elapsedTime;
-    //dof.current.target = focus.lerp(particles.current.position, 0.05)
-    //movement.lerp(temp.set(state.mouse.x, state.mouse.y * 0.2, 0), 0.2)
     if (dof.current) {
+      dof.current.target = focus.lerp(particles.current.position, 0.05)
+      movement.lerp(temp.set(state.mouse.x, state.mouse.y * 0.2, 0), 0.2)
       dof.current.circleOfConfusionMaterial.uniforms.focusDistance.value = parameters.focusDistance
       dof.current.circleOfConfusionMaterial.uniforms.focalLength.value = parameters.focalLength
       dof.current.resolution.height = parameters.height
@@ -68,13 +74,16 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
 
   })
 
-  const generateGalaxy = () => {
+  /**
+   * TODO: Look at converting the positions/particles to a `useMemo` which i hope will improve matters on MacOS.
+   * */
+  const generateGalaxy = useCallback(() => {
     const positions = new Float32Array(parameters.count * 3)
     const colors = new Float32Array(parameters.count * 3)
     const colorInside = new THREE.Color(parameters.insideColor)
     const colorOutside = new THREE.Color(parameters.outsideColor)
 
-    const sections = 6;
+    const sections = 7;
     const objectsDistance = 4;
 
 
@@ -245,28 +254,23 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
     //   material.current.opacity = parameters.opacity
 
     // }
-  }
+    galaxyCreated.current = true;
+  }, [parameters, planeAlphaTexture, planeColorTexture])
 
   return (
     <>
-      <Suspense fallback={<CanvasLoader />}>
-        <group ref={group} {...props}>
-          <points ref={particles}>
-            <bufferGeometry />
-            <pointsMaterial ref={material} size={parameters.size} sizeAttenuation={true} depthWrite={true} vertexColors={true} blending={THREE.AdditiveBlending} />
-          </points>
-          {nucleus && (
-            <Nucleus size={0.125} />
-          )}
-          {helper && (
-            <axesHelper args={[2, 2, 2]} />
-          )}
-        </group>
-      </Suspense>
-      {/* {effects && (
-        <Effects ref={dof} />
-      )} */}
-
+      <group ref={group} {...props} dispose={null}>
+        <points ref={particles}>
+          <bufferGeometry ref={geometry} />
+          <pointsMaterial ref={material} size={parameters.size} sizeAttenuation={true} depthWrite={true} vertexColors={true} blending={THREE.AdditiveBlending} />
+        </points>
+        {nucleus && (
+          <Nucleus size={0.125} />
+        )}
+        {helper && (
+          <axesHelper args={[2, 2, 2]} />
+        )}
+      </group>
     </>
   )
 }

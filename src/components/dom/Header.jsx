@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Box,
   Flex,
@@ -207,7 +207,6 @@ export function SiteHeader() {
             </HStack>
           </HStack>
           <Flex alignItems="center" justifyContent="end" width={{ base: "25%", md: 'auto' }}>
-            <UIToggles />
             {screenSize !== 'base' ? (
               <Link
                 className="ui"
@@ -226,8 +225,8 @@ export function SiteHeader() {
                 Join MetaGame
               </Link>
             ) : (
-                <Link
-                  className="ui"
+              <Link
+                className="ui"
                 href="https://metagame.wtf"
                 px={0}
                 py={0}
@@ -292,106 +291,7 @@ export function SiteHeader() {
   );
 }
 
-export const UIToggles = () => {
-  const [uiOn, setUiOn] = useState(true);
-  const [canvasOn, setCanvasOn] = useState(true)
-  const { dom } = useStore()
-  const screenSize = useBreakpoint()
-  const mob = screenSize === 'base' ? '-mob' : ''
-  const homeBg = `assets/img/home-bg${mob}.jpg`
-  const scheduleBg = `assets/img/schedule-bg${mob}.jpg`
-  const workshopsBg = `assets/img/workshops-bg${mob}.jpg`
-  const speakersBg = `assets/img/speakers-bg${mob}.jpg`
-  const metaverseBg = `assets/img/metaverse-bg${mob}.jpg`
-  const chatBg = `assets/img/chat-bg${mob}.jpg`
-  const applyBg = `assets/img/apply-bg${mob}.jpg`
 
-  const toggleUI = () => {
-    if (typeof window !== 'undefined') {
-      const ui = document.querySelectorAll('.ui')
-      const content = document.querySelectorAll('section')
-      ui.forEach((item, i) => {
-        item.style.transition = 'transform 0.3s 0.1s ease, opacity 0.3s 0.2s'
-        console.log(item);
-        if (uiOn) {
-          item.style.opacity = 0
-        } else {
-          item.style.opacity = 1
-        }
-      })
-      content.forEach((item, i) => {
-        item.style.transition = 'opacity 0.3s 0.4s ease'
-        console.log(item);
-        if (uiOn) {
-          item.style.opacity = 0
-        } else {
-          item.style.opacity = 1
-        }
-      })
-      setUiOn(!uiOn)
-    }
-  }
-
-  const toggleCanvas = () => {
-    if (typeof window !== 'undefined') {
-      const canvas = document.querySelector('canvas')
-      const content = document.querySelectorAll('section')
-
-      if (canvas.style.display === 'block') {
-        canvas.style.display = 'none'
-
-        content[0].style.backgroundImage = `url(${homeBg})`
-        content[1].style.backgroundImage = `url(${scheduleBg}) `
-        content[2].style.backgroundImage = `url(${workshopsBg}) `
-        content[3].style.backgroundImage = `url(${speakersBg}) `
-        content[4].style.backgroundImage = `url(${metaverseBg})`
-        content[5].style.backgroundImage = `url(${chatBg})`
-        content[6].style.backgroundImage = `url(${applyBg})`
-
-      } else {
-        canvas.style.display = 'block'
-        content.forEach(item => {
-          item.style.background = `none`
-        })
-      }
-      setCanvasOn(!canvasOn)
-    }
-  }
-
-
-  return (
-    <HStack fontSize={{ base: '3vw', lg: '0.7vw' }} fontWeight={500} position="fixed" bottom={5} right={{base: 3, lg: 5}} opacity={0.5} transition="opacity 0.3s ease" _hover={{
-      opacity: 1
-    }}>
-      <VStack spacing={0}>
-        <IconButton
-          icon={uiOn ? <FaToggleOn /> : <FaToggleOff />}
-          aria-label="Toggle UI"
-          flex={0}
-          fontSize={{ base: '12vmin', lg: "2vmax" }}
-          colorScheme="ghost"
-          color={uiOn ? "#FF61E6" : "#7C56FF"}
-          alignSelf="center"
-          onClick={toggleUI}
-        />
-        <Text as="span">UI</Text>
-      </VStack>
-      <VStack spacing={0}>
-        <IconButton
-          icon={canvasOn ? <FaToggleOn /> : <FaToggleOff />}
-          aria-label="Toggle Effects"
-          flex={0}
-          fontSize={{ base: '12vmin', lg: "2vmax" }}
-          colorScheme="ghost"
-          color={canvasOn ? "#FF61E6" : "#7C56FF"}
-          alignSelf="center"
-          onClick={toggleCanvas}
-        />
-        <Text as="span">Effects</Text>
-      </VStack>
-    </HStack>
-  )
-}
 
 export const MenuIcon2SVG = ({ toggle }) => (
   <Box>

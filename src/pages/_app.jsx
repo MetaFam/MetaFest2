@@ -1,13 +1,13 @@
 import "@/styles/App.css";
-import React, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import useStore from '@/helpers/store'
-import { useEffect, useRef } from 'react'
+import { useIsMac, useLocalStore } from "@/utils/hooks";
+import React, { useEffect, useRef, useState } from 'react'
 import { HeadComponent } from "@/components/dom/HeadComponent";
 import Dom from '@/components/layout/dom'
 import partition from '@/helpers/partition'
 import dynamic from 'next/dynamic'
-import { settings } from '@/seo.config';
-import SocialImg from "@/static/assets/img/social.png";
+
 
 import { ChakraProvider, CSSReset, extendTheme, useBreakpointValue } from "@chakra-ui/react";
 
@@ -90,7 +90,7 @@ const theme = extendTheme({
             base: "translateY(5px)",
             lg: "translateY(9px)",
             "2xl": "translateY(10px)",
-        },
+          },
         }
       },
       h2: {
@@ -220,19 +220,21 @@ const LCanvas = dynamic(() => import('@/components/layout/canvas'), {
 })
 
 const Balance = ({ child }) => {
-  const [r3f, dom] = partition(child, (c) => c.props.r3f === true)
+  const [r3f, dom] = partition(child, (c) => c.props.r3f === true);
   const mobile = useBreakpointValue({ base: true, lg: false });
+  const macOS = useIsMac();
 
   return (
     <>
       <Dom>{dom}</Dom>
-      <LCanvas isMobile={mobile}>{r3f}</LCanvas>
+      <LCanvas isMobile={mobile} >{r3f}</LCanvas>
     </>
   )
 }
 
 function App({ Component, pageProps = { title: 'index' } }) {
   const router = useRouter()
+  const { os } = useStore();
   const curURL = useRef(null);
   let host = curURL ?? curURL.current;
 
@@ -241,19 +243,25 @@ function App({ Component, pageProps = { title: 'index' } }) {
       const getHostname = () => {
         if (typeof window !== "undefined") {
           curURL.current = window.location.origin;
-          // console.log(window.location);
-          // return host;
-          return null;
+          console.log('HOST: ', host.current);
+          return host;
         }
       };
+
       getHostname();
     }
-  }, [curURL]);
+  }, [curURL, host]);
 
 
   useEffect(() => {
     useStore.setState({ router })
-  }, [router])
+    if (typeof window !== "undefined") {
+      useStore.setState({
+        os: navigator.userAgent.toUpperCase() ?? null
+      })
+
+    }
+  }, [os, router])
 
   const child = Component(pageProps).props.children
 

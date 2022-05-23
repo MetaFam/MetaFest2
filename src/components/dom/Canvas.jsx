@@ -16,7 +16,7 @@ import SeedLogo from "../img/assets/textures/particles/seed_logo.png";
 import BabyOctoImg from "../static/assets/textures/baby_octo_alpha_0001.png";
 import BabyOctoAlpha from "../static/assets/textures/baby_octo_alpha_map.png";
 
-export const Canvas = ({toggleAnimations}) => {
+export const Canvas = ({ toggleAnimations }) => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const canvas = document.querySelector("canvas.webgl");
@@ -601,12 +601,12 @@ export const Canvas = ({toggleAnimations}) => {
 
       //Click events
       window.addEventListener("click", () => {
-        console.log(easterEgg1[0].classList);
+        // console.log(easterEgg1[0].classList);
         if (currentIntersect) {
           console.log("i", currentIntersect);
           if (currentIntersect === plane1 || currentIntersect === plane3 || currentIntersect === galaxy1) {
             easterEgg1[0].classList.toggle("found");
-            console.log(easterEgg1[0].classList);
+            // console.log(easterEgg1[0].classList);
           }
         } else {
           console.log("no intersect", currentIntersect);
@@ -684,16 +684,16 @@ export const Canvas = ({toggleAnimations}) => {
         const objectsToTest = [plane1, plane3];
         const intersects = raycaster.intersectObjects(objectsToTest, false);
         if (intersects.length) {
-          console.log('length', intersects.length);
-          console.log("Something is being hovered");
+          // console.log('length', intersects.length);
+          // console.log("Something is being hovered");
           if (currentIntersect === null) {
           }
           currentIntersect = intersects[0];
-          console.log("mouse enter", currentIntersect);
+          // console.log("mouse enter", currentIntersect);
 
         } else {
           if (currentIntersect) {
-            console.log("mouse leave");
+            // console.log("mouse leave");
             // easterEgg1.classList.remove('found')
           }
           currentIntersect = null;
@@ -709,7 +709,7 @@ export const Canvas = ({toggleAnimations}) => {
 
         // if(toggleAnimations) return
         // Call tick again on the next frame
-          window.requestAnimationFrame(tick);
+        window.requestAnimationFrame(tick);
 
       };
       tick();

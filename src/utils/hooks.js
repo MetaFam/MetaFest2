@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useToast } from "@chakra-ui/react";
+import useStore from "@/helpers/store";
 
 
 export const useOnScreen = (ref) => {
@@ -41,3 +42,13 @@ export const useDisabledMobileNotify = (type) => {
   });
   return notice;
 };
+
+// Tests for Mac users so we can degrade the 3D experience due to Mac/WebGL issues.
+export const useIsMac = () => {
+  const { os } = useStore();
+  if (os) {
+    return os.indexOf('MAC') >= 0 ?? false;
+  }
+  return false;
+}
+

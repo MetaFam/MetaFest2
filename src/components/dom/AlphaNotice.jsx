@@ -1,14 +1,29 @@
-import { useState, useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import {
   Text,
   IconButton,
   Box,
 } from '@chakra-ui/react'
 import { CloseIcon } from '@chakra-ui/icons'
+import {getFromLS, saveToLS, localStore} from '@/helpers/store'
+import { useIsMac } from '@/utils/hooks';
 
 export function AlphaNotice() {
-  const [toggle, setToggle] = useState(true);
-  const notice= useRef(null);
+  const [toggle, setToggle] = useState(false);
+  const { dismiss } = localStore.get('MF2AlphaNotice') || { dismiss: toggle };
+  const notice = useRef(null);
+  const macOS = useIsMac();
+
+  const handleClick = () => {
+    setToggle(false);
+    localStore.set('MF2AlphaNotice', { dismiss: true });
+  }
+
+  useEffect(() => {
+    if (!dismiss) {
+      setToggle(true);
+    }
+  }, [dismiss]);
 
   return (
     <Box
@@ -37,32 +52,47 @@ export function AlphaNotice() {
         justifyContent="space-around"
         flexFlow="row nowrap"
         mx="auto"
-        maxW={{base: '75%', md: '66%', '2xl': "6xl"}}
-        px={{base: 5, lg: 3}}
+        maxW={{ base: '75%', md: '66%', '2xl': "6xl" }}
+        px={{ base: 5, lg: 3 }}
         py={3}
       >
         {/* <Image src={BabyOctoGif} boxSize="25px" objectFit="cover" /> */}
-        <Text fontSize={{base: "2vmin", lg: '0.7vmax'}} fontWeight={700}>
-          The site is in{" "}
-          <Text as="span" color="cyan" fontWeight="700">
-            Beta
+        {!macOS ? (
+          <Text fontSize={{ base: "2vmin", lg: '0.7vmax' }} fontWeight={700}>
+            The site is in{" "}
+            <Text as="span" color="cyan" fontWeight="700">
+              Beta
+            </Text>
+            .{" "}
+            <span role="img" aria-label="watchful eyes">
+              👀
+            </span>{" "}
+            We&apos;re still working on content, there&apos;s no Web3 connectivity (or is there...?) and there are some bugs. <br /> We&apos;re working to get it all ship shape ASAP!
           </Text>
-          .{" "}
-          <span role="img" aria-label="watchful eyes">
-            👀
-          </span>{" "}
-          We&apos;re still working on content, there&apos;s no Web3 connectivity (or is there...?) and there
-          are some bugs. <br /> We&apos;re working to get it
-          all ship shape ASAP!
-        </Text>
+        ) : (
+          <Text fontSize={{ base: "2vmin", lg: '0.7vmax' }} fontWeight={700}>
+            It would appear that you&apos;re on a{" "}
+            <Text as="span" color="cyan" fontWeight="700">
+              Mac
+            </Text>
+
+            .{" "}
+            <span role="img" aria-label="watchful eyes">
+              👀
+            </span>{" "}
+            <br />
+            There&apos;s an issue with ThreeJS and OSX where some features cause issues in the browser so we have disabled this functionality for the time being. Apologies.
+          </Text>
+
+        )}
         {/* <Image src={BabyOctoGif} boxSize="35px" objectFit="cover" /> */}
         <IconButton
-          onClick={() => setToggle(!toggle)}
+          onClick={handleClick}
           colorScheme="ghost"
           color="#927CFF"
           pos="fixed"
           bottom={3}
-          right={{base: 2, lg: 6}}
+          right={{ base: 2, lg: 6 }}
           size="sm"
           aria-label="Close notice"
           icon={<CloseIcon />}
