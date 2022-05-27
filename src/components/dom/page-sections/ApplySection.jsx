@@ -69,7 +69,7 @@ const [openFairApplication, setOpenFairApplication] = useState(false);
             maxW={{base: '100%', md: "2xl"}}
             p={{ base: 8, md: 12 }}
             sx={{
-              bg: "rgba(255,255,255,0.1)",
+              bg: "rgba(33,33,33,0.5)",
               backdropFilter: "blur(7px)",
               borderRadius: "5px 30px 10px 0",
               boxShadow: "0 0 30px #00000070",
