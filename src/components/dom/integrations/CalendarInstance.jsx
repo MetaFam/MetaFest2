@@ -21,7 +21,7 @@ function CalendarInstance () {
     <>
       <iframe
         title='MetaFest2: Schedule'
-        src={`https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%238E24AA&ctz=UTC&mode=AGENDA&showTabs=0&src=OWxpZWtudTVwbmVzMWw1MWVqNm4yOTE2dTBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%23F4511E`}
+        src={`https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%238E24AA&ctz=UTC&mode=AGENDA&showTabs=0&src=85ftetvc3cdl0qop7a36iguacc%40group.calendar.google.com&color=%23F4511E`}
         style={{
           minHeight: '500px',
           height: '100%',
