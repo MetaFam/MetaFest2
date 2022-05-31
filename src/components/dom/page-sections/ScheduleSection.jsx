@@ -158,7 +158,7 @@ export const ScheduleSection = () => {
             textAlign="center"
           >
             <Link
-              href="https://calendar.google.com/calendar/embed?src=9lieknu5pnes1l51ej6n2916u0%40group.calendar.google.com&amp;ctz=Europe%2FLondon"
+              href="https://calendar.google.com/calendar/embed?src=85ftetvc3cdl0qop7a36iguacc%40group.calendar.google.com&amp;ctz=Europe%2FLondon"
               isExternal
               fontWeight={700}
               fontSize="0.7vmax"
