@@ -1,4 +1,5 @@
 import React from 'react'
+
 import WidgetBot from '@widgetbot/react-embed'
 
 export default function ChatInstance () {

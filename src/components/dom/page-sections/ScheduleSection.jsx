@@ -367,7 +367,7 @@ const timeBlocks = [
     dates: 'Wednesday June 22nd',
     title: 'DAO Career Day',
     strapline: 'Join us for the DAO Job Fair!',
-    description: 'Join us for the DAO Job Fair!  Meet other DAOs that are part of our MetaAlliance and more!  Learn how to get started now.  Add your unique contributions and join the new web3 workforce.  Welcome.',
+    description: 'Finding your place within web3 is hard enough, now imagine trying to navigate a DAO! Were here to help! Most people think only technical roles needed but there’s a place for everyone within web3',
     extra: ''
   },
   {

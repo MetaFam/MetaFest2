@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef , useState } from 'react'
+
 import {
   Box,
   HStack,
@@ -7,13 +8,14 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { FaToggleOff, FaToggleOn } from 'react-icons/fa'
-import useStore, {getFromLS, localStore, saveToLS} from '@/helpers/store'
-import { useIsMac } from "@/utils/hooks";
-import { SiteHeader } from "@/components/dom/Header";
-import { SiteFooter } from "@/components/dom/Footer";
+
 import { AlphaNotice } from '@/components/dom/AlphaNotice';
 import { EasterEgg } from '@/components/dom/EasterEgg';
 import { EasterEggGlitch } from '@/components/dom/EasterEggGlitch';
+import { SiteFooter } from "@/components/dom/Footer";
+import { SiteHeader } from "@/components/dom/Header";
+import useStore, {localStore} from '@/helpers/store'
+import { useIsMac } from "@/utils/hooks";
 
 const Dom = ({ children }) => {
   const ref = useRef(null)
@@ -51,7 +53,6 @@ const Dom = ({ children }) => {
       {children}
       <SiteFooter />
       <UIToggles />
-      <AlphaNotice  />
       <EasterEgg />
       <EasterEggGlitch />
     </Box>
@@ -92,7 +93,7 @@ export const UIToggles = () => {
       })
       setUiOn(!uiOn)
     }
-    
+
   }
 
   const toggleCanvas = useCallback(() => {

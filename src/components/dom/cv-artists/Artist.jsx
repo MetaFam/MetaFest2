@@ -1,8 +1,10 @@
 import React, { useRef, useState } from "react";
+
 import {
   Box,
   Text,
 } from "@chakra-ui/react";
+
 import { useOnScreen } from "@/utils/hooks";
 
 

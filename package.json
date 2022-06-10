@@ -11,7 +11,7 @@
   },
   "scripts": {
     "lint": "yarn prettier && yarn eslint",
-    "eslint": "next lint --fix --dir src",
+    "eslint": "next lint --fix --dir src --ignore-path .eslintignore",
     "prettier": "prettier -l \"./src/**/*.{js,jsx,md}\"",
     "dev": "next dev",
     "build": "next build",

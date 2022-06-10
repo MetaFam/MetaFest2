@@ -2,3 +2,6 @@
 dist
 node_modules/
 next.config.js
+public/assets/
+static/assets/
+static/draco

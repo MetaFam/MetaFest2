@@ -1,13 +1,14 @@
-import { Canvas, useFrame } from '@react-three/fiber'
-import * as THREE from "three";
-import { Environment, OrbitControls, Preload } from '@react-three/drei'
-
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
+
+import { Environment, OrbitControls, Preload } from '@react-three/drei'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { DepthOfField, EffectComposer, Glitch, Scanline, Vignette } from '@react-three/postprocessing';
 import { BlendFunction, GlitchMode } from 'postprocessing'
-import useStore from '@/helpers/store'
+import * as THREE from "three";
+
 
 import { CanvasLoader } from '@/components/canvas/Loader'
+import useStore from '@/helpers/store'
 import { useIsMac } from '@/utils/hooks';
 
 const LControl = () => {
