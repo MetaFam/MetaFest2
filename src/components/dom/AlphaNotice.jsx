@@ -7,8 +7,8 @@ import {
   Text,
 } from '@chakra-ui/react'
 
-import {localStore} from '@/helpers/store'
-import { useIsMac } from '@/utils/hooks';
+import {localStore} from '@mf/helpers/store'
+import { useIsMac } from '@mf/utils/hooks';
 
 export function AlphaNotice() {
   const [toggle, setToggle] = useState(false);

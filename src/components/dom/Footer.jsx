@@ -7,9 +7,9 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-import { BoxedNextImage } from "@/components/dom/BoxedNextImage";
-import OctopusImg from "@/static/assets/img/octopus.png";
-import { useOnScreen } from "@/utils/hooks";
+import { BoxedNextImage } from "@mf/components/dom/BoxedNextImage";
+import OctopusImg from "@mf/static/assets/img/octopus.png";
+import { useOnScreen } from "@mf/utils/hooks";
 // import MetaGameLogo from '../static/assets/img/logo.png'
 
 export function SiteFooter() {

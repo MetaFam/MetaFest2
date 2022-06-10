@@ -5,7 +5,7 @@ import { useFrame } from '@react-three/fiber'
 import gsap from "gsap";
 import * as THREE from "three";
 
-import useStore from '@/helpers/store'
+import useStore from '@mf/helpers/store'
 
 export default function OctoPetVox(props) {
   const router = useStore((s) => s.router)

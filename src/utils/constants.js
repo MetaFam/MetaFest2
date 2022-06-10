@@ -13,39 +13,55 @@ export const timeBlocks = [
     title: 'Opening Ceremonies!',
     strapline: 'Get ready for a jam-packed 2 weeks! 55+ plus speakers, panels, workshops, and more...',
     description: 'Welcome to MetaFest2!  Let’s break the ice with some social games and fun.  Time to start the festivities.  Game-on!',
-    extra: `If you missed out last year, I can feel your <span className="gradient">FOMO</span> from here!!`
+    extra: ``
   },
   {
     week: 1,
     dates: 'Friday-Saturday June 10th-11th',
-    title: 'Tooling Days',
-    strapline: 'How do you stay organized and productive?',
-    description: 'Two days of an open toolbox. Learn useful Web3, DAO, organizational dApps often from the creators.',
-    extra: `If you missed out last year, I can feel your <span className="gradient">FOMO</span> from here!!`
+    title: 'MetaVerse Days',
+    strapline: 'Looks like some damn good Pie. Let’s eat desert first.',
+    description: 'Word on the street is, a lot is happening in “the” MetaVerse. MetaGamers are active in NeosVR, (crypto)Voxels, Webaverse, Atlantis World, and more. Don’t miss the Voxels Scavenger Hunt with Prize!, other blockchain games, music, and digital fashion!',
+    extra: ``
   },
   {
     week: 1,
-    dates: 'Sunday-Monday June 12th-13th',
-    title: 'Metaverse Days',
-    strapline: 'Whoa, the MetaVerse, what’s that?',
-    description: 'There’s a lot happening in the MetaVerse.  MetaGamers have a presence in Neos, Cryptovoxels, Atlantis World, Decentraland, Aavegotchi Gotchiverse, and more.  Come join us and see what we’ve been building!  Learn some new skills to start playing in your MetaVerse of choice.  It may be a new trend word, but we’ve been digging in for more than a year. :)',
-    extra: `If you missed out last year, I can feel your <span className="gradient">FOMO</span> from here!!`
+    dates: 'Sunday June 12th',
+    title: 'Sunday Funday #1',
+    strapline: 'All work and no play, makes Nova swim in circles.',
+    description: 'Sunday Funday is our weekend day of play and entertainment. Join us for live events in MetaVerse worlds, music, games, possible POAPs, and more!',
+    extra: ``
+  },
+  {
+    week: 1,
+    dates: 'Monday June 13th',
+    title: 'Tooling Day',
+    strapline: 'How does that work? How do we work?',
+    description: 'We stood on top of this toolbox to close it. Careful when opening. Catch DAO organizational platforms, bounty/ achievement systems, and more. Discover the emerging tools of web3. ',
+    extra: ''
+  },
+  {
+    week: 1,
+    dates: 'Tuesday-Thursday June 14th-16th',
+    title: 'DAOs in Web3',
+    strapline: 'Speakers! Panels! Workshops!',
+    description: 'Three packed days of DAOS and Web3. Learn everything from DAO incubation to funding & marketing, to DAO compliance & taxes, DAO comic books, DAO digi-physical merch to finding your soul in DAOs. Get to know some MetaAlliance and future MetaAlliance members. Don’t miss the Women in Web3 Panel!',
+    extra: ''
   },
   {
     week: 2,
-    dates: 'Tuesday-Friday June 14th-17th',
-    title: 'MetaAlliance and Regen Days',
-    strapline: 'Speakers! Panels! Workshops!',
-    description: 'Learn about the guilds and embassies in our greater ecosystem!  MetaAlliance is a partnership of DAOs and projects, together building the new Web3 future.  Regen Days will cover new regenerative projects, ReFi, and more.  We will take a look into what on-the-ground expansion of Web3 looks like.',
-    extra: `If you missed out last year, I can feel your <span className="gradient">FOMO</span> from here!!`
+    dates: 'Friday June 17th',
+    title: 'ReGen Day',
+    strapline: 'Innovation in Regeneration and ReFI. Tech for Positive Impact',
+    description: 'Local DAOs, regenerative projects, ReFi, carbon credits on-chain. Take a look into what on-the-ground expansion of Web3 looks like and how organizations are pushing tech towards new solutions with big global impact.',
+    extra: ``
   },
   {
     week: 2,
     dates: 'Saturday June 18th',
-    title: 'Tooling Follow-up Presentations',
-    strapline: 'Well I got this shiny new toolbox, now what?',
-    description: 'Need some extra pointers on how to swing that hammer or run that decentralized workflow space?  Get the gritty details on how to use your growing toolbox.',
-    extra: `If you missed out last year, I can feel your <span className="gradient">FOMO</span> from here!!`
+    title: 'ReFi/NFTs',
+    strapline: 'Regen, NFTs, and a dash of Fashion',
+    description: 'Web3 Art is evolving, ReFi is pushing limits to solve pushed limits. Art making impacts. Crossing worlds via tech. ReFi NFTs and a Digital Fashion Show/Scavenger Hunt in NEOS VR.',
+    extra: ``
   },
   {
     week: 2,
@@ -53,23 +69,31 @@ export const timeBlocks = [
     title: 'Sunday Funday: Live Concerts & Entertainment',
     strapline: 'All work and no play, makes Nova swim in circles.',
     description: 'Sunday Funday is our weekend day of play and entertainment. Join us for live events in MetaVerse worlds, games, possible POAPs, and more!',
-    extra: `If you missed out last year, I can feel your <span className="gradient">FOMO</span> from here!!`
+    extra: ``
   },
   {
     week: 2,
     dates: 'Monday June 20th',
-    title: 'DeFi Day',
-    strapline: 'We know, we could do a whole Fest on just DeFi.  But look at how much we’ve stacked in one day!',
-    description: 'All things Decentralized Finance.  Are you a full-on deGen?  Just dabbling?  Learn tips and tricks straight from the creators of DeFi platforms.',
+    title: 'RegenMeta',
+    strapline: 'On-the-ground DAOs',
+    description: 'Following up our Regen day mixing in a little Meta, want to get your hands dirty? Wanna learn about DeSci, this is the day for you!',
+    extra: ``
+  },
+  {
+    week: 2,
+    dates: 'Tuesday June 21st',
+    title: 'Meta Day',
+    strapline: 'Web3losophy',
+    description: 'We are making up new forms of thought and words. Think with us about thinking about how to think about changing things. It’s an indescribable day.',
     extra: `If you missed out last year, I can feel your <span className="gradient">FOMO</span> from here!!`
   },
   {
     week: 2,
-    dates: 'Tuesday-Wednesday June 21st-22nd',
-    title: 'Job Fair and Meta-Days',
-    strapline: 'So, how do I start working in a DAO?',
-    description: 'Join us for the DAO JobFair!  Meet other DAOs that are part of our MetaAlliance and more!  Learn how to get started now.  Add your unique contributions and join the new web3 workforce.  Welcome.',
-    extra: `If you missed out last year, I can feel your <span className="gradient">FOMO</span> from here!!`
+    dates: 'Wednesday June 22nd',
+    title: 'DAO Career Day',
+    strapline: 'Join us for the DAO Job Fair!',
+    description: 'Finding your place within web3 is hard enough, now imagine trying to navigate a DAO! Were here to help! Most people think only technical roles needed but there’s a place for everyone within web3',
+    extra: ''
   },
   {
     week: 2,
@@ -77,7 +101,7 @@ export const timeBlocks = [
     title: 'Closing Ceremonies and Awards',
     strapline: 'Well that was fun!  Can we stay here forever??',
     description: 'Whoa, so much was covered.  How do we wrap this up?  Awards!  You get an Oprah NFT, you get a Octo, you get the point.  If you came for the POAP, don’t miss this day.',
-    extra: `If you missed out last year, I can feel your <span className="gradient">FOMO</span> from here!!`
+    extra: ``
   },
 ]
 

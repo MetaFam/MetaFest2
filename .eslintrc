@@ -47,8 +47,8 @@
       "alias": {
         "extensions": [".js", ".jsx"],
         "map": [
-          ["@", "./src"],
-          ["@mf", "./src/*"],
+          ["@", "."],
+          ["@mf", "./src"],
           ["@mfdom", "./src/components/dom"],
           ["@mfcanvas", "./src/components/canvas"],
           ["@mflayout", "./src/components/layout"]

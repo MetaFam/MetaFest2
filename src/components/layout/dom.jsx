@@ -9,13 +9,13 @@ import {
 } from "@chakra-ui/react";
 import { FaToggleOff, FaToggleOn } from 'react-icons/fa'
 
-import { AlphaNotice } from '@/components/dom/AlphaNotice';
-import { EasterEgg } from '@/components/dom/EasterEgg';
-import { EasterEggGlitch } from '@/components/dom/EasterEggGlitch';
-import { SiteFooter } from "@/components/dom/Footer";
-import { SiteHeader } from "@/components/dom/Header";
-import useStore, {localStore} from '@/helpers/store'
-import { useIsMac } from "@/utils/hooks";
+import { AlphaNotice } from '@mf/components/dom/AlphaNotice';
+import { EasterEgg } from '@mf/components/dom/EasterEgg';
+import { EasterEggGlitch } from '@mf/components/dom/EasterEggGlitch';
+import { SiteFooter } from "@mf/components/dom/Footer";
+import { SiteHeader } from "@mf/components/dom/Header";
+import useStore, {localStore} from '@mf/helpers/store'
+import { useIsMac } from "@mf/utils/hooks";
 
 const Dom = ({ children }) => {
   const ref = useRef(null)

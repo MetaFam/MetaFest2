@@ -5,8 +5,8 @@ import { useFrame } from '@react-three/fiber'
 import gsap from "gsap";
 import * as THREE from "three";
 
-import useStore from '@/helpers/store'
-import { useOnScreen } from "@/utils/hooks";
+import useStore from '@mf/helpers/store'
+import { useOnScreen } from "@mf/utils/hooks";
 
 export default function LuxVox(props) {
   const router = useStore((s) => s.router)

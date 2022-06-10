@@ -15,7 +15,7 @@ import {
   ScheduleSection,
   SpeakersSection,
   WorkshopsSection,
-} from "@/components/dom/page-sections";
+} from "@mf/components/dom/page-sections";
 
 import {
   galaxy1Params,
@@ -31,22 +31,22 @@ import {
 // WARNING ! errors might get obfuscated by using dynamic import.
 // If something goes wrong go back to a static import to show the error.
 // https://github.com/pmndrs/react-three-next/issues/49
-const NomadVox = dynamic(() => import('@/components/canvas/Nomad'), {
+const NomadVox = dynamic(() => import('@mf/components/canvas/Nomad'), {
   ssr: false,
 })
-const JetsetterVox = dynamic(() => import('@/components/canvas/Jetsetter'), {
+const JetsetterVox = dynamic(() => import('@mf/components/canvas/Jetsetter'), {
   ssr: false,
 })
-const BabyEarthVox = dynamic(() => import('@/components/canvas/BabyEarth'), {
+const BabyEarthVox = dynamic(() => import('@mf/components/canvas/BabyEarth'), {
   ssr: false,
 })
-const OctoPetVox = dynamic(() => import('@/components/canvas/OctoPet'), {
+const OctoPetVox = dynamic(() => import('@mf/components/canvas/OctoPet'), {
   ssr: false,
 })
-const OctoEasterEgg = dynamic(() => import('@/components/canvas/EasterEgg'), {
+const OctoEasterEgg = dynamic(() => import('@mf/components/canvas/EasterEgg'), {
   ssr: false,
 })
-const Galaxy = dynamic(() => import('@/components/canvas/Galaxy'), {
+const Galaxy = dynamic(() => import('@mf/components/canvas/Galaxy'), {
   ssr: false,
 })
 

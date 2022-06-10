@@ -7,7 +7,7 @@ import {
 import { Html, useProgress } from "@react-three/drei";
 import gsap from "gsap";
 
-import useStore from '@/helpers/store'
+import useStore from '@mf/helpers/store'
 
 export const CanvasLoader = () => {
   const { dom } = useStore();

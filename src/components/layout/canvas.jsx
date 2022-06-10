@@ -7,9 +7,9 @@ import { BlendFunction, GlitchMode } from 'postprocessing'
 import * as THREE from "three";
 
 
-import { CanvasLoader } from '@/components/canvas/Loader'
-import useStore from '@/helpers/store'
-import { useIsMac } from '@/utils/hooks';
+import { CanvasLoader } from '@mf/components/canvas/Loader'
+import useStore from '@mf/helpers/store'
+import { useIsMac } from '@mf/utils/hooks';
 
 const LControl = () => {
   const dom = useStore((state) => state.dom)

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { useToast } from "@chakra-ui/react";
 
-import useStore from "@/helpers/store";
+import useStore from "@mf/helpers/store";
 
 
 export const useOnScreen = (ref) => {

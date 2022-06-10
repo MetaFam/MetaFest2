@@ -5,7 +5,7 @@ import { useFrame, useLoader } from "@react-three/fiber";
 import * as THREE from "three";
 import { TextureLoader } from 'three/src/loaders/TextureLoader.js'
 
-import { textures } from '@/utils/constants';
+import { textures } from '@mf/utils/constants';
 
 
 const OctoEasterEgg = (props) => {

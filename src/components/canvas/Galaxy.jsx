@@ -6,7 +6,7 @@ import { folder, useControls } from 'leva'
 import * as THREE from 'three'
 import { TextureLoader } from 'three/src/loaders/TextureLoader.js'
 
-import { CanvasLoader } from '@/components/canvas/Loader'
+import { CanvasLoader } from '@mf/components/canvas/Loader'
 
 
 // eslint-disable-next-line react/display-name

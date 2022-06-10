@@ -3,7 +3,7 @@ import React, { Suspense } from 'react'
 import { Box } from '@chakra-ui/react'
 import Script from 'next/script'
 
-import { DOMLoader } from '@/components/dom/Loader'
+import { DOMLoader } from '@mf/components/dom/Loader'
 
 export function AirtableSpeakerInstance () {
   return (

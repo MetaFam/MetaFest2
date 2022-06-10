@@ -14,20 +14,20 @@ import {
 } from "@chakra-ui/react";
 import { BsFillPinMapFill } from 'react-icons/bs';
 
-import { BoxedNextImage } from "@/components/dom/BoxedNextImage";
+import { BoxedNextImage } from "@mf/components/dom/BoxedNextImage";
 import {
   AirtableContributorInstance,
   AirtableFairInstance,
   AirtablePerformerInstance,
   AirtableSpeakerInstance,
   AirtableSponsorInstance,
-} from "@/components/dom/integrations/AirtableInstance";
-import SpeakerIcon from "@/static/assets/img/icons/forum.svg"
-import SponsorIcon from "@/static/assets/img/icons/patrons.svg"
-import ContributorIcon from "@/static/assets/img/icons/players.svg"
-import FairIcon from "@/static/assets/img/icons/welcometometagame.svg"
-import PerformerIcon from "@/static/assets/img/icons/xpearned.svg"
-import { useOnScreen } from "@/utils/hooks";
+} from "@mf/components/dom/integrations/AirtableInstance";
+import SpeakerIcon from "@mf/static/assets/img/icons/forum.svg"
+import SponsorIcon from "@mf/static/assets/img/icons/patrons.svg"
+import ContributorIcon from "@mf/static/assets/img/icons/players.svg"
+import FairIcon from "@mf/static/assets/img/icons/welcometometagame.svg"
+import PerformerIcon from "@mf/static/assets/img/icons/xpearned.svg"
+import { useOnScreen } from "@mf/utils/hooks";
 
 
 export const ApplySection = () => {

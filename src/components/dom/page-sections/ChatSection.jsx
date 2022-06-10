@@ -3,8 +3,8 @@ import React, { useRef, useState } from "react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { Box, Button, Link, Text } from "@chakra-ui/react";
 
-import ChatInstance from "@/components/dom/integrations/ChatInstance";
-import { useOnScreen } from "@/utils/hooks";
+import ChatInstance from "@mf/components/dom/integrations/ChatInstance";
+import { useOnScreen } from "@mf/utils/hooks";
 
 export const ChatSection = () => {
   const ref = useRef(null);
@@ -79,7 +79,7 @@ export const ChatSection = () => {
           <ChatInstance />
           <Box position="absolute" top={2} right={8}>
             <Link
-              href="https://discord.com/channels/629411177947987986/629411178837442601"
+              href="https://discord.com/channels/935789606962610216/977072830204231680"
               isExternal
               fontWeight={500}
               fontSize="0.7vmax"

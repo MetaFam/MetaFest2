@@ -6,14 +6,14 @@ import {
   Button,
   IconButton,
   Link,
-  Tab,
-  TabList, TabPanel, TabPanels, Tabs, Text, useDisclosure
+  SimpleGrid,
+  Tab, TabList, TabPanel, TabPanels, Tabs, Text, useDisclosure
 } from "@chakra-ui/react";
 
-import CalendarInstance from "@/components/dom/integrations/CalendarInstance";
-import ScheduleIcon from '@/static/assets/img/icons/events.svg';
-import { useDisabledMobileNotify, useOnScreen } from "@/utils/hooks";
-
+import CalendarInstance from "@mf/components/dom/integrations/CalendarInstance";
+import ScheduleIcon from '@mf/static/assets/img/icons/events.svg';
+import { timeBlocks } from "@mf/utils/constants";
+import { useDisabledMobileNotify, useOnScreen } from "@mf/utils/hooks";
 
 
 export const ScheduleSection = () => {
@@ -78,23 +78,13 @@ export const ScheduleSection = () => {
             alignSelf="center"
             filter="drop-shadow(0 0 15px #FF61E6)"
           />
-          {/* <Text flex="1 0 100%" width="100%" alignSelf="flex-end" justifySelf="flex-start" fontWeight={500}>
-            Our community members are busy rn, booking guests &amp; organising
-            workshops. <br /> Watch this space
-            <Text as="span" className="gradient2">
-              ...it&apos;s gonna blow your mind!
-            </Text>
-          </Text> */}
         </Box>
 
         <Box className="__content__body">
-
-
-          {/* {timeBlocks.map((block, i) => <DayBlock key={`dayBlock-${i}`} block={block} />)} */}
           <WeekTabs blocks={timeBlocks} />
 
           <Box mt={5}>
-            <Text>
+            <Text as="em">
               To enter MetaFest2, you will have to{" "}
               <a
                 href="https://gitcoin.co/grants/213/metagame"
@@ -110,9 +100,10 @@ export const ScheduleSection = () => {
                 rel="noopener noreferrer"
               >
                 donate to our Giveth project
-              </a>
+              </a>...{' '}
+              jk jk just enter!
             </Text>
-            <Text>jk jk just enter!</Text>
+
             <Button
               d={{ md: "none" }}
               colorScheme="pink"
@@ -213,7 +204,7 @@ export const WeekTabs = ({ blocks }) => {
 
       <TabPanels>
         <TabPanel px={{base: 0, lg: 4}}>
-          <Box
+          {/* <Box
             d="flex"
             alignContent="flex-start"
             justifyContent="space-between"
@@ -222,33 +213,25 @@ export const WeekTabs = ({ blocks }) => {
             opacity={tabIndex === 0 ? 1 : 0}
             transform={tabIndex === 0 ? 'translateX(0)' : 'translateX(-200px)'}
             transition="transform 0.3s 1s ease-in-out,  opacity 0.3s 1.1s ease-in-out"
-          >
+          > */}
+          <SimpleGrid columns={{base: 1, md: 2, xl: 3}} gap={{base: 4, xl: 6}}>
             {
               week1 && week1.map((day, i) => (
                 <DayBlock key={i} day={day} />
               ))
             }
-          </Box>
+          </SimpleGrid>
+          {/* </Box> */}
         </TabPanel>
         <TabPanel px={{base: 0, lg: 4}}>
-          <Box
-            d="flex"
-            alignContent="flex-start"
-            justifyContent="space-between"
-            flexFlow="row wrap"
-            w="100%"
-            opacity={tabIndex === 1 ? 1 : 0}
-            transform={tabIndex === 1 ? 'translateX(0)' : 'translateX(-200px)'}
-            transition="transform 0.3s 1s ease-in-out,  opacity 0.3s 1.1s ease-in-out"
-          >
+          <SimpleGrid columns={{base: 1, md: 2, xl: 3}} gap={{base: 4, xl: 6}}>
             {
               week2 && week2.map((day, i) => (
                 <DayBlock key={i} day={day} />
               ))
             }
-          </Box>
+          </SimpleGrid>
         </TabPanel>
-
       </TabPanels>
     </Tabs>
   )
@@ -280,102 +263,3 @@ export const DayBlock = ({ day }) => {
     </Box>
   )
 }
-
-const timeBlocks = [
-  {
-    week: 1,
-    dates: 'Thursday June 9th',
-    title: 'Opening Ceremonies!',
-    strapline: 'Get ready for a jam-packed 2 weeks! 55+ plus speakers, panels, workshops, and more...',
-    description: 'Welcome to MetaFest2!  Let’s break the ice with some social games and fun.  Time to start the festivities.  Game-on!',
-    extra: ``
-  },
-  {
-    week: 1,
-    dates: 'Friday-Saturday June 10th-11th',
-    title: 'MetaVerse Days',
-    strapline: 'Looks like some damn good Pie. Let’s eat desert first.',
-    description: 'Word on the street is, a lot is happening in “the” MetaVerse. MetaGamers are active in NeosVR, (crypto)Voxels, Webaverse, Atlantis World, and more. Don’t miss the Voxels Scavenger Hunt with Prize!, other blockchain games, music, and digital fashion!',
-    extra: ``
-  },
-  {
-    week: 1,
-    dates: 'Sunday June 12th',
-    title: 'Sunday Funday #1',
-    strapline: 'All work and no play, makes Nova swim in circles.',
-    description: 'Sunday Funday is our weekend day of play and entertainment. Join us for live events in MetaVerse worlds, music, games, possible POAPs, and more!',
-    extra: ``
-  },
-  {
-    week: 1,
-    dates: 'Monday June 13th',
-    title: 'Tooling Day',
-    strapline: 'How does that work? How do we work?',
-    description: 'We stood on top of this toolbox to close it. Careful when opening. Catch DAO organizational platforms, bounty/ achievement systems, and more. Discover the emerging tools of web3. ',
-    extra: ''
-  },
-  {
-    week: 1,
-    dates: 'Tuesday-Thursday June 14th-16th',
-    title: 'DAObble in Web3',
-    strapline: 'Speakers! Panels! Workshops!',
-    description: 'Three packed days of DAOS and Web3. Learn everything from DAO incubation to funding & marketing, to DAO compliance & taxes, DAOcomic books, DAO digi-physical merch to finding your soul in DAOs. Get to know some MetaAlliance and future MetaAlliance members. Don’t miss the Women in Web3 Panel!',
-    extra: ''
-  },
-  {
-    week: 2,
-    dates: 'Friday June 17th',
-    title: 'ReGen Day',
-    strapline: 'Innovation in Regeneration and ReFI. Tech for Positive Impact',
-    description: 'Local DAOs, regenerative projects, ReFi, carbon credits on-chain. Take a look into what on-the-ground expansion of Web3 looks like and how organizations are pushing tech towards new solutions with big global impact.',
-    extra: ``
-  },
-  {
-    week: 2,
-    dates: 'Saturday June 18th',
-    title: 'ReFi/NFTs',
-    strapline: 'Regen, NFTs, and a dash of Fashion',
-    description: 'Web3 Art is evolving, ReFi is pushing limits to solve pushed limits. Art making impacts. Crossing worlds via tech. ReFi NFTs and a Digital Fashion Show/Scavenger Hunt in NEOS VR.',
-    extra: ``
-  },
-  {
-    week: 2,
-    dates: 'Sunday June 19th',
-    title: 'Sunday Funday: Live Concerts & Entertainment',
-    strapline: 'All work and no play, makes Nova swim in circles.',
-    description: 'Sunday Funday is our weekend day of play and entertainment. Join us for live events in MetaVerse worlds, games, possible POAPs, and more!',
-    extra: ``
-  },
-  {
-    week: 2,
-    dates: 'Monday June 20th',
-    title: 'RegenMeta',
-    strapline: 'On-the-ground DAOs',
-    description: 'This day falls somewhere between Regen and Meta. IRL communities making a difference.',
-    extra: ``
-  },
-  {
-    week: 2,
-    dates: 'Tuesday June 21st',
-    title: 'Meta Day',
-    strapline: 'So, how do I start working in a DAO?',
-    description: 'Join us for the DAO JobFair!  Meet other DAOs that are part of our MetaAlliance and more!  Learn how to get started now.  Add your unique contributions and join the new web3 workforce.  Welcome.',
-    extra: `If you missed out last year, I can feel your <span className="gradient">FOMO</span> from here!!`
-  },
-  {
-    week: 2,
-    dates: 'Wednesday June 22nd',
-    title: 'DAO Career Day',
-    strapline: 'Join us for the DAO Job Fair!',
-    description: 'Finding your place within web3 is hard enough, now imagine trying to navigate a DAO! Were here to help! Most people think only technical roles needed but there’s a place for everyone within web3',
-    extra: ''
-  },
-  {
-    week: 2,
-    dates: 'Thursday June 23rd',
-    title: 'Closing Ceremonies and Awards',
-    strapline: 'Well that was fun!  Can we stay here forever??',
-    description: 'Whoa, so much was covered.  How do we wrap this up?  Awards!  You get an Oprah NFT, you get a Octo, you get the point.  If you came for the POAP, don’t miss this day.',
-    extra: ``
-  },
-]

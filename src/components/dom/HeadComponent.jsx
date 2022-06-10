@@ -5,7 +5,7 @@ import { NextSeo } from 'next-seo';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import { settings } from '@/seo.config';
+import { settings } from '@mf/seo.config';
 
 export const HeadComponent = (props) => {
   const { title, description, image } = props;

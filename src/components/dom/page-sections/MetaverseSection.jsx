@@ -11,9 +11,9 @@ import {
 import {
   CryptovoxelsHQInstance,
   CryptovoxelsJobFairInstance,
-} from "@/components/dom/integrations/CryptovoxelsInstance";
-import useStore from '@/helpers/store'
-import { useOnScreen } from "@/utils/hooks";
+} from "@mf/components/dom/integrations/CryptovoxelsInstance";
+import useStore from '@mf/helpers/store'
+import { useOnScreen } from "@mf/utils/hooks";
 
 
 export const MetaverseSection = () => {

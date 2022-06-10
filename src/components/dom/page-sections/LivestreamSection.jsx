@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { Box, Button, Link, Text } from "@chakra-ui/react";
 
-import { useOnScreen } from "@/utils/hooks";
+import { useOnScreen } from "@mf/utils/hooks";
 import YoutubeInstance from "@mfdom/integrations/YoutubeInstance";
 
 

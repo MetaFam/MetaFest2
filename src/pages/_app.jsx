@@ -1,14 +1,14 @@
 // import "module-alias/register";
-import "@/styles/App.css";
+import "@mf/styles/App.css";
 import React, { useEffect, useRef, useState } from 'react'
 
 import { CSSReset, ChakraProvider, extendTheme, useBreakpointValue } from "@chakra-ui/react";
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 
-import partition from '@/helpers/partition'
-import useStore from '@/helpers/store'
-import { useIsMac } from "@/utils/hooks";
+import partition from '@mf/helpers/partition'
+import useStore from '@mf/helpers/store'
+import { useIsMac } from "@mf/utils/hooks";
 import { HeadComponent } from "@mfdom/HeadComponent";
 import Dom from '@mflayout/dom'
 
@@ -76,19 +76,22 @@ const theme = extendTheme({
         "&.livestreamLink": {
           color: "#FF61E6",
           position: "relative",
-          "&--live": {
-            "&:after": {
-              content: "'Streaming now...'",
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              color: "#FF61E6",
-              fontSize: "xs",
-              transform: 'translateY(-10px)',
-              width: '200px',
-              textAlign: 'right',
-            }
-          }
+          // "&--live": {
+          //   "&:before": {
+          //     content: "'•'",
+          //     position: 'absolute',
+          //     top: -15,
+          //     right: 0,
+          //     display: 'block',
+          //     color: "#FF61E6",
+          //     fontSize: "3rem",
+          //     width: '30px',
+          //     height: '30px',
+          //     border: '1px solid #FF61E6',
+          //     textAlign: 'right',
+          //     transformOrigin: 'center',
+          //   }
+          // }
         }
       },
       h1: {
@@ -235,7 +238,21 @@ const theme = extendTheme({
           width: 'auto',
         }
       },
-
+      // '.live': {
+      //   position: 'relative',
+      //   "&:after": {
+      //     content: "'Streaming now...'",
+      //     position: 'absolute',
+      //     top: 0,
+      //     right: 0,
+      //     color: "#FF61E6",
+      //     fontSize: "xs",
+      //     transform: 'translateY(-10px)',
+      //     width: '200px',
+      //     textAlign: 'right',
+      //     textDecoration: 'blink',
+      //   }
+      // }
     },
   },
 });

@@ -9,7 +9,7 @@ import {
   useBreakpointValue
 } from "@chakra-ui/react";
 
-import { useOnScreen } from "@/utils/hooks";
+import { useOnScreen } from "@mf/utils/hooks";
 
 
 export const ArtistsIntro = () => {

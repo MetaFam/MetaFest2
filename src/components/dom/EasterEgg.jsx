@@ -12,7 +12,7 @@ import {
   useBreakpointValue
 } from '@chakra-ui/react'
 
-import { BoxedNextImage } from "@/components/dom/BoxedNextImage";
+import { BoxedNextImage } from "@mf/components/dom/BoxedNextImage";
 
 export const EasterEgg = () => {
   const [toggle, setToggle] = useState(false);

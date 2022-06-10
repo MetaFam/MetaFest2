@@ -11,17 +11,20 @@ import {
   Stack,
   Text,
   VStack,
+  keyframes,
   useBreakpoint,
-  useDisclosure,
+  useDisclosure
 } from "@chakra-ui/react";
+import {DateTime} from 'luxon';
 import { BiJoystick, BiWalletAlt } from 'react-icons/bi'
 import { FaToggleOff, FaToggleOn } from 'react-icons/fa'
 
-import { BoxedNextImage } from "@/components/dom/BoxedNextImage";
-import useStore from '@/helpers/store'
-import MF2Logo from "@/static/assets/img/mf2-logo.png";
-import { useDisabledGeneralNotify, useOnScreen } from "@/utils/hooks";
+import { BoxedNextImage } from "@mf/components/dom/BoxedNextImage";
+import useStore from '@mf/helpers/store'
+import MF2Logo from "@mf/static/assets/img/mf2-logo.png";
+import { useDisabledGeneralNotify, useOnScreen } from "@mf/utils/hooks";
 // import MetaGameLogo from '../static/assets/img/logo.png'
+import { StatusIndicator } from "@mfdom/StatusIndicator";
 
 const Links = [
   {
@@ -69,6 +72,54 @@ export function SiteHeader() {
   const disabledGenNotify = useDisabledGeneralNotify();
   const handleToggle = () => (isOpen ? onClose() : onOpen());
   const screenSize = useBreakpoint()
+  const nowTime = DateTime.now();
+  const dayStartTime = DateTime.fromObject({ hour: 14 }, { zone: 'utc' });
+  const dayEndTime = DateTime.fromObject({ hour: 23 }, { zone: 'utc' });
+  const [streaming, setStreaming] = useState(false);
+  console.log({ dayStartTime, dayEndTime, nowTime, streaming })
+    const ringScaleMin = 0.33;
+  const ringScaleMax = 0.66;
+  const streamingBlink = keyframes`
+  50% {
+    opacity: 0;
+  }
+	`;
+  const pulseDot = keyframes`
+	0% {
+    transform: scale(0.9);
+  }
+  25% {
+    transform: scale(1.1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(0.9);
+  }
+	`;
+
+    const pulseRing = keyframes`
+	0% {
+    transform: scale(${ringScaleMin});
+  }
+	30% {
+		transform: scale(${ringScaleMax});
+	},
+  40%,
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+	`;
+  useEffect(() => {
+    if (nowTime >= dayStartTime && nowTime <= dayEndTime) {
+      setStreaming(true);
+    }
+  }, [nowTime, dayStartTime, dayEndTime, streaming]);
+
 
   const NavLink = ({ href, children, offset }) => (
     <Link
@@ -90,7 +141,28 @@ export function SiteHeader() {
       href={`/${href}`}
       onClick={handleToggle}
       color="white"
-      className={href === 'live' ? 'livestreamLink' : ''}
+      className={streaming && href === 'live' ? 'livestreamLink--live' : 'liveSreamLink'}
+      sx={{
+        '&.livestreamLink--live': {
+          position: 'relative',
+          '&:before': {
+              content: "''",
+              position: 'absolute',
+              top: '-5px',
+              right: '-5px',
+              display: 'block',
+              color: "#FF61E6",
+              width: '20px',
+            height: '20px',
+              // bgColor: '#FF61E6',
+              border: '5px solid #FF61E6',
+              textAlign: 'right',
+            transformOrigin: 'center',
+              borderRadius: '50%',
+            animation: `2.25s ${pulseRing} cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite`,
+          },
+        }
+      }}
     >
       {children}
     </Link>
@@ -205,7 +277,7 @@ export function SiteHeader() {
               display={{ base: "none", md: "flex" }}
             >
               {Links.map((link, i) => (
-                <NavLink key={`desktop-${link.name}`} href={link.href}>
+                <NavLink key={`desktop-${link.name}`} href={link.href} className={streaming ? 'live' : ''}>
                   {link.name}
                 </NavLink>
               ))}
