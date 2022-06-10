@@ -5,6 +5,7 @@ const useStore = create(() => {
     router: null,
     dom: null,
     os: null,
+    r3f: null,
   }
 })
 

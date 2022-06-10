@@ -10,15 +10,11 @@
     "node": ">=14"
   },
   "scripts": {
-    "lint": "yarn prettier && yarn eslint",
-    "eslint": "next lint --fix --dir src --ignore-path .eslintignore",
-    "prettier": "prettier -l \"./src/**/*.{js,jsx,md}\"",
     "dev": "next dev",
     "build": "next build",
     "export": "EXPORT=true next build && EXPORT=true next export && EXPORT=true next-image-export-optimizer",
     "analyze": "ANALYZE=true next build",
-    "start": "next start",
-    "fleek:deploy": "EXPORT=true next build && EXPORT=true next export && fleek site:deploy"
+    "start": "next start"
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.17.0",

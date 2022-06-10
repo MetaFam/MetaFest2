@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Box } from '@chakra-ui/react';
 import { useFrame, useLoader } from "@react-three/fiber";
 import * as THREE from "three";
-import { TextureLoader } from 'three/src/loaders/TextureLoader'
+import { TextureLoader } from 'three/src/loaders/TextureLoader.js'
 
 import { textures } from '@/utils/constants';
 

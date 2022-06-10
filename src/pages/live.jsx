@@ -270,6 +270,7 @@ const Page = () => {
     <>
       <DOM />
       {/* @ts-ignore */}
+      {/* eslint-disable-next-line */}
       <R3F r3f />
     </>
   )
