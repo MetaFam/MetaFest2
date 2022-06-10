@@ -141,7 +141,7 @@ const calUrl = "https://www.googleapis.com/calendar/v3/calendars/85ftetvc3cdl0qo
 export const getSpeakers = async () => {
   const today = new Date();
   const aBitEarlierThanNow = new Date(today.getTime() - (60 * 60 * 1000));
-  const next2Days = new Date(today.getTime() + (1 * 24 * 60 * 60 * 1000));
+  const next2Days = new Date(today.getTime() + (2 * 24 * 60 * 60 * 1000));
 
   try {
     const res = await axios.get(calUrl)
