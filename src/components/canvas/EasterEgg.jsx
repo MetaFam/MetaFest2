@@ -1,20 +1,24 @@
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
 import { Box } from '@chakra-ui/react';
-import React, { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
-import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import * as THREE from "three";
+import { TextureLoader } from 'three/src/loaders/TextureLoader'
+
+import { textures } from '@/utils/constants';
 
 
 const OctoEasterEgg = (props) => {
-  const mesh = useRef();
-  const material = useRef();
+  const mesh = useRef(null);
+  const material = useRef(null);
   const [active, setActive] = useState(false);
+  const mapTexture = useLoader(TextureLoader, textures.octo.map);
+  const alphaTexture = useLoader(TextureLoader, textures.octo.alpha);
+  // const [textures] = useState({map: textures.octo.map, alpha: textures.octo.alpha })
   const { animate } = props;
   const clock = new THREE.Clock();
   let previousTime = 0;
 
-  const mapTexture = useLoader(TextureLoader, '/assets/textures/baby_octo_alpha_0001.png');
-  const alphaTexture = useLoader(TextureLoader, '/assets/textures/baby_octo_alpha_map.png');
   alphaTexture.minFilter = THREE.NearestFilter;
   alphaTexture.magFilter = THREE.NearestFilter;
   alphaTexture.generateMipmaps = true;

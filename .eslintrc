@@ -1,9 +1,59 @@
 {
-  "extends": ["next", "prettier", "next/core-web-vitals"],
+  "extends": [
+    "plugin:import/errors",
+    "prettier", // Prettier must be last brodie.
+    "next",
+    "next/core-web-vitals"
+  ],
   "rules": {
     "import/prefer-default-export": "off",
-    "no-console": "off",
+    "no-console": "warn",
     "no-var": "error",
-    "@next/next/no-img-element": "off"
+    "@next/next/no-img-element": "off",
+    "no-unused-vars": "warn",
+    "react/jsx-props-no-spreading": "off",
+      "react/function-component-definition": [
+        "error",
+        { "namedComponents": ["arrow-function", "function-expression", "function-declaration"] }
+    ],
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal", ["parent", "sibling", "object", "index"]],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
+    "sort-imports": ["warn", {
+      "ignoreCase": false,
+      "ignoreDeclarationSort": true,
+      "ignoreMemberSort": false,
+      "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
+    }]
+  },
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "extensions": [".js", ".jsx"],
+        "map": [
+          ["@", "./src"],
+          ["@mf", "./src/*"],
+          ["@mfdom", "./src/components/dom"],
+          ["@mfcanvas", "./src/components/canvas"],
+          ["@mflayout", "./src/components/layout"]
+        ]
+      }
+    }
   }
 }

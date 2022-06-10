@@ -1,8 +1,8 @@
 import * as THREE from 'three'
-import { useFrame, extend } from '@react-three/fiber'
+import { extend, useFrame } from '@react-three/fiber'
 import { useRef, useState } from 'react'
-import useStore from '@/helpers/store'
 import { shaderMaterial } from '@react-three/drei'
+import useStore from '@/helpers/store'
 
 import vertex from './glsl/shader.vert'
 import fragment from './glsl/shader.frag'

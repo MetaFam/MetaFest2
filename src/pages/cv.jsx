@@ -1,16 +1,11 @@
-import { PerspectiveCamera, Stats } from '@react-three/drei'
-import React, { useEffect, useMemo, useRef, forwardRef, useLayoutEffect, Suspense } from "react";
-import * as THREE from "three";
-import gsap from "gsap";
-import { useFrame, extend } from '@react-three/fiber'
-import dynamic from 'next/dynamic'
+import React, { Suspense, forwardRef, useEffect, useLayoutEffect, useMemo, useRef } from "react";
 
-import {
-  ArtistsIntro,
-  Artist,
-  ArtistLuxumbra,
-  ArtistMusashi,
-} from "@/components/dom/cv-artists";
+import { PerspectiveCamera, Stats } from '@react-three/drei'
+import { extend, useFrame } from '@react-three/fiber'
+import gsap from "gsap";
+import dynamic from 'next/dynamic'
+import * as THREE from "three";
+
 
 import {
   galaxy1Params,
@@ -21,6 +16,12 @@ import {
 } from '@/components/canvas/galaxies';
 import { Effects, Nucleus } from "@/components/canvas/Galaxy";
 import { CanvasLoader } from '@/components/canvas/Loader';
+import {
+  Artist,
+  ArtistLuxumbra,
+  ArtistMusashi,
+  ArtistsIntro,
+} from "@/components/dom/cv-artists";
 
 const NomadVox = dynamic(() => import('@/components/canvas/Nomad'), {
   ssr: false,

@@ -1,7 +1,7 @@
-import React, { useRef, useEffect } from 'react';
-// import * as JitsiMeetExternalAPI from "../dist/jitsi";
+import React, { useEffect, useRef } from 'react';
+// import * as JitsiMeetExternalAPI from "@/dist/jitsi";
 
-const JitsiMeetExternalAPI = window.JitsiMeetExternalAPI;
+const {JitsiMeetExternalAPI} = window;
 
 const JitsiInstance = ({ width, height, roomData }) => {
 	const root = useRef(null);
@@ -22,7 +22,7 @@ const JitsiInstance = ({ width, height, roomData }) => {
 		};
 	}, [roomData, width, height]);
 
-	return <div ref={root} style={{height: '100%'}}></div>;
+	return <div ref={root} style={{height: '100%'}} />;
 };
 
 export default JitsiInstance;

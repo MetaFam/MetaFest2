@@ -1,8 +1,7 @@
 import React from 'react'
 import './crawltextInstance.css'
 
-const Crawl = () => {
-  return (
+const Crawl = () => (
       <section className='star-warsI' >
         <div className=''>
           <div className=''>
@@ -49,6 +48,5 @@ const Crawl = () => {
         </div>
       </section>
   )
-}
 
 export default Crawl

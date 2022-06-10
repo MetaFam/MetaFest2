@@ -1,4 +1,5 @@
 const plugins = require('next-compose-plugins')
+const path = require('path')
 const withImages = require('next-images');
 // const withOptimizedImages = require('next-optimized-images');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
@@ -9,7 +10,8 @@ const withOffline = require('next-offline');
 
 const nextConfig = {
   webpack(config, { webpack, isServer }) {
-    webpack5: false,
+    // eslint-disable-next-line no-unused-labels
+    webpack5: false
     // audio support
     config.module.rules.push({
       test: /\.(ogg|mp3|wav|mpe?g)$/i,
@@ -35,6 +37,19 @@ const nextConfig = {
       exclude: /node_modules/,
       use: ['raw-loader', 'glslify-loader'],
     })
+
+    config.plugins = config.plugins || [];
+
+    config.optimization.providedExports = true;
+
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "@": path.resolve(__dirname, "./src/"),
+      "@mf": path.resolve(__dirname, "./src/"),
+      "@mfdom": path.resolve(__dirname, "./src/components/dom/"),
+      "@mfcanvas": path.resolve(__dirname, "./src/components/canvas/"),
+      "@mflayout": path.resolve(__dirname, "./src/components/layout/")
+    };
 
     return config
   },

@@ -1,31 +1,36 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+
 import {
   Box,
+  Button,
   Flex,
   HStack,
-  VStack,
-  Link,
   IconButton,
-  Button,
   Image,
-  useBreakpoint,
-  useDisclosure,
+  Link,
   Stack,
   Text,
+  VStack,
+  useBreakpoint,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { BiWalletAlt, BiJoystick } from 'react-icons/bi'
-import { FaToggleOn, FaToggleOff } from 'react-icons/fa'
-import { BoxedNextImage } from "@/components/dom/BoxedNextImage";
-import { useDisabledGeneralNotify, useOnScreen } from "@/utils/hooks";
-import useStore from '@/helpers/store'
+import { BiJoystick, BiWalletAlt } from 'react-icons/bi'
+import { FaToggleOff, FaToggleOn } from 'react-icons/fa'
 
+import { BoxedNextImage } from "@/components/dom/BoxedNextImage";
+import useStore from '@/helpers/store'
 import MF2Logo from "@/static/assets/img/mf2-logo.png";
+import { useDisabledGeneralNotify, useOnScreen } from "@/utils/hooks";
 // import MetaGameLogo from '../static/assets/img/logo.png'
 
 const Links = [
   {
     name: "Home",
     href: "#home",
+  },
+  {
+    name: "MF2 Live",
+    href: "live"
   },
   {
     name: "Schedule",
@@ -71,7 +76,7 @@ export function SiteHeader() {
       fontWeight={{ base: 500, lg: 700 }}
       px={2}
       py={1}
-      rounded={"md"}
+      rounded="md"
       textShadow="0 0 10px rgba(0, 0, 0, 0.8)"
       opacity={!linkOnScreen ? 1 : 0}
       transform={`translate3d(${!linkOnScreen ? 0 : -200}, 0, 0)`}
@@ -85,6 +90,7 @@ export function SiteHeader() {
       href={`/${href}`}
       onClick={handleToggle}
       color="white"
+      className={href === 'live' ? 'livestreamLink' : ''}
     >
       {children}
     </Link>
@@ -92,8 +98,7 @@ export function SiteHeader() {
 
 
   return (
-    <>
-      <Box
+    <Box
         ref={ref}
         as="header"
         bg="transparent"
@@ -115,8 +120,8 @@ export function SiteHeader() {
       >
         <Flex
           h={{ base: '75px', md: "100px" }}
-          alignItems={"center"}
-          justifyContent={"space-between"}
+          alignItems="center"
+          justifyContent="space-between"
         >
           <Box width={{ base: "25%" }} h="2.5rem" overflow="visible" sx={{
             d: { base: 'inline-flex', md: 'none' },
@@ -176,10 +181,10 @@ export function SiteHeader() {
               <MenuIcon2SVG toggle={isOpen} />
             </Button>
           </Box>
-          <HStack spacing={8} alignItems={"center"} className="ui">
+          <HStack spacing={8} alignItems="center" className="ui">
             <Link href="/#home" flex={{ base: 1 }}>
               <BoxedNextImage
-                src={'assets/img/mf2-logo.png'}
+                src="assets/img/mf2-logo.png"
                 alt="MetaGame Logo"
                 boxSize={{ base: "65px", md: "95px" }}
                 objectFit="cover"
@@ -195,7 +200,7 @@ export function SiteHeader() {
             </Link>
             <HStack
               className="ui"
-              as={"nav"}
+              as="nav"
               spacing={4}
               display={{ base: "none", md: "flex" }}
             >
@@ -213,7 +218,7 @@ export function SiteHeader() {
                 href="https://metagame.wtf"
                 px={5}
                 py={2}
-                color={"white"}
+                color="white"
                 fontWeight={700}
                 bg="#927CFF"
                 boxShadow="0 0 10px rgba(0, 0, 0, 0.6)"
@@ -272,14 +277,13 @@ export function SiteHeader() {
           backdropFilter="blur(7px)"
           transition="transform 0.3s 0.1s ease, opacity 0.3s 0.2s"
           boxShadow="0 0 15px #00000070"
-
           opacity={isOpen ? 1 : 0}
           transform={`translate3d(0, ${isOpen ? 0 : '-100vh'}, 0)`}
           zIndex={-1}
         >
-          <Stack as={"nav"} spacing={4} height="auto">
+          <Stack as="nav" spacing={4} height="auto">
             {Links.map((link) => (
-              <NavLink key={`mobile-${link.name}`} href={link.href}>
+              <NavLink key={`mobile-${link.name}`} href={link.href} >
                 {link.name}
               </NavLink>
             ))}
@@ -287,7 +291,6 @@ export function SiteHeader() {
         </Box>
         {/* ) : null} */}
       </Box>
-    </>
   );
 }
 

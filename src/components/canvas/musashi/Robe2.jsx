@@ -56,7 +56,7 @@ export default function Robe2Vox(props) {
         intensity={3}
         distance={3}
         decay={2}
-        color={'0xffffff'}
+        color="0xffffff"
         castShadow
       />
     </group>

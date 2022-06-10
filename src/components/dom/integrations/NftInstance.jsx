@@ -1,4 +1,5 @@
 import React from 'react'
+
 import styled from '@emotion/styled'
 
 const Container = styled.div`
@@ -34,7 +35,7 @@ class Soon extends React.Component {
 
 const NftInstance = () => {
   const openInNewTab = url => {
-    let win = window.open(url, '_blank')
+    const win = window.open(url, '_blank')
     win.focus()
   }
   return (

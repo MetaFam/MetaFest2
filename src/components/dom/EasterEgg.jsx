@@ -1,18 +1,18 @@
-import React, {useState, useRef} from 'react'
+import React, {useRef, useState} from 'react'
+
+import { CloseIcon, ExternalLinkIcon } from '@chakra-ui/icons'
 import {
-  Text,
-  Button,
-  Image,
-  IconButton,
-  Container,
   Box,
+  Button,
+  Container,
+  IconButton,
+  Image,
   Link,
+  Text,
   useBreakpointValue
 } from '@chakra-ui/react'
-import { CloseIcon, ExternalLinkIcon } from '@chakra-ui/icons'
-import { BoxedNextImage } from "@/components/dom/BoxedNextImage";
 
-import BabyOctoGif from "@/static/assets/img/baby_octo_alpha.gif";
+import { BoxedNextImage } from "@/components/dom/BoxedNextImage";
 
 export const EasterEgg = () => {
   const [toggle, setToggle] = useState(false);
@@ -21,7 +21,7 @@ export const EasterEgg = () => {
   const claim1Ref = useRef(null);
   const responsiveButtonSize = useBreakpointValue({base: 'sm', lg: 'md'})
   const handleToggle = () => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== "undefined" && ee1Ref.current) {
       setToggle(!toggle);
       ee1Ref.current.classList.remove("found");
     }
@@ -88,7 +88,7 @@ export const EasterEgg = () => {
           maxW={{base: '100%', md: "5xl"}}
           py={3}
         >
-          <BoxedNextImage src={'assets/img/baby_octo_alpha.gif'} alt="Baby Octo mascot" boxSize={{base: '35px', xl:"100px"}} objectFit="cover" />
+          <BoxedNextImage src="assets/img/baby_octo_alpha.gif" alt="Baby Octo mascot" boxSize={{base: '35px', xl:"100px"}} objectFit="cover" />
           <Box flex={1}>
             <Text as="h3">
               <span role="img" aria-label="Octo emoji">
@@ -125,9 +125,10 @@ export const EasterEgg = () => {
             </Button>
           </Box>
 
-          <BoxedNextImage src={'assets/img/baby_octo_alpha.gif'} alt="Baby Octo mascot" boxSize={{base: '35px', xl:"100px"}} objectFit="cover" />
+          <BoxedNextImage src="assets/img/baby_octo_alpha.gif" alt="Baby Octo mascot" boxSize={{base: '35px', xl:"100px"}} objectFit="cover" />
           <IconButton
             onClick={handleToggle}
+            variant="ghost"
             colorScheme="ghost"
             pos="absolute"
             top={3}
@@ -194,14 +195,12 @@ export const EasterEgg = () => {
 };
 
 
-export const MinterInstance = () => {
-  return (
+export const MinterInstance = () => (
     <iframe
       title="Claim Easter Egg NFT"
       src="https://gateway.ipfscdn.io/ipfs/QmQpHkDDWGJPBHFKkpX1DsfzvwZXQYNVoaW4R1Lhenp6T5/bundledrop.html?contract=0x91BBa1e0EE2DCC8d78Fa017588614f328d6d1885&amp;chainId=80001&amp;tokenId=0"
       width="100%"
       height="100%"
       frameBorder="0"
-    ></iframe>
+     />
   );
-};

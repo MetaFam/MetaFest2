@@ -1,11 +1,13 @@
-import { useEffect, useState, useRef } from 'react'
-import {
-  Text,
-  IconButton,
-  Box,
-} from '@chakra-ui/react'
+import { useEffect, useRef, useState } from 'react'
+
 import { CloseIcon } from '@chakra-ui/icons'
-import {getFromLS, saveToLS, localStore} from '@/helpers/store'
+import {
+  Box,
+  IconButton,
+  Text,
+} from '@chakra-ui/react'
+
+import {localStore} from '@/helpers/store'
 import { useIsMac } from '@/utils/hooks';
 
 export function AlphaNotice() {

@@ -49,7 +49,7 @@ const WorkshopInstance = () => {
   const { addFloatingSpace } = useContext(FloatingSpaceContext)
 
   const openInNewTab = url => {
-    let win = window.open(url, '_blank')
+    const win = window.open(url, '_blank')
     win.focus()
   }
 

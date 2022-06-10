@@ -1,17 +1,19 @@
 import React, { useRef, useState } from "react";
+
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
   Link,
   Text,
 } from "@chakra-ui/react";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
+
 import {
   CryptovoxelsHQInstance,
   CryptovoxelsJobFairInstance,
 } from "@/components/dom/integrations/CryptovoxelsInstance";
-import { useOnScreen } from "@/utils/hooks";
 import useStore from '@/helpers/store'
+import { useOnScreen } from "@/utils/hooks";
 
 
 export const MetaverseSection = () => {
@@ -38,7 +40,7 @@ export const MetaverseSection = () => {
           size="sm"
           transition="all 0.3s 0.8s ease"
           transform={`translateY(${openHQ ? 0 : "-70px"})`}
-          willChange={true}
+          willChange
           onClick={() => setOpenHQ(!openHQ)}
           zIndex={2002}
         >
@@ -56,7 +58,7 @@ export const MetaverseSection = () => {
           size="sm"
           transition="all 0.3s 0.8s ease"
           transform={`translateY(${openFair ? 0 : "-70px"})`}
-          willChange={true}
+          willChange
           onClick={() => setOpenFair(!openFair)}
           zIndex={2002}
         >
@@ -70,7 +72,7 @@ export const MetaverseSection = () => {
         transform={`translate3d(${onScreen ? 0 : "-70px"}, 0, 0)`}
         opacity={onScreen ? 1 : 0}
         transition="transform 0.3s 0.4s ease-in-out, opacity 0.6s 0.5s ease-in"
-        willChange={true}
+        willChange
         zIndex={openHQ || openFair ? 0 : 2001}
       >
         <Box className="__content__body--no-firstof" textAlign="right" mt={6}>
@@ -82,7 +84,7 @@ export const MetaverseSection = () => {
             Join us at our HQ and explore the metaverse as we join together in games, scavenger hunts, learning, and other fun events.{" "}
           </Text>
 
-          <Button colorScheme="ghost" onClick={() => setOpenHQ(!openHQ)}>
+          <Button variant="ghost" colorScheme="ghost" onClick={() => setOpenHQ(!openHQ)}>
             Open the booth
           </Button>
           <Text>
@@ -92,7 +94,7 @@ export const MetaverseSection = () => {
             </span>
           </Text>
           <Text>Come to the Job Fair and find your place!</Text>
-          <Button colorScheme="ghost" onClick={() => setOpenFair(!openFair)}>
+          <Button  variant="ghost" colorScheme="ghost" onClick={() => setOpenFair(!openFair)}>
             Open the fair
           </Button>
           <Text>
@@ -101,7 +103,7 @@ export const MetaverseSection = () => {
             </span>
           </Text>
           <Text>All hand made with love by MetaGamers!</Text>
-          <Button colorScheme="ghost" onClick={() => router.push('/cv')}>
+          <Button variant="ghost" colorScheme="ghost" onClick={() => router.push('/cv')}>
             Open the Gallery
           </Button>
         </Box>
@@ -149,7 +151,7 @@ export const MetaverseSection = () => {
               <span role="img" aria-label="Attention!">
                 📢
               </span>{" "}
-              Need more CryptoVoxels? Open it up in a new tab.{" "}
+              Hey Anon, need more Voxels? Open it up in a new tab.{" "}
               <ExternalLinkIcon />
             </Link>
           </Box>

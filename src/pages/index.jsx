@@ -1,19 +1,20 @@
-import React, { createRef, Suspense, useEffect, useLayoutEffect, useMemo, useRef } from "react";
-import * as THREE from "three";
-import { useFrame, useThree, extend } from '@react-three/fiber'
+import React, { Suspense, createRef, useEffect, useLayoutEffect, useMemo, useRef } from "react";
+
 import { PerspectiveCamera, Stats, useProgress } from '@react-three/drei'
+import { extend, useFrame, useThree } from '@react-three/fiber'
 import gsap from "gsap";
 import dynamic from 'next/dynamic'
+import * as THREE from "three";
 
 
 import {
-  HomeSection,
-  ScheduleSection,
-  WorkshopsSection,
-  SpeakersSection,
-  MetaverseSection,
-  ChatSection,
   ApplySection,
+  ChatSection,
+  HomeSection,
+  MetaverseSection,
+  ScheduleSection,
+  SpeakersSection,
+  WorkshopsSection,
 } from "@/components/dom/page-sections";
 
 import {
@@ -22,7 +23,7 @@ import {
   galaxy3Params,
   galaxy4Params,
   galaxy5Params,
-} from '@/components/canvas/galaxies';
+} from '../components/canvas/galaxies';
 
 
 
@@ -50,10 +51,8 @@ const Galaxy = dynamic(() => import('@/components/canvas/Galaxy'), {
 })
 
 // dom components goes here
-const DOM = () => {
-
-  return (
-    <>
+function DOM() {
+  return <>
       <HomeSection />
       <ScheduleSection />
       <WorkshopsSection />
@@ -62,13 +61,12 @@ const DOM = () => {
       <ChatSection />
       <ApplySection />
     </>
-  )
 }
 
 export const objectsDistance = 4;
 
 
-export const R3FSceneSection = ({ name, count, children, ...props }) => {
+export function R3FSceneSection({ name, count, children, ...props }) {
   const group = useRef(null);
   // const { layers } = props;
   // useLayoutEffect(() => {
@@ -83,7 +81,7 @@ export const R3FSceneSection = ({ name, count, children, ...props }) => {
 }
 
 // canvas components goes here
-const R3F = () => {
+function R3F() {
   const { size, viewport } = useThree();
   const aspect = size.width / viewport.width;
   const dof = useRef(null);
@@ -236,7 +234,7 @@ const R3F = () => {
                 gsap.to(cameraGroup.current.rotation, {
                   duration: 1.5,
                   ease: "power2.inOut",
-                  x: Math.PI * 0.35,
+                  x: Math.PI * 0.25,
                   y: 0,
                   z: 0,
                 });
@@ -262,6 +260,21 @@ const R3F = () => {
                   z: 0,
                 });
                 break;
+              default:
+                gsap.to(cameraGroup.current.rotation, {
+                  duration: 1.5,
+                  ease: "power2.inOut",
+                  x: "0",
+                  y: "0",
+                  z: "0",
+                });
+                gsap.to(cameraGroup.current.position, {
+                  duration: 1.5,
+                  ease: "power2.inOut",
+                  z: 0,
+                });
+                break;
+
             }
 
           }
@@ -348,17 +361,13 @@ const R3F = () => {
         <Galaxy dof={dof1} parameters={galaxy1Params} position={[6, 0, -13]} rotation={[4.8, 4.15, 4.75]} />
       </R3FSceneSection>
 
-      <R3FSceneSection name="SectionTwo" count={1}>
-
-      </R3FSceneSection>
+      <R3FSceneSection name="SectionTwo" count={1} />
 
       <R3FSceneSection name="SectionThree" count={2}>
         <Galaxy dof={dof2} parameters={galaxy2Params} position={[0, -3, -15]} />
       </R3FSceneSection>
 
-      <R3FSceneSection name="SectionFour" count={3}>
-
-      </R3FSceneSection>
+      <R3FSceneSection name="SectionFour" count={3} />
 
       <R3FSceneSection name="SectionFive" count={4}>
         <group ref={nomad} receiveShadow>
@@ -367,14 +376,14 @@ const R3F = () => {
       </R3FSceneSection>
 
       <R3FSceneSection name="SectionSix" count={5}>
-        <OctoPetVox position={[0, -1.8, 0]} animate={true} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
-        <BabyEarthVox position={[-1.5, -.8, -2]} animate={true} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
+        <OctoPetVox position={[0, -1.8, 0]} animate rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
+        <BabyEarthVox position={[-1.5, -.8, -2]} animate rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
         <Galaxy dof={dof3} parameters={galaxy3Params} position={[6, -6.5, -15]} />
       </R3FSceneSection>
 
       <R3FSceneSection name="SectionSeven" count={6}>
         <group ref={jetsetter}>
-          <JetsetterVox animate={true} position={[-2, -1.8, 0]} rotation={[-Math.PI / .1, Math.PI / 6.5, 0]}
+          <JetsetterVox animate position={[-2, -1.8, 0]} rotation={[-Math.PI / .1, Math.PI / 6.5, 0]}
           />
         </group>
         <Galaxy dof={dof4} parameters={galaxy4Params} position={[3, -1.5, -2]} />
@@ -383,7 +392,7 @@ const R3F = () => {
   )
 }
 
-const Page = () => {
+function Page() {
   return (
     <>
       <DOM />

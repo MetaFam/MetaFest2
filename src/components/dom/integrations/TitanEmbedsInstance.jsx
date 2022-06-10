@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { FloatingSpaceContext } from '../../contexts/FloatingSpaceContext'
+import React, { useContext, useEffect, useState } from 'react'
+
+import { FloatingSpaceContext } from '@components/integrations/contexts/FloatingSpaceContext'
 
 function ChatInstance () {
   const [discordRoom, setDiscordRoom] = useState('692409996083855501')
@@ -28,7 +29,7 @@ function ChatInstance () {
       height='100%'
       frameBorder='0'
       title='discord chat'
-    ></iframe>
+     />
   )
 }
 

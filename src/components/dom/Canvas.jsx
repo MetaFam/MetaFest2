@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
-import * as THREE from "three";
-// import { useFrame, useThree } from "@react-three/fiber";
+
 import gsap from "gsap";
+import * as THREE from "three";
+
+// import { useFrame, useThree } from "@react-three/fiber";
 import {
   // galaxyColors,
   generateGalaxy,
@@ -10,9 +12,11 @@ import {
   galaxy3Params,
   galaxy4Params,
 } from "../canvas/galaxies";
+
 // import { OctoA } from './models/Octopus'
 // import NomadModel from "./models/CarbonNomad";
-import SeedLogo from "../img/assets/textures/particles/seed_logo.png";
+import SeedLogo from "/assets/textures/particles/seed_logo.png";
+
 import BabyOctoImg from "../static/assets/textures/baby_octo_alpha_0001.png";
 import BabyOctoAlpha from "../static/assets/textures/baby_octo_alpha_map.png";
 
@@ -71,7 +75,7 @@ export const Canvas = ({ toggleAnimations }) => {
        */
 
       // // Animation mixer
-      let mixer = null;
+      const mixer = null;
 
       /**
        * Objects
@@ -290,7 +294,7 @@ export const Canvas = ({ toggleAnimations }) => {
        * Renderer
        */
       const renderer = new THREE.WebGLRenderer({
-        canvas: canvas,
+        canvas,
         alpha: true,
       });
       renderer.shadowMap.enabled = true;
@@ -320,7 +324,7 @@ export const Canvas = ({ toggleAnimations }) => {
        */
 
       // Scroll
-      let scrollY = window.scrollY;
+      let {scrollY} = window;
       let currentSection = 0;
 
       window.addEventListener("scroll", () => {
@@ -599,7 +603,7 @@ export const Canvas = ({ toggleAnimations }) => {
         }
       });
 
-      //Click events
+      // Click events
       window.addEventListener("click", () => {
         // console.log(easterEgg1[0].classList);
         if (currentIntersect) {
@@ -716,7 +720,7 @@ export const Canvas = ({ toggleAnimations }) => {
     }
   }, [toggleAnimations]);
 
-  return <canvas className="webgl"></canvas>;
+  return <canvas className="webgl" />;
 };
 
 // const ProfilePage = React.lazy(() => import('./ProfilePage'));

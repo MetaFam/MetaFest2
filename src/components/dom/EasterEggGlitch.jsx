@@ -1,15 +1,17 @@
-import React, {useState, useRef} from 'react'
+import React, {useRef, useState} from 'react'
+
+import { CloseIcon, ExternalLinkIcon } from '@chakra-ui/icons'
 import {
-  Text,
-  Button,
-  Image,
-  IconButton,
-  Container,
   Box,
+  Button,
+  Container,
+  IconButton,
+  Image,
   Link,
+  Text,
   useBreakpointValue
 } from '@chakra-ui/react'
-import { CloseIcon, ExternalLinkIcon } from '@chakra-ui/icons'
+
 import { BoxedNextImage } from "@/components/dom/BoxedNextImage";
 
 export const EasterEggGlitch = () => {
@@ -91,7 +93,7 @@ export const EasterEggGlitch = () => {
           maxW={{base: '100%', md: "5xl"}}
           py={3}
         >
-          <BoxedNextImage src={'assets/img/baby_octo_alpha.gif'} alt="Baby Octo mascot" boxSize={{base: '35px', xl:"100px"}} objectFit="cover" />
+          <BoxedNextImage src="assets/img/baby_octo_alpha.gif" alt="Baby Octo mascot" boxSize={{base: '35px', xl:"100px"}} objectFit="cover" />
           <Box flex={1}>
             <Text as="h3">
               <span role="img" aria-label="Octo emoji">
@@ -128,16 +130,17 @@ export const EasterEggGlitch = () => {
             </Button>
           </Box>
 
-          <BoxedNextImage src={'assets/img/baby_octo_alpha.gif'} alt="Baby Octo mascot" boxSize={{base: '35px', xl:"100px"}} objectFit="cover" />
+          <BoxedNextImage src="assets/img/baby_octo_alpha.gif" alt="Baby Octo mascot" boxSize={{base: '35px', xl:"100px"}} objectFit="cover" />
           <IconButton
             onClick={handleToggle}
             colorScheme="ghost"
+            variant="ghost"
             pos="absolute"
             top={3}
             right={0}
             size="sm"
             aria-label="Close easter egg"
-            icon={<CloseIcon />}
+            icon={<CloseIcon color="white" />}
             zIndex={2001}
           />
         </Box>
@@ -197,14 +200,12 @@ export const EasterEggGlitch = () => {
 };
 
 
-export const MinterInstance = () => {
-  return (
+export const MinterInstance = () => (
     <iframe
       title="Claim Easter Egg NFT"
       src="https://gateway.ipfscdn.io/ipfs/QmQpHkDDWGJPBHFKkpX1DsfzvwZXQYNVoaW4R1Lhenp6T5/bundledrop.html?contract=0x91BBa1e0EE2DCC8d78Fa017588614f328d6d1885&amp;chainId=80001&amp;tokenId=1"
       width="100%"
       height="100%"
       frameBorder="0"
-    ></iframe>
+     />
   );
-};

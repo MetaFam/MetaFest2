@@ -16,7 +16,7 @@ export const localStore = {
   set: function (key, value) {
     if(!global.localStorage) return
     if (!key || !value) {return;}
-    console.log('setter', key, value);
+    // console.log('setter', key, value);
     if (typeof value === "object") {
       value = JSON.stringify(value);
     }

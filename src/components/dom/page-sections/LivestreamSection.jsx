@@ -3,26 +3,27 @@ import React, { useRef, useState } from "react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { Box, Button, Link, Text } from "@chakra-ui/react";
 
-import ChatInstance from "@/components/dom/integrations/ChatInstance";
 import { useOnScreen } from "@/utils/hooks";
+import YoutubeInstance from "@mfdom/integrations/YoutubeInstance";
 
-export const ChatSection = () => {
+
+export function LivestreamSection() {
   const ref = useRef(null);
   const onScreen = useOnScreen(ref);
   const [open, setOpen] = useState(false);
 
-  const toggleChat = () => {
+  const toggleStream = () => {
     setOpen(!open);
     if (typeof window !== "undefined") {
       const body = document.querySelector("body");
-      body.classList.toggle("chat-open");
+      body.classList.toggle("stream-open");
     }
   };
 
   return (
     <Box
       as="section"
-      id="chat"
+      id="livestream"
       justifyContent={{ base: "flex-end", lg: "inherit" }}
     >
       {open && (
@@ -37,27 +38,27 @@ export const ChatSection = () => {
           transition="all 0.3s 0.8s ease"
           transform={`translateY(${open ? 0 : "-70px"})`}
           willChange
-          onClick={toggleChat}
+          onClick={toggleStream}
           zIndex={2002}
         >
-          Close chat
+          Close stream
         </Button>
       )}
       <Box
         ref={ref}
         className="__content"
-        transform={`translate3d(${onScreen ? 0 : "-70px"}, 0, 0)`}
-        opacity={onScreen ? 1 : 0}
+        transform={`translate3d(${!open ? 0 : "-70px"}, 0, 0)`}
+        opacity={!open ? 1 : 0}
         transition="transform 0.3s 0.4s ease-in-out, opacity 0.6s 0.5s ease-in"
       >
         <Box className="__content__body" textAlign="right" mt={6}>
-          <Text as="h2">MetaFest Chat</Text>
+          <Text as="h2">LiveStream</Text>
           <Text as="p" className="gradient">
-            Come and join the discusion.
+            Watch the action live.
           </Text>
           <Text as="p">
-            <Button variant="ghost" onClick={toggleChat}>
-              Open chat
+            <Button variant="ghost" colorScheme="ghost" onClick={toggleStream}>
+              Open Stream
             </Button>
           </Text>
         </Box>
@@ -76,18 +77,32 @@ export const ChatSection = () => {
           transition="opacity 1.2s 0.8s ease-in-out"
           zIndex={2001}
         >
-          <ChatInstance />
-          <Box position="absolute" top={2} right={8}>
+          <YoutubeInstance />
+          <Box
+            display="flex"
+            position="absolute"
+            bottom={0}
+            right={0}
+            width="100%"
+            textAlign="center"
+          >
             <Link
-              href="https://discord.com/channels/629411177947987986/629411178837442601"
+              href="https://www.youtube.com/embed/live_stream?channel=UC6gdZ6Q7Fwfvn-Uu4QKDyhg"
               isExternal
-              fontWeight={500}
+              fontWeight={700}
               fontSize="0.7vmax"
+              // d="inline-block"
+              mx="auto"
+              p={3}
+              bg="linear-gradient(90.24deg, #640DFB99 0.3%, rgba(100, 13, 251, 0.9) 80.16%)"
+              borderRadius="5px 5px 0 0"
+              boxShadow="0 0 5px rgba(0,0,0,0.6)"
+              overflow="clip"
             >
               <span role="img" aria-label="Attention!">
                 📢
               </span>{" "}
-              Hey Anon, need more Discord? Open it up in a new tab.{" "}
+              Hey Anon, need more Stream? Open it up in a new tab.{" "}
               <ExternalLinkIcon />
             </Link>
           </Box>
@@ -95,4 +110,4 @@ export const ChatSection = () => {
       )}
     </Box>
   );
-};
+}
