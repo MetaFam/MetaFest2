@@ -28,8 +28,7 @@ export const ScheduleSection = () => {
       id="schedule"
       flexFlow="row nowrap"
       justifyContent="space-between"
-      alignItems="flex-start"
-      pt={{base: "10%", '2xl': 0}}
+      // alignItems={{base: "flex-start", '2xl': 'center'}}
     >
       {openCal && (
         <Button
@@ -55,7 +54,7 @@ export const ScheduleSection = () => {
         transform={`translate3d(${onScreen ? 0 : "-70px"}, 0, 0)`}
         opacity={onScreen ? 1 : 0}
         transition="transform 0.3s 0.4s ease-in-out, opacity 0.6s 0.5s ease-in"
-        pt={{base: 8, lg: 0}}
+        pt={{base: 20, '2xl': 0}}
       >
         <Box
           position="relative"

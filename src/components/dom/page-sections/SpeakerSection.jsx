@@ -74,7 +74,7 @@ export const SpeakersSection = () => {
         opacity={onScreen ? 1 : 0}
         transition="transform 0.3s 0.4s ease-in-out, opacity 0.6s 0.5s ease-in"
         width="100%"
-        pt={{ base: 20, lg: 0 }}
+        pt={{ base: 20, '2xl': 0 }}
       >
         <Text as="h2">Speakers</Text>
         <Box className="__content__body">
