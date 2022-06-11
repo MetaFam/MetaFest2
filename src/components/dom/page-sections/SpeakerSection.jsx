@@ -74,7 +74,7 @@ export const SpeakersSection = () => {
         opacity={onScreen ? 1 : 0}
         transition="transform 0.3s 0.4s ease-in-out, opacity 0.6s 0.5s ease-in"
         width="100%"
-
+        pt={{ base: 20, lg: 0 }}
       >
         <Text as="h2">Speakers</Text>
         <Box className="__content__body">
@@ -87,8 +87,8 @@ export const SpeakersSection = () => {
               <Text>Loading...</Text>
             ) : (
               <>
-                <Text as="h3" className="gradient2">Coming up...the next 48 hours</Text>
-                <SimpleGrid spacing={5} columns={5} mt={6}>
+                  <Text as="h3" className="gradient2">Coming up...the next 48 hours</Text>
+                  <SimpleGrid spacing={5} columns={{ base: 1, xl: 5 }} mt={6}>
                   {speakersList.current &&
                     speakersList.current.length > 0 &&
                     speakersList.current.map((speaker, i) => {
@@ -114,7 +114,7 @@ export const SpeakersSection = () => {
                                 bgColor="purple.800"
                                 aria-label={`${speaker.description}`}
                               >
-                                <Text as="h4" fontSize="md">
+                                <Text as="h4" fontSize={{base: "md", sm: 'sm', '2xl': 'md'}}>
                                   {speaker.description ?? speaker.summary}</Text>
                               </Tooltip>
                               {endDate <= halfHourAgo && (
@@ -155,7 +155,7 @@ export const SpeakersSection = () => {
                         );
                       }
                     })}
-                </SimpleGrid>
+                    </SimpleGrid>
               </>
             )}
           </Box>

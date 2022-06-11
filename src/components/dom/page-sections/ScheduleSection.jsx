@@ -29,7 +29,7 @@ export const ScheduleSection = () => {
       flexFlow="row nowrap"
       justifyContent="space-between"
       alignItems="flex-start"
-      pt="10%"
+      pt={{base: "10%", '2xl': 0}}
     >
       {openCal && (
         <Button
@@ -84,7 +84,7 @@ export const ScheduleSection = () => {
           <WeekTabs blocks={timeBlocks} />
 
           <Box mt={5}>
-            <Text as="em">
+            <Text as="em" fontSize={{base: 'xs', lg: 'inherit'}}>
               To enter MetaFest2, you will have to{" "}
               <a
                 href="https://gitcoin.co/grants/213/metagame"
@@ -203,7 +203,7 @@ export const WeekTabs = ({ blocks }) => {
       </TabList>
 
       <TabPanels>
-        <TabPanel px={{base: 0, lg: 4}}>
+        <TabPanel px={{base: 0, lg: 4}} pt={{base: 0, lg: 'inherit'}}>
           {/* <Box
             d="flex"
             alignContent="flex-start"
@@ -223,7 +223,7 @@ export const WeekTabs = ({ blocks }) => {
           </SimpleGrid>
           {/* </Box> */}
         </TabPanel>
-        <TabPanel px={{base: 0, lg: 4}}>
+        <TabPanel px={{base: 0, lg: 4}} pt={{base: 0, lg: 'inherit'}}>
           <SimpleGrid columns={{base: 1, md: 2, xl: 3}} gap={{base: 4, xl: 6}}>
             {
               week2 && week2.map((day, i) => (

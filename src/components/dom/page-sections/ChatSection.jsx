@@ -79,7 +79,7 @@ export const ChatSection = () => {
           <ChatInstance />
           <Box position="absolute" top={2} right={8}>
             <Link
-              href="https://discord.com/channels/935789606962610216/977072830204231680"
+              href="https://discord.com/channels/935789606962610216/984775736718159932"
               isExternal
               fontWeight={500}
               fontSize="0.7vmax"
