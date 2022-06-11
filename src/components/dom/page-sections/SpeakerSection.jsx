@@ -123,7 +123,7 @@ export const SpeakersSection = () => {
                               <Text as="span">{startDate.toFormat('ccc')}, {startDate.toLocaleString(DateTime.DATETIME_FULL)}</Text>
                               <Popover key={speaker.id} zIndex={100} colorScheme="purple" >
                                 <PopoverTrigger>
-                                  <Button size="sm" overflow="hidden">More info</Button>
+                                  <Button size="sm" bg="#FF61E6">More info</Button>
                                 </PopoverTrigger>
                                 <PopoverContent as="div" bgColor="rgba(41,2,80,1)">
                                   <PopoverCloseButton />

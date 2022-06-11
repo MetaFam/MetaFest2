@@ -165,7 +165,7 @@ export function SiteHeader() {
       href={`/${href}`}
       onClick={handleToggle}
       color="white"
-      className={streaming && href === 'live' ? 'livestreamLink--live' : 'liveSreamLink'}
+      className={streaming && href === 'live' ? 'livestreamLink--live' : ''}
       sx={{
         '&.livestreamLink--live': {
           position: 'relative',
@@ -314,13 +314,8 @@ export function SiteHeader() {
               href="https://metagame.wtf"
               px={5}
               py={2}
-              color="white"
               fontWeight={700}
-              bg="#927CFF"
-              boxShadow="0 0 10px rgba(0, 0, 0, 0.6)"
-              size="sm"
               mr={0}
-              borderRadius="md"
               isExternal
             >
               Join MetaGame

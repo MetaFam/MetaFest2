@@ -76,22 +76,6 @@ const theme = extendTheme({
         "&.livestreamLink": {
           color: "#FF61E6",
           position: "relative",
-          // "&--live": {
-          //   "&:before": {
-          //     content: "'•'",
-          //     position: 'absolute',
-          //     top: -15,
-          //     right: 0,
-          //     display: 'block',
-          //     color: "#FF61E6",
-          //     fontSize: "3rem",
-          //     width: '30px',
-          //     height: '30px',
-          //     border: '1px solid #FF61E6',
-          //     textAlign: 'right',
-          //     transformOrigin: 'center',
-          //   }
-          // }
         }
       },
       h1: {
