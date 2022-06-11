@@ -5,7 +5,6 @@ import { useFrame } from '@react-three/fiber'
 import gsap from "gsap";
 import * as THREE from "three";
 
-import useStore from '@mf/helpers/store'
 
 export default function BabyEarthVox(props) {
   // const router = useStore((s) => s.router)

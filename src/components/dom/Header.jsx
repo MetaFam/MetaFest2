@@ -15,7 +15,7 @@ import {
   useBreakpoint,
   useDisclosure
 } from "@chakra-ui/react";
-import {DateTime} from 'luxon';
+import { DateTime, Duration } from 'luxon';
 import { BiJoystick, BiWalletAlt } from 'react-icons/bi'
 import { FaToggleOff, FaToggleOn } from 'react-icons/fa'
 
@@ -23,8 +23,7 @@ import { BoxedNextImage } from "@mf/components/dom/BoxedNextImage";
 import useStore from '@mf/helpers/store'
 import MF2Logo from "@mf/static/assets/img/mf2-logo.png";
 import { useDisabledGeneralNotify, useOnScreen } from "@mf/utils/hooks";
-// import MetaGameLogo from '../static/assets/img/logo.png'
-import { StatusIndicator } from "@mfdom/StatusIndicator";
+
 
 const Links = [
   {
@@ -73,11 +72,12 @@ export function SiteHeader() {
   const handleToggle = () => (isOpen ? onClose() : onOpen());
   const screenSize = useBreakpoint()
   const nowTime = DateTime.now();
-  const dayStartTime = DateTime.fromObject({ hour: 14 }, { zone: 'utc' });
-  const dayEndTime = DateTime.fromObject({ hour: 23 }, { zone: 'utc' });
+  const [nowTimeState, setNowTimeState] = useState(null);
+  const dayStartTime = DateTime.fromObject({ hour: 14, minute: 30, second: 0 }, { zone: 'utc' });
+  const dayEndTime = DateTime.fromObject({ hour: 21, minute: 30 }, { zone: 'utc' });
   const [streaming, setStreaming] = useState(false);
-  console.log({ dayStartTime, dayEndTime, nowTime, streaming })
-    const ringScaleMin = 0.33;
+
+  const ringScaleMin = 0.33;
   const ringScaleMax = 0.66;
   const streamingBlink = keyframes`
   50% {
@@ -99,7 +99,7 @@ export function SiteHeader() {
   }
 	`;
 
-    const pulseRing = keyframes`
+  const pulseRing = keyframes`
 	0% {
     transform: scale(${ringScaleMin});
   }
@@ -114,12 +114,36 @@ export function SiteHeader() {
     opacity: 0;
   }
 	`;
-  useEffect(() => {
-    if (nowTime >= dayStartTime && nowTime <= dayEndTime) {
-      setStreaming(true);
-    }
-  }, [nowTime, dayStartTime, dayEndTime, streaming]);
 
+  const updateTime = useCallback(() => {
+    setNowTimeState(DateTime.now());
+    // console.log('update time');
+  }, []);
+
+
+  useEffect(() => {
+    if (!nowTimeState) {
+      updateTime();
+    }
+  });
+
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (nowTimeState >= dayStartTime && nowTimeState <= dayEndTime) {
+        !streaming && setStreaming(true);
+
+      } else {
+        streaming && setStreaming(false);
+      }
+      updateTime();
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+    }
+
+  }, [dayEndTime, dayStartTime, nowTimeState, streaming, updateTime]);
 
   const NavLink = ({ href, children, offset }) => (
     <Link
@@ -146,19 +170,19 @@ export function SiteHeader() {
         '&.livestreamLink--live': {
           position: 'relative',
           '&:before': {
-              content: "''",
-              position: 'absolute',
-              top: '-5px',
-              right: '-5px',
-              display: 'block',
-              color: "#FF61E6",
-              width: '20px',
+            content: "''",
+            position: 'absolute',
+            top: '-5px',
+            right: '-5px',
+            display: 'block',
+            color: "#FF61E6",
+            width: '20px',
             height: '20px',
-              // bgColor: '#FF61E6',
-              border: '5px solid #FF61E6',
-              textAlign: 'right',
+            // bgColor: '#FF61E6',
+            border: '5px solid #FF61E6',
+            textAlign: 'right',
             transformOrigin: 'center',
-              borderRadius: '50%',
+            borderRadius: '50%',
             animation: `2.25s ${pulseRing} cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite`,
           },
         }
@@ -171,198 +195,198 @@ export function SiteHeader() {
 
   return (
     <Box
-        ref={ref}
-        as="header"
-        bg="transparent"
-        position="fixed"
-        top={0}
-        px={4}
-        w="100%"
-        maxW="100vw"
+      ref={ref}
+      as="header"
+      bg="transparent"
+      position="fixed"
+      top={0}
+      px={4}
+      w="100%"
+      maxW="100vw"
+      h={{ base: '75px', md: "100px" }}
+      // transform={`translate3d(0, ${onScreen ? 0 : "-70px"}, 0)`}
+      opacity={onScreen ? 1 : 0}
+      transition="transform 0.3s 1s ease-in-out, opacity 0.6s 0.8s ease-in"
+      zIndex={2001}
+      sx={{
+        a: {
+          color: "white",
+        },
+      }}
+    >
+      <Flex
         h={{ base: '75px', md: "100px" }}
-        // transform={`translate3d(0, ${onScreen ? 0 : "-70px"}, 0)`}
-        opacity={onScreen ? 1 : 0}
-        transition="transform 0.3s 1s ease-in-out, opacity 0.6s 0.8s ease-in"
-        zIndex={2001}
-        sx={{
-          a: {
-            color: "white",
-          },
-        }}
+        alignItems="center"
+        justifyContent="space-between"
       >
-        <Flex
-          h={{ base: '75px', md: "100px" }}
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Box width={{ base: "25%" }} h="2.5rem" overflow="visible" sx={{
-            d: { base: 'inline-flex', md: 'none' },
-          }}>
-            <Button
-              onClick={handleToggle}
-              className="ui"
-              sx={{
-                alignSelf: "center",
-                justifySelf: "right",
-                position: "relative",
-                flexDirection: "column",
-                justifyContent: "space-around",
-                overflow: 'visible',
-                w: { base: "2.25rem" },
-                h: { base: "2.25rem" },
+        <Box width={{ base: "25%" }} h="2.5rem" overflow="visible" sx={{
+          d: { base: 'inline-flex', md: 'none' },
+        }}>
+          <Button
+            onClick={handleToggle}
+            className="ui"
+            sx={{
+              alignSelf: "center",
+              justifySelf: "right",
+              position: "relative",
+              flexDirection: "column",
+              justifyContent: "space-around",
+              overflow: 'visible',
+              w: { base: "2.25rem" },
+              h: { base: "2.25rem" },
+              background: "transparent",
+              border: "none",
+              cursor: "pointer",
+              padding: 0,
+              mx: 0,
+              zIndex: 2003,
+              "&:hover, &:focus,  &[data-hover]": {
+                outline: "none",
                 background: "transparent",
-                border: "none",
-                cursor: "pointer",
-                padding: 0,
-                mx: 0,
-                zIndex: 2003,
-                "&:hover, &:focus,  &[data-hover]": {
-                  outline: "none",
-                  background: "transparent",
-                  boxShadow: "none",
-                },
-                div: {
-                  w: "100%",
-                  h: "100%",
-                  p: 0,
-                  transition: "all 0.3s linear",
-                  position: "relative",
-                  transformOrigin: "1px",
-                },
-                "path, circle": {
-                  fill: isOpen ? "transparent" : "transparent",
-                  transition: "all 0.2s 0.2s ease",
-                  stroke: isOpen ? "#7C56FF" : "#927CFF",
-                },
-                ".top-line": {
-                  transition: "all 0.6s ease",
-                  transform: isOpen
-                    ? "rotate(-405deg) translate3d(1px, 3px, 0)"
-                    : "rotate(0)",
-                  transformOrigin: "center",
-                },
-                ".bottom-line": {
-                  transition: "all 0.6s ease",
-                  transform: isOpen
-                    ? "rotate(405deg) translate3d(0px, -4px, 0)"
-                    : "rotate(0)",
-                  transformOrigin: "center",
-                },
+                boxShadow: "none",
+              },
+              div: {
+                w: "100%",
+                h: "100%",
+                p: 0,
+                transition: "all 0.3s linear",
+                position: "relative",
+                transformOrigin: "1px",
+              },
+              "path, circle": {
+                fill: isOpen ? "transparent" : "transparent",
+                transition: "all 0.2s 0.2s ease",
+                stroke: isOpen ? "#7C56FF" : "#927CFF",
+              },
+              ".top-line": {
+                transition: "all 0.6s ease",
+                transform: isOpen
+                  ? "rotate(-405deg) translate3d(1px, 3px, 0)"
+                  : "rotate(0)",
+                transformOrigin: "center",
+              },
+              ".bottom-line": {
+                transition: "all 0.6s ease",
+                transform: isOpen
+                  ? "rotate(405deg) translate3d(0px, -4px, 0)"
+                  : "rotate(0)",
+                transformOrigin: "center",
+              },
+            }}
+          >
+            <MenuIcon2SVG toggle={isOpen} />
+          </Button>
+        </Box>
+        <HStack spacing={8} alignItems="center" className="ui">
+          <Link href="/#home" flex={{ base: 1 }}>
+            <BoxedNextImage
+              src="assets/img/mf2-logo.png"
+              alt="MetaGame Logo"
+              boxSize={{ base: "65px", md: "95px" }}
+              objectFit="cover"
+              transform={{ md: "translateY(15px) translateX(10px)" }}
+              sx={{
+                transition: 'all 0.2s 0.1s ease',
+                filter: "drop-shadow(0 0 15px rgba(0,0,0,0.6))",
+                _hover: {
+                  filter: "drop-shadow(0 0 15px #FF61E696)",
+                }
               }}
-            >
-              <MenuIcon2SVG toggle={isOpen} />
-            </Button>
-          </Box>
-          <HStack spacing={8} alignItems="center" className="ui">
-            <Link href="/#home" flex={{ base: 1 }}>
-              <BoxedNextImage
-                src="assets/img/mf2-logo.png"
-                alt="MetaGame Logo"
-                boxSize={{ base: "65px", md: "95px" }}
-                objectFit="cover"
-                transform={{ md: "translateY(15px) translateX(10px)" }}
-                sx={{
-                  transition: 'all 0.2s 0.1s ease',
-                  filter: "drop-shadow(0 0 15px rgba(0,0,0,0.6))",
-                  _hover: {
-                    filter: "drop-shadow(0 0 15px #FF61E696)",
-                  }
-                }}
-              />
-            </Link>
-            <HStack
-              className="ui"
-              as="nav"
-              spacing={4}
-              display={{ base: "none", md: "flex" }}
-            >
-              {Links.map((link, i) => (
-                <NavLink key={`desktop-${link.name}`} href={link.href} className={streaming ? 'live' : ''}>
-                  {link.name}
-                </NavLink>
-              ))}
-            </HStack>
-          </HStack>
-          <Flex alignItems="center" justifyContent="end" width={{ base: "25%", md: 'auto' }}>
-            {screenSize !== 'base' ? (
-              <Link
-                className="ui"
-                href="https://metagame.wtf"
-                px={5}
-                py={2}
-                color="white"
-                fontWeight={700}
-                bg="#927CFF"
-                boxShadow="0 0 10px rgba(0, 0, 0, 0.6)"
-                size="sm"
-                mr={0}
-                borderRadius="md"
-                isExternal
-              >
-                Join MetaGame
-              </Link>
-            ) : (
-              <Link
-                className="ui"
-                href="https://metagame.wtf"
-                px={0}
-                py={0}
-                // color={"white"}
-                bg="transparent"
-                size="sm"
-                mr={0}
-                borderRadius="md"
-                isExternal
-              >
-                <IconButton
-                  icon={<BiJoystick />}
-                  aria-label="Join MetaGame"
-                  flex={0}
-                  fontSize={{ base: '12vmin', lg: "2vmax" }}
-                  colorScheme="ghost"
-                  color="#927CFF"
-                  alignSelf="center"
-                // filter="drop-shadow(0 0 15px #FF61E6)"
-                />
-              </Link>
-
-            )}
-
-          </Flex>
-        </Flex>
-
-        {/* {isOpen ? ( */}
-        <Box
-          className="ui"
-          display={{ base: "flex", md: "none" }}
-          position="fixed"
-          top={0}
-          left={0}
-          w="100%"
-          minW="100%"
-          minH="100vh"
-          alignItems="center"
-          justifyContent="center"
-          p={5}
-          pt="100px"
-          bg="linear-gradient(0deg, rgba(41,2,80,0.1) 0%, rgba(25,0,50,0.5) 40%)"
-          backdropFilter="blur(7px)"
-          transition="transform 0.3s 0.1s ease, opacity 0.3s 0.2s"
-          boxShadow="0 0 15px #00000070"
-          opacity={isOpen ? 1 : 0}
-          transform={`translate3d(0, ${isOpen ? 0 : '-100vh'}, 0)`}
-          zIndex={-1}
-        >
-          <Stack as="nav" spacing={4} height="auto">
-            {Links.map((link) => (
-              <NavLink key={`mobile-${link.name}`} href={link.href} >
+            />
+          </Link>
+          <HStack
+            className="ui"
+            as="nav"
+            spacing={4}
+            display={{ base: "none", md: "flex" }}
+          >
+            {Links.map((link, i) => (
+              <NavLink key={`desktop-${link.name}`} href={link.href} className={streaming ? 'live' : ''}>
                 {link.name}
               </NavLink>
             ))}
-          </Stack>
-        </Box>
-        {/* ) : null} */}
+          </HStack>
+        </HStack>
+        <Flex alignItems="center" justifyContent="end" width={{ base: "25%", md: 'auto' }}>
+          {screenSize !== 'base' ? (
+            <Link
+              className="ui"
+              href="https://metagame.wtf"
+              px={5}
+              py={2}
+              color="white"
+              fontWeight={700}
+              bg="#927CFF"
+              boxShadow="0 0 10px rgba(0, 0, 0, 0.6)"
+              size="sm"
+              mr={0}
+              borderRadius="md"
+              isExternal
+            >
+              Join MetaGame
+            </Link>
+          ) : (
+            <Link
+              className="ui"
+              href="https://metagame.wtf"
+              px={0}
+              py={0}
+              // color={"white"}
+              bg="transparent"
+              size="sm"
+              mr={0}
+              borderRadius="md"
+              isExternal
+            >
+              <IconButton
+                icon={<BiJoystick />}
+                aria-label="Join MetaGame"
+                flex={0}
+                fontSize={{ base: '12vmin', lg: "2vmax" }}
+                colorScheme="ghost"
+                color="#927CFF"
+                alignSelf="center"
+              // filter="drop-shadow(0 0 15px #FF61E6)"
+              />
+            </Link>
+
+          )}
+
+        </Flex>
+      </Flex>
+
+      {/* {isOpen ? ( */}
+      <Box
+        className="ui"
+        display={{ base: "flex", md: "none" }}
+        position="fixed"
+        top={0}
+        left={0}
+        w="100%"
+        minW="100%"
+        minH="100vh"
+        alignItems="center"
+        justifyContent="center"
+        p={5}
+        pt="100px"
+        bg="linear-gradient(0deg, rgba(41,2,80,0.1) 0%, rgba(25,0,50,0.5) 40%)"
+        backdropFilter="blur(7px)"
+        transition="transform 0.3s 0.1s ease, opacity 0.3s 0.2s"
+        boxShadow="0 0 15px #00000070"
+        opacity={isOpen ? 1 : 0}
+        transform={`translate3d(0, ${isOpen ? 0 : '-100vh'}, 0)`}
+        zIndex={-1}
+      >
+        <Stack as="nav" spacing={4} height="auto">
+          {Links.map((link) => (
+            <NavLink key={`mobile-${link.name}`} href={link.href} >
+              {link.name}
+            </NavLink>
+          ))}
+        </Stack>
       </Box>
+      {/* ) : null} */}
+    </Box>
   );
 }
 

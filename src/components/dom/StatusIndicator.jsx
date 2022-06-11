@@ -13,7 +13,7 @@ export const StatusIndicator = ({ text }) => {
   const dayStartTime = new Date('14:00:00', 'UTC+0');
   const dayEndTime = new Date('21:00:00', 'UTC+0');
   const [streaming, setStreaming] = useState(!!(dayStartTime <= nowTime || dayEndTime >= nowTime));
-  console.log('streaming', streaming);
+  // console.log('streaming', streaming);
   // try {
   //   const res = await axios.get(`${calUrl}&amp;timeMin=${dayStartTime.toISOString()}&amp;timeMax=${dayEndTime.toISOString()}`)
 

@@ -9,7 +9,6 @@ import {
 } from "@chakra-ui/react";
 import { FaToggleOff, FaToggleOn } from 'react-icons/fa'
 
-import { AlphaNotice } from '@mf/components/dom/AlphaNotice';
 import { EasterEgg } from '@mf/components/dom/EasterEgg';
 import { EasterEggGlitch } from '@mf/components/dom/EasterEggGlitch';
 import { SiteFooter } from "@mf/components/dom/Footer";
