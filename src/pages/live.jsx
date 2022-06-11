@@ -18,43 +18,11 @@ import { CanvasLoader } from '@mf/components/canvas/Loader';
 import { LivestreamSection } from "@mf/components/dom/page-sections/LivestreamSection";
 
 
-// const NomadVox = dynamic(() => import('@mf/components/canvas/Nomad'), {
-//   ssr: false,
-// })
-// const LuxVox = dynamic(() => import('@mf/components/canvas/Lux'), {
-//   ssr: false,
-// })
-// const JetsetterVox = dynamic(() => import('@mf/components/canvas/Jetsetter'), {
-//   ssr: false,
-// })
-// const HouseholdVox = dynamic(() => import('@mf/components/canvas/Household'), {
-//   ssr: false,
-// })
-// const IndustrialVox = dynamic(() => import('@mf/components/canvas/Industrial'), {
-//   ssr: false,
-// })
-// const BabyEarthVox = dynamic(() => import('@mf/components/canvas/BabyEarth'), {
-//   ssr: false,
-// })
-// const OctoPetVox = dynamic(() => import('@mf/components/canvas/OctoPet'), {
-//   ssr: false,
-// })
+
 const Galaxy = dynamic(() => import('@mf/components/canvas/Galaxy'), {
   ssr: false,
 })
-// Musashi
-// const Robe = dynamic(() => import('@mf/components/canvas/musashi/Robe'), {
-//   ssr: false,
-// })
-// const Robe2 = dynamic(() => import('@mf/components/canvas/musashi/Robe2'), {
-//   ssr: false,
-// })
-// const ILB = dynamic(() => import('@mf/components/canvas/musashi/Ilb'), {
-//   ssr: false,
-// })
-// const MolochPet1 = dynamic(() => import('@mf/components/canvas/musashi/MolochPet1'), {
-//   ssr: false,
-// })
+
 
 
 

@@ -73,7 +73,7 @@ export const EasterEgg = () => {
             transition="all 0.3s 0.8s ease"
             // transform={`translateY(${openClaim ? 0 : "-70px"})`}
             onClick={() => setOpenClaim(!openClaim)}
-            zIndex={2004}
+            zIndex={3004}
           >
             Close the claimer
           </Button>
@@ -170,7 +170,7 @@ export const EasterEgg = () => {
             textAlign="center"
           >
             <Link
-              href="https://testnets.opensea.io/assets?search[query]=0x91BBa1e0EE2DCC8d78Fa017588614f328d6d1885"
+              href="https://opensea.io/assets/matic/0xff89aacc8c67255561737c2107c68826e52f7b7d/1"
               isExternal
               fontWeight={700}
               fontSize="0.7vmax"
@@ -198,7 +198,7 @@ export const EasterEgg = () => {
 export const MinterInstance = () => (
     <iframe
       title="Claim Easter Egg NFT"
-      src="https://gateway.ipfscdn.io/ipfs/QmQpHkDDWGJPBHFKkpX1DsfzvwZXQYNVoaW4R1Lhenp6T5/bundledrop.html?contract=0x91BBa1e0EE2DCC8d78Fa017588614f328d6d1885&amp;chainId=80001&amp;tokenId=0"
+      src="https://gateway.ipfscdn.io/ipfs/QmfJu3spsSJot6givCK2VjwEgVHymc5RCXHqfG1W5WZyFX/edition-drop.html?contract=0xff89AacC8c67255561737c2107C68826E52f7B7D&amp;chainId=137&amp;tokenId=1"
       width="100%"
       height="100%"
       frameBorder="0"
