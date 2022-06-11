@@ -25,44 +25,50 @@ import {
 import axios from 'axios';
 import { DateTime, Duration } from 'luxon';
 
-import { useOnScreen } from "@mf/utils/hooks";
+import { useGetSpeakers, useOnScreen } from "@mf/utils/hooks";
 
 
 export const SpeakersSection = () => {
   const ref = useRef(null);
   const onScreen = useOnScreen(ref);
   // const list = getSpeakers();
-  const getSpeakersList = getSpeakers();
+  const getSpeakersList = getSpeakers(20);
   const [loading, setLoading] = useState(false);
-  const speakersList = useRef([]);
+  const speakersList = useRef(null);
   const currentDateTime = DateTime.now();
   const halfHourAgo = Duration.fromObject({ minutes: 30 }).negate();
   const comfortBreak = Duration.fromObject({ minutes: 30 });
   // console.log('times', currentDateTime.hour, halfHourAgo.values.minutes);
-
   const streamingBlink = keyframes`
   50% {
     opacity: 0;
   }
 	`;
 
-  useEffect(() => {
-    if (!loading && speakersList.current) {
+  const makeList = useCallback(async () => {
+    try {
       setLoading(true);
-      getSpeakersList.then((list) => {
-        list.sort((a, b) => {
-          const dateA = new Date(a.start.dateTime);
-          const dateB = new Date(b.start.dateTime);
-
-          return dateA - dateB;
+      const list = await getSpeakersList;
+      if (list) {
+        speakersList.current = list.map(speaker => {
+          return speaker
         });
-        speakersList.current = list;
-      }).then(() => {
-        setLoading(false);
-      });
+        console.log('speakersList', speakersList.current);
+      }
+      setLoading(false);
+
+    } catch (error) {
+      console.log('error', error);
+      setLoading(false);
     }
-    setLoading(false);
-  }, [getSpeakersList, loading]);
+  }, [getSpeakersList]);
+
+  useEffect(() => {
+    if (!loading  && !speakersList.current) {
+      makeList();
+    }
+
+  }, [getSpeakersList, loading, makeList]);
 
 
   return (
@@ -83,21 +89,25 @@ export const SpeakersSection = () => {
           </Text>
 
           <Box w="100%" h="auto" mt={3}>
+              <Text as="h3" className="gradient2">Coming up...the next 48 hours</Text>
             {loading ? (
               <Text>Loading...</Text>
             ) : (
-              <>
-                  <Text as="h3" className="gradient2">Coming up...the next 48 hours</Text>
                   <SimpleGrid spacing={5} columns={{ base: 1, xl: 5 }} mt={6}>
                   {speakersList.current &&
                     speakersList.current.length > 0 &&
                     speakersList.current.map((speaker, i) => {
                       const startDate = DateTime.fromISO(speaker.start.dateTime);
                       const endDate = DateTime.fromISO(speaker.end.dateTime);
-                      // console.log('date', speaker);
+                      // console.log('date', { startDate, endDate, currentDateTime, halfHourAgo, comfortBreak });
                       if (i <= 9) {
                         return (
-                          <Box  key={speaker.id}>
+                          <Box key={speaker.id}
+                            sx={{
+                            borderRadius: "lg",
+                                  border: endDate <= halfHourAgo || startDate <= currentDateTime ? '1px solid #FF61E6' : 'none',
+                                }}
+                          >
                             <VStack align="flex-start" spacing={2} position="relative" p={3}
                               // sx={{
                               //   bgColor: 'rgba(0,0,0, 0.1)',
@@ -114,13 +124,13 @@ export const SpeakersSection = () => {
                                 bgColor="purple.800"
                                 aria-label={`${speaker.description}`}
                               >
-                                <Text as="h4" fontSize={{base: "md", sm: 'sm', '2xl': 'md'}}>
+                                <Text as="h4" fontSize={{ base: "md", sm: 'sm', '2xl': 'md' }} >
                                   {speaker.description ?? speaker.summary}</Text>
                               </Tooltip>
-                              {endDate <= halfHourAgo && (
-                                <Text as="span" className="gradient" position="absolute" top={0} right={0} variant="outline" animation={`2s ${streamingBlink} cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite`} transform="translateY(-30px)">Streaming now...</Text>
+                              {endDate <= halfHourAgo || startDate <= currentDateTime && (
+                                <Text as="span" className="gradient" position="absolute" top={0} right={0} variant="outline" animation={`2s ${streamingBlink} cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite`} transform={{base: "translateY(-20px)", '2xl': "translateY(-38px)"}}>Streaming now...</Text>
                               )}
-                              <Text as="span">{startDate.toFormat('ccc')}, {startDate.toLocaleString(DateTime.DATETIME_FULL)}</Text>
+                              <Text as="span" fontSize="sm">{startDate.toFormat('ccc')}, {startDate.toLocaleString(DateTime.DATETIME_FULL)}</Text>
                               <Popover key={speaker.id} zIndex={100} colorScheme="purple" >
                                 <PopoverTrigger>
                                   <Button size="sm" bg="#FF61E6" colorScheme="pink">More info</Button>
@@ -142,10 +152,10 @@ export const SpeakersSection = () => {
                                     pb={4}
                                   >
                                     <Box fontSize='sm'>Want more?</Box>
-                                                                        <HStack>
+                                    <HStack>
                                       <Link href={speaker.htmlLink} isExternal>Calendar</Link>
                                       <Link href="https://discord.gg/g3KnY4sXXP" isExternal>Chat</Link>
-                                      {endDate <= halfHourAgo && <Link href="/live">Watch</Link>}
+                                      {endDate <= halfHourAgo || startDate <= currentDateTime && <Link href="/live">Watch</Link>}
                                     </HStack>
                                   </PopoverFooter>
                                 </PopoverContent>
@@ -156,7 +166,6 @@ export const SpeakersSection = () => {
                       }
                     })}
                     </SimpleGrid>
-              </>
             )}
           </Box>
 
@@ -167,31 +176,37 @@ export const SpeakersSection = () => {
 };
 
 const calUrl = "https://www.googleapis.com/calendar/v3/calendars/85ftetvc3cdl0qop7a36iguacc@group.calendar.google.com/events?key=AIzaSyDo07MSotIB3Q4ETlx_7yxVUB2YKU3MySs";
-export const getSpeakers = async () => {
-  const today = new Date();
-  const aBitEarlierThanNow = new Date(today.getTime() - (0.5 * 60 * 60 * 1000));
-  const next2Days = new Date(today.getTime() + (2 * 24 * 60 * 60 * 1000));
+export const getSpeakers = async (num) => {
+  const today = DateTime.now();
+  const aBitEarlierThanNow = Duration.fromObject({ minutes: 30 }).negate();
+  const next2Days = Duration.fromObject({ days: 3 });
 
   try {
-    const res = await axios.get(calUrl)
-
-    const speakers = res.data.items.filter((item, i) => {
-      const itemDate = new Date(item.start.dateTime);
-      if (itemDate > aBitEarlierThanNow && itemDate < next2Days) {
-        if (item.status === 'confirmed' && !item.summary.includes('FREE') && item.description !== undefined) {
-          // if (!item.description.includes('<html-blob>')) {
-          // console.log('item', item.description);
-          return item
-        }
-        // }
+    const res = await axios.get(calUrl, {
+      params: {
+        maxResults: num,
+        timeMin: today.plus(aBitEarlierThanNow).toISO(),
+        timeMax: today.plus(next2Days).toISO(),
+        singleEvents: true,
+        orderBy: "startTime",
+        fields: "items(description,end,start,summary,htmlLink,location, status)",
       }
     });
-    return speakers.length ? speakers : [];
+    if (res.status === 200) {
+      const speakers = res.data.items.filter((item, i) => {
+        if (item.status === 'confirmed' && !item.summary.includes('FREE') && item.description !== undefined) {
+          return item
+        }
+      });
+      return speakers.length > 0 ? speakers : [];
+    }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log('error fetching calendar', error);
   }
 };
 
+// TODO: finish this
 export const getStreamStatus = async () => {
   const nowTime = new Date();
 

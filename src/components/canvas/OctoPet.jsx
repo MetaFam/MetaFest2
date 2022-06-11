@@ -8,11 +8,9 @@ import * as THREE from "three";
 import useStore from '@mf/helpers/store'
 
 export default function OctoPetVox(props) {
-  const router = useStore((s) => s.router)
   const group = useRef();
-  const [hovered, setHover] = useState(false)
   const { nodes, materials } = useGLTF("/assets/models/babyocto-vox.glb");
-  const { route, animate } = props
+  const { animate } = props
   const clock = new THREE.Clock();
   let previousTime = 0;
   useFrame(() => {
@@ -37,9 +35,6 @@ export default function OctoPetVox(props) {
         material={materials['palette.004']}
         rotation={[Math.PI * 0.5, 0, 0]}
         scale={0.5}
-        onClick={() => router.push(route)}
-        // onPointerOver={(e) => setHover(true)}
-        // onPointerOut={(e) => setHover(false)}
       />
     </group>
   );

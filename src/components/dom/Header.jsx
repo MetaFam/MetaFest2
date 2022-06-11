@@ -73,7 +73,7 @@ export function SiteHeader() {
   const screenSize = useBreakpoint()
   const nowTime = DateTime.now();
   const [nowTimeState, setNowTimeState] = useState(null);
-  const dayStartTime = DateTime.fromObject({ hour: 14, minute: 30, second: 0 }, { zone: 'utc' });
+  const dayStartTime = DateTime.fromObject({ hour: 14, minute: 0, second: 0 }, { zone: 'utc' });
   const dayEndTime = DateTime.fromObject({ hour: 21, minute: 30 }, { zone: 'utc' });
   const [streaming, setStreaming] = useState(false);
 
@@ -311,12 +311,12 @@ export function SiteHeader() {
           {screenSize !== 'base' ? (
             <Link
               className="ui"
-                    _hover={{
-        textDecoration: "none",
-        background: "linear-gradient(-90deg, #FF61E6 -29.22%, #7C56FF 107.53%)",
-        backgroundClip: "text",
-        WebkitTextFillColor: "transparent",
-      }}
+              _hover={{
+                textDecoration: "none",
+                background: "linear-gradient(-90deg, #FF61E6 -29.22%, #7C56FF 107.53%)",
+                backgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
               href="https://metagame.wtf"
               px={5}
               py={2}
