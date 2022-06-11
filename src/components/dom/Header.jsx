@@ -311,6 +311,12 @@ export function SiteHeader() {
           {screenSize !== 'base' ? (
             <Link
               className="ui"
+                    _hover={{
+        textDecoration: "none",
+        background: "linear-gradient(-90deg, #FF61E6 -29.22%, #7C56FF 107.53%)",
+        backgroundClip: "text",
+        WebkitTextFillColor: "transparent",
+      }}
               href="https://metagame.wtf"
               px={5}
               py={2}

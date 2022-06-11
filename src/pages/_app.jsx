@@ -128,6 +128,11 @@ const theme = extendTheme({
         '&.ghost': {
           color: '#fff'
         },
+        '&.chakra-button': {
+          _hover: {
+            bg: '#7C56FF',
+          }
+        }
 
       },
       section: {
