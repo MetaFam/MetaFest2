@@ -38,6 +38,7 @@ export const SpeakersSection = () => {
   const currentDateTime = DateTime.now();
   const halfHourAgo = Duration.fromObject({ minutes: 30 }).negate();
   const comfortBreak = Duration.fromObject({ minutes: 30 });
+  const [currentSpeaker, setCurrentSpeaker] = useState(null);
   // console.log('times', currentDateTime.hour, halfHourAgo.values.minutes);
   const streamingBlink = keyframes`
   50% {
@@ -53,7 +54,19 @@ export const SpeakersSection = () => {
         speakersList.current = list.map(speaker => {
           return speaker
         });
-        console.log('speakersList', speakersList.current);
+        const findSpeaker = speakersList.current && speakersList.current.map(speaker => {
+          const startTime = DateTime.fromISO(speaker.start.dateTime);
+          const endTime = DateTime.fromISO(speaker.end.dateTime);
+          if (startTime <= currentDateTime && endTime >= currentDateTime) {
+            console.log('current', speaker);
+            return speaker;
+          }
+        });
+        if (findSpeaker && findSpeaker.length > 0) {
+          setCurrentSpeaker(findSpeaker[0]);
+          console.log('cur speaker updated', findSpeaker);
+        }
+        // console.log('speakersListUpdated', speakersList.current[0], currentSpeaker);
       }
       setLoading(false);
 
@@ -61,15 +74,36 @@ export const SpeakersSection = () => {
       console.log('error', error);
       setLoading(false);
     }
-  }, [getSpeakersList]);
+  }, [currentDateTime, currentSpeaker, getSpeakersList]);
 
   useEffect(() => {
-    if (!loading  && !speakersList.current) {
+    if (!loading && !speakersList.current) {
       makeList();
     }
 
   }, [getSpeakersList, loading, makeList]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (speakersList.current && currentSpeaker) {
+        // console.log({ speakersList, currentSpeaker });
+        const curStartTime = DateTime.fromISO(currentSpeaker.start.dateTime);
+        const curEndTime = DateTime.fromISO(currentSpeaker.end.dateTime);
+        const now = DateTime.now();
+        const dur = Duration.fromObject({ minutes: 45 });
+        // console.log('curStartTime', curStartTime, curEndTime, currentDateTime);
+        if (now > curEndTime) {
+          makeList();
+          console.log('makeList');
+        }
+
+      }
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+    }
+  }, [currentDateTime, currentSpeaker, makeList]);
 
   return (
     <Box as="section" id="speakers">
@@ -89,83 +123,84 @@ export const SpeakersSection = () => {
           </Text>
 
           <Box w="100%" h="auto" mt={3}>
-              <Text as="h3" className="gradient2">Coming up...the next 48 hours</Text>
+            <Text as="h3" className="gradient2">Coming up...the next 48 hours</Text>
             {loading ? (
               <Text>Loading...</Text>
             ) : (
-                  <SimpleGrid spacing={5} columns={{ base: 1, xl: 5 }} mt={6}>
-                  {speakersList.current &&
-                    speakersList.current.length > 0 &&
-                    speakersList.current.map((speaker, i) => {
-                      const startDate = DateTime.fromISO(speaker.start.dateTime);
-                      const endDate = DateTime.fromISO(speaker.end.dateTime);
-                      // console.log('date', { startDate, endDate, currentDateTime, halfHourAgo, comfortBreak });
-                      if (i <= 9) {
-                        return (
-                          <Box key={speaker.id}
-                            sx={{
+              <SimpleGrid spacing={5} columns={{ base: 1, xl: 5 }} mt={6}>
+                {speakersList.current &&
+                  speakersList.current.length > 0 &&
+                  speakersList.current.map((speaker, i) => {
+                    const startDate = DateTime.fromISO(speaker.start.dateTime);
+                    const endDate = DateTime.fromISO(speaker.end.dateTime);
+                    // console.log('date', { startDate, endDate, currentDateTime, halfHourAgo, comfortBreak });
+                    if (i <= 9) {
+                      return (
+                        <Box key={speaker.id}
+                          sx={{
                             borderRadius: "lg",
-                                  border: endDate <= halfHourAgo || startDate <= currentDateTime ? '1px solid #FF61E6' : 'none',
-                                }}
+                            border: endDate <= currentDateTime || startDate <= currentDateTime ? '1px solid #FF61E6' : 'none',
+                            bgColor: endDate <= currentDateTime || startDate <= currentDateTime ? 'rgba(255,255,255,0.05)' : 'transparent',
+                          }}
+                        >
+                          <VStack align="flex-start" spacing={2} position="relative" p={3}
+                          // sx={{
+                          //   bgColor: 'rgba(0,0,0, 0.1)',
+                          //   backdropFilter: 'blur(7px)',
+                          //   borderRadius: 'lg',
+                          //   zIndex: 0,
+                          // }}
                           >
-                            <VStack align="flex-start" spacing={2} position="relative" p={3}
-                              // sx={{
-                              //   bgColor: 'rgba(0,0,0, 0.1)',
-                              //   backdropFilter: 'blur(7px)',
-                              //   borderRadius: 'lg',
-                              //   zIndex: 0,
-                              // }}
+                            <Tooltip
+                              label={`${speaker.summary}`}
+                              hasArrow
+                              variant="ghost"
+                              color="white"
+                              bgColor="purple.800"
+                              aria-label={`${speaker.description}`}
                             >
-                              <Tooltip
-                                label={`${speaker.summary}`}
-                                hasArrow
-                                variant="ghost"
-                                color="white"
-                                bgColor="purple.800"
-                                aria-label={`${speaker.description}`}
-                              >
-                                <Text as="h4" fontSize={{ base: "md", sm: 'sm', '2xl': 'md' }} >
-                                  {speaker.description ?? speaker.summary}</Text>
-                              </Tooltip>
-                              {endDate <= halfHourAgo || startDate <= currentDateTime && (
-                                <Text as="span" className="gradient" position="absolute" top={0} right={0} variant="outline" animation={`2s ${streamingBlink} cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite`} transform={{base: "translateY(-20px)", '2xl': "translateY(-38px)"}}>Streaming now...</Text>
-                              )}
-                              <Text as="span" fontSize="sm">{startDate.toFormat('ccc')}, {startDate.toLocaleString(DateTime.DATETIME_FULL)}</Text>
-                              <Popover key={speaker.id} zIndex={100} colorScheme="purple" >
-                                <PopoverTrigger>
-                                  <Button size="sm" bg="#FF61E6" colorScheme="pink">More info</Button>
-                                </PopoverTrigger>
-                                <PopoverContent as="div" bgColor="rgba(41,2,80,1)">
-                                  <PopoverCloseButton />
-                                  <PopoverArrow bgColor="rgba(41,2,80,1)"/>
-                                  <PopoverHeader fontWeight={900} className="gradient2" pointerEvents="none">{speaker.description}</PopoverHeader>
-                                  <PopoverBody>
-                                    <Box as="span" fontWeight="700">Title: {speaker.summary} </Box>
-                                    <Text>Start: {startDate.toFormat('ccc')}, {startDate.toLocaleString(DateTime.DATETIME_FULL)}</Text>
-                                    <Text>Finish: {endDate.toFormat('ccc')}, {endDate.toLocaleString(DateTime.DATETIME_FULL)}</Text>
-                                  </PopoverBody>
-                                  <PopoverFooter
-                                    border='0'
-                                    display='flex'
-                                    alignItems='center'
-                                    justifyContent='space-between'
-                                    pb={4}
-                                  >
-                                    <Box fontSize='sm'>Want more?</Box>
-                                    <HStack>
-                                      <Link href={speaker.htmlLink} isExternal>Calendar</Link>
-                                      <Link href="https://discord.gg/g3KnY4sXXP" isExternal>Chat</Link>
-                                      {endDate <= halfHourAgo || startDate <= currentDateTime && <Link href="/live">Watch</Link>}
-                                    </HStack>
-                                  </PopoverFooter>
-                                </PopoverContent>
-                              </Popover>
-                            </VStack>
-                          </Box>
-                        );
-                      }
-                    })}
-                    </SimpleGrid>
+                              <Text as="h4" fontSize={{ base: "md", sm: 'sm', '2xl': 'md' }} >
+                                {speaker.description ?? speaker.summary}</Text>
+                            </Tooltip>
+                            {endDate <= currentDateTime || startDate <= currentDateTime && (
+                              <Text as="span" className="gradient" position="absolute" top={0} right={0} variant="outline" animation={`2s ${streamingBlink} cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite`} transform={{ base: "translateY(-20px)", '2xl': "translateY(-38px)" }}>Streaming now...</Text>
+                            )}
+                            <Text as="span" fontSize="sm">{startDate.toFormat('ccc')}, {startDate.toLocaleString(DateTime.DATETIME_FULL)}</Text>
+                            <Popover key={speaker.id} zIndex={100} colorScheme="purple" >
+                              <PopoverTrigger>
+                                <Button size="sm" bg="#FF61E6" colorScheme="pink">More info</Button>
+                              </PopoverTrigger>
+                              <PopoverContent as="div" bgColor="rgba(41,2,80,1)">
+                                <PopoverCloseButton />
+                                <PopoverArrow bgColor="rgba(41,2,80,1)" />
+                                <PopoverHeader fontWeight={900} className="gradient2" pointerEvents="none">{speaker.description}</PopoverHeader>
+                                <PopoverBody>
+                                  <Box as="span" fontWeight="700">Title: {speaker.summary} </Box>
+                                  <Text>Start: {startDate.toFormat('ccc')}, {startDate.toLocaleString(DateTime.DATETIME_FULL)}</Text>
+                                  <Text>Finish: {endDate.toFormat('ccc')}, {endDate.toLocaleString(DateTime.DATETIME_FULL)}</Text>
+                                </PopoverBody>
+                                <PopoverFooter
+                                  border='0'
+                                  display='flex'
+                                  alignItems='center'
+                                  justifyContent='space-between'
+                                  pb={4}
+                                >
+                                  <Box fontSize='sm'>Want more?</Box>
+                                  <HStack>
+                                    <Link href={speaker.htmlLink} isExternal>Calendar</Link>
+                                    <Link href="https://discord.gg/g3KnY4sXXP" isExternal>Chat</Link>
+                                    {endDate <= currentDateTime || startDate <= currentDateTime && <Link href="/live">Watch</Link>}
+                                  </HStack>
+                                </PopoverFooter>
+                              </PopoverContent>
+                            </Popover>
+                          </VStack>
+                        </Box>
+                      );
+                    }
+                  })}
+              </SimpleGrid>
             )}
           </Box>
 
@@ -185,7 +220,7 @@ export const getSpeakers = async (num) => {
     const res = await axios.get(calUrl, {
       params: {
         maxResults: num,
-        timeMin: today.plus(aBitEarlierThanNow).toISO(),
+        timeMin: today.toISO(),
         timeMax: today.plus(next2Days).toISO(),
         singleEvents: true,
         orderBy: "startTime",
