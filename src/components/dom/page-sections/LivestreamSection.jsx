@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { ExternalLinkIcon } from "@chakra-ui/icons";
-import { Box, Button, Link, Spinner, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Link, Spinner, Text, VStack, keyframes } from "@chakra-ui/react";
 import { DateTime, Duration } from 'luxon';
 
 import { getSpeakers } from "@mf/utils/helpers";
@@ -9,6 +9,23 @@ import { useOnScreen } from "@mf/utils/hooks";
 import { BoxedNextImage } from "@mfdom/BoxedNextImage";
 import YoutubeInstance from "@mfdom/integrations/YoutubeInstance";
 
+const ringScaleMin = 0.98;
+const ringScaleMax = 1;
+const pulseRing = keyframes`
+	0% {
+    transform: scale(${ringScaleMin});
+  }
+	30% {
+		transform: scale(${ringScaleMax});
+	},
+  40%,
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+	`;
 export function LivestreamSection() {
   const ref = useRef(null);
   const onScreen = useOnScreen(ref);
@@ -16,6 +33,7 @@ export function LivestreamSection() {
   const speaker = getSpeakers(1);
   const [currentSpeaker, setCurrentspeaker] = useState(null);
   const [loadingSpeaker, setLoadingSpeaker] = useState(false);
+  const [streaming, setStreaming] = useState(false);
   const dateTime = DateTime.now();
   const toggleStream = () => {
     setOpen(!open);
@@ -25,23 +43,25 @@ export function LivestreamSection() {
     }
   };
 
-  const compareForNextSpeaker = useCallback(async () => {
+  const updateCurrentSpeaker = useCallback(async () => {
     try {
-      const s = await speaker
       const n = await getSpeakers(2);
+      console.log("n", n);
 
-      if (s && n) {
-        console.log('compareForNextSpeaker', s, n);
-        if (s[0].summary !== n[0].summary) {
-          // setCurrentspeaker(n[0]);
-          console.log('speakerChange');
-          return n[0]
-        }
-        // !currentSpeaker && setCurrentspeaker(s[0]);
-        console.log('no change');
-        return s[0]
+      if (n !== null) {
+        // console.log('compareForNextSpeaker', n);
+          setCurrentspeaker(n[0]);
+          console.log('speakerChange', n[0]);
+          if (DateTime.fromISO(n[0]?.end.dateTime) > DateTime.now()) {
+            setStreaming(true);
+          } else {
+            setStreaming(false);
+          }
       }
-      return null
+      console.log('no speakerChange');
+      setCurrentspeaker(null);
+      setLoadingSpeaker(false);
+
     } catch (error) {
       console.log('compareForNextSpeaker error', error);
     }
@@ -50,19 +70,15 @@ export function LivestreamSection() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const speakerChange = compareForNextSpeaker();
       try {
-        speakerChange.then(s => {
-          // if (speaker) {
-            setCurrentspeaker(s);
-          // }
-        });
-
+        if (currentSpeaker !== null) {
+          if (DateTime.fromISO(currentSpeaker.end.dateTime) < DateTime.now()) {
+            updateCurrentSpeaker();
+          }
+        }
       } catch (error) {
-
+        console.log('speakerChange error', error);
       }
-      console.log('speakerChange', speakerChange);
-      console.log('currentSpeaker', currentSpeaker);
 
     }, 5000);
 
@@ -70,26 +86,54 @@ export function LivestreamSection() {
       clearInterval(interval);
     }
 
-  }, [compareForNextSpeaker, currentSpeaker]);
+  }, [updateCurrentSpeaker, currentSpeaker]);
 
   useEffect(() => {
     // console.log('current speaker', currentSpeaker);
     try {
-      if (!currentSpeaker) {
-        setLoadingSpeaker(true);
-        speaker.then(s => {
-          setCurrentspeaker(s[0]);
-          console.log('speaker set');
-        });
 
+      if (currentSpeaker === null) {
+        setLoadingSpeaker(true);
+        if (speaker !== null) {
+          speaker.then(s => {
+            if (s) {
+              setCurrentspeaker(s[0]);
+              console.log('speaker set', s);
+              setLoadingSpeaker(false);
+            }
+          }).then(() => {
+            if (currentSpeaker !== null) {
+              if (DateTime.fromISO(currentSpeaker.start.dateTime) < DateTime.now()) {
+                setStreaming(true);
+              } else {
+                setStreaming(false);
+              }
+            }
+          })
+        }
+        setLoadingSpeaker(false);
       }
-      setLoadingSpeaker(false);
-      console.log("speaker", speaker);
     } catch (error) {
       console.log('error', error);
     }
   }, [currentSpeaker, speaker]);
 
+  useEffect(() => {
+    try {
+      // if (!currentSpeaker) return;
+      if(currentSpeaker === null) return;
+      if (DateTime.fromISO(currentSpeaker.start.dateTime) < DateTime.now() && DateTime.fromISO(currentSpeaker.end.dateTime) > DateTime.now()) {
+        setStreaming(true);
+        // return;
+      } else {
+        setStreaming(false);
+        // return;
+      }
+
+    } catch (error) {
+      console.log('error', error);
+    }
+  }, [currentSpeaker]);
 
   return (
     <Box
@@ -149,42 +193,50 @@ export function LivestreamSection() {
           background={`url(/assets/img/speakercard.gif) no-repeat center`}
           backgroundSize="cover"
         >
-          {!currentSpeaker ? (
+          {currentSpeaker === null && (
             <VStack w="100%" textAlign="center">
-              <Spinner fontSize="xl" color="#FF61E6" emptyColor="#76EBF2"/>
+            <Text as="span" className="gradient2">No events</Text>
+          </VStack>
+          )}
+
+          {loadingSpeaker && (
+            <VStack w="100%" textAlign="center">
+              <Spinner fontSize="xl" color="#FF61E6" emptyColor="#76EBF2" />
               <Text as="span" className="gradient2">Loading...</Text>
             </VStack>
-          ) : (
-
-            <VStack textAlign="center" justify="center" p={5} bgColor="rgba(255, 255, 255, 0.1)"
+          )}
+          {currentSpeaker !== null && !loadingSpeaker && (
+              <VStack textAlign="center" justify="center" p={5} bgColor="rgba(255, 255, 255, 0.1)"
                 backdropFilter="blur(7px)" borderRadius="2xl" textTransform="capitalize" onClick={toggleStream}
                 title="Open stream"
                 sx={{
                   _hover: {
                     cursor: 'pointer'
                   }
-                }}>
-
-              <BoxedNextImage
-                src="assets/img/mf2-logo.png"
-                alt="MetaGame Logo"
-                boxSize={{ base: "200px", md: "300px" }}
-                objectFit="cover"
-                  textAlign="center"
-                sx={{
-                  transition: 'all 0.2s 0.1s ease',
-                  filter: "drop-shadow(0 0 15px rgba(0,0,0,0.6))",
-                  'img': {
-                    mx: 'auto'
-                  }
                 }}
+              >
+
+                <BoxedNextImage
+                  src="assets/img/mf2-logo.png"
+                  alt="MetaGame Logo"
+                  boxSize={{ base: "200px", md: "300px" }}
+                  objectFit="cover"
+                  textAlign="center"
+                  animation={streaming && `2.25s ${pulseRing} cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite`}
+                  sx={{
+                    transition: 'all 0.2s 0.1s ease',
+                    filter: "drop-shadow(0 0 15px rgba(0,0,0,0.6))",
+                    'img': {
+                      mx: 'auto'
+                    }
+                  }}
                 />
-                <Text as="h3" fontSize="lg" fontWeight={500}>{DateTime.fromISO(currentSpeaker.start.dateTime) <= dateTime ? 'On stage now' : 'Up next...'}</Text>
+                <Text as="h3" fontSize="lg" fontWeight={500} color={streaming && '#FF61E6'}>{streaming ? 'On stage now' : 'Up next...'}</Text>
                 <Text as="h4" className="gradient2" fontSize="3xl" fontWeight={500} mt={3}>{currentSpeaker.summary}</Text>
                 <Text fontSize="xl" >Start: {DateTime.fromISO(currentSpeaker.start.dateTime).toRelativeCalendar()}, {DateTime.fromISO(currentSpeaker.start.dateTime).toLocaleString(DateTime.TIME_24_WITH_SHORT_OFFSET)}</Text>
                 <Text fontSize="xl">End: {DateTime.fromISO(currentSpeaker.end.dateTime).toRelativeCalendar()}, {DateTime.fromISO(currentSpeaker.end.dateTime).toLocaleString(DateTime.TIME_24_WITH_SHORT_OFFSET)}</Text>
-                <Text fontSize="xl">Click to Open Stream</Text>
-            </VStack>
+                    {streaming && <Text fontSize="xl">Click to Open Stream</Text>}
+                  </VStack>
           )}
         </Box>
       </Box>
