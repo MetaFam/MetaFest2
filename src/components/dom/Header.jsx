@@ -240,7 +240,7 @@ export function SiteHeader() {
               padding: 0,
               mx: 0,
               zIndex: 2003,
-              "&:hover, &:focus,  &[data-hover]": {
+              "&.chakra-button:hover, &.chakra-button:focus,  &.chakra-button[data-hover]": {
                 outline: "none",
                 background: "transparent",
                 boxShadow: "none",

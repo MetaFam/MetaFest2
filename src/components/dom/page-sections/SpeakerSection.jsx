@@ -163,7 +163,7 @@ export const SpeakersSection = () => {
                                 {speaker.description ?? speaker.summary}</Text>
                             </Tooltip>
                             {endDate <= currentDateTime || startDate <= currentDateTime && (
-                              <Text as="span" className="gradient" position="absolute" top={0} right={0} variant="outline" animation={`2s ${streamingBlink} cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite`} transform={{ base: "translateY(-20px)", '2xl': "translateY(-38px)" }}>Streaming now...</Text>
+                              <Text as="span" fontSize={{ base: 'xs', '2xl': "sm" }} className="gradient" position="absolute" top={0} right={0} variant="outline" animation={`2s ${streamingBlink} cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite`} transform={{ base: "translateY(-20px)", xl: 'translateY(-35px)', '2xl': "translateY(-38px)" }}>Streaming now...</Text>
                             )}
                             <Text as="span" fontSize="sm">{startDate.toFormat('ccc')}, {startDate.toLocaleString(DateTime.DATETIME_FULL)}</Text>
                             <Popover key={speaker.id} zIndex={100} colorScheme="purple" >
@@ -185,9 +185,10 @@ export const SpeakersSection = () => {
                                   alignItems='center'
                                   justifyContent='space-between'
                                   pb={4}
+                                  fontSize={{ base: 'sm', xl: 'sm', '2xl': "lg" }}
                                 >
                                   <Box fontSize='sm'>Want more?</Box>
-                                  <HStack>
+                                  <HStack >
                                     <Link href={speaker.htmlLink} isExternal>Calendar</Link>
                                     <Link href="https://discord.gg/g3KnY4sXXP" isExternal>Chat</Link>
                                     {endDate <= currentDateTime || startDate <= currentDateTime && <Link href="/live">Watch</Link>}

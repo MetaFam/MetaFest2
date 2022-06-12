@@ -127,6 +127,11 @@ export const UIToggles = () => {
           alignSelf="center"
           onClick={toggleUI}
           isDisabled={macOS || !canvasOn}
+          sx={{
+            '&.chakra-button:hover': {
+              bgColor: 'transparent',
+            }
+          }}
         />
         <Text as="span">UI</Text>
       </VStack>
@@ -141,6 +146,11 @@ export const UIToggles = () => {
           alignSelf="center"
           onClick={() => toggleCanvas()}
           isDisabled={macOS || !uiOn}
+          sx={{
+            '&.chakra-button:hover': {
+              bgColor: 'transparent',
+            }
+          }}
         />
         <Text as="span">Effects</Text>
       </VStack>
