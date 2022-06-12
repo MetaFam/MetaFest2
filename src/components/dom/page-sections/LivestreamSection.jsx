@@ -1,17 +1,22 @@
-import React, { useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { ExternalLinkIcon } from "@chakra-ui/icons";
-import { Box, Button, Link, Text } from "@chakra-ui/react";
+import { Box, Button, Link, Spinner, Text, VStack } from "@chakra-ui/react";
+import { DateTime, Duration } from 'luxon';
 
+import { getSpeakers } from "@mf/utils/helpers";
 import { useOnScreen } from "@mf/utils/hooks";
+import { BoxedNextImage } from "@mfdom/BoxedNextImage";
 import YoutubeInstance from "@mfdom/integrations/YoutubeInstance";
-
 
 export function LivestreamSection() {
   const ref = useRef(null);
   const onScreen = useOnScreen(ref);
   const [open, setOpen] = useState(false);
-
+  const speaker = getSpeakers(1);
+  const [currentSpeaker, setCurrentspeaker] = useState(null);
+  const [loadingSpeaker, setLoadingSpeaker] = useState(false);
+  const dateTime = DateTime.now();
   const toggleStream = () => {
     setOpen(!open);
     if (typeof window !== "undefined") {
@@ -20,11 +25,77 @@ export function LivestreamSection() {
     }
   };
 
+  const compareForNextSpeaker = useCallback(async () => {
+    try {
+      const s = await speaker
+      const n = await getSpeakers(2);
+
+      if (s && n) {
+        console.log('compareForNextSpeaker', s, n);
+        if (s[0].summary !== n[0].summary) {
+          // setCurrentspeaker(n[0]);
+          console.log('speakerChange');
+          return n[0]
+        }
+        // !currentSpeaker && setCurrentspeaker(s[0]);
+        console.log('no change');
+        return s[0]
+      }
+      return null
+    } catch (error) {
+      console.log('compareForNextSpeaker error', error);
+    }
+
+  }, [speaker]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const speakerChange = compareForNextSpeaker();
+      try {
+        speakerChange.then(s => {
+          // if (speaker) {
+            setCurrentspeaker(s);
+          // }
+        });
+
+      } catch (error) {
+
+      }
+      console.log('speakerChange', speakerChange);
+      console.log('currentSpeaker', currentSpeaker);
+
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+    }
+
+  }, [compareForNextSpeaker, currentSpeaker]);
+
+  useEffect(() => {
+    // console.log('current speaker', currentSpeaker);
+    try {
+      if (!currentSpeaker) {
+        setLoadingSpeaker(true);
+        speaker.then(s => {
+          setCurrentspeaker(s[0]);
+          console.log('speaker set');
+        });
+
+      }
+      setLoadingSpeaker(false);
+      console.log("speaker", speaker);
+    } catch (error) {
+      console.log('error', error);
+    }
+  }, [currentSpeaker, speaker]);
+
+
   return (
     <Box
       as="section"
       id="livestream"
-      justifyContent={{ base: "flex-end", lg: "inherit" }}
+      justifyContent={{ base: "flex-end", lg: "space-between" }}
     >
       {open && (
         <Button
@@ -61,6 +132,60 @@ export function LivestreamSection() {
               Open Stream
             </Button>
           </Text>
+        </Box>
+      </Box>
+      <Box className="__support"
+        mt={6}
+        flex="0 1 50%"
+        transform={`translate3d(${!open ? 0 : "70px"}, 0, 0)`}
+        opacity={!open ? 1 : 0}
+        transition="transform 0.3s 0.4s ease-in-out, opacity 0.6s 0.5s ease-in"
+      >
+        <Box
+          border="5px solid #FF61E699"
+          borderRadius="2xl"
+          boxShadow="0 0 30px rgba(0,0,0,0.98) inset"
+          p={{ base: 6, xl: 8 }}
+          background={`url(/assets/img/speakercard.gif) no-repeat center`}
+          backgroundSize="cover"
+        >
+          {!currentSpeaker ? (
+            <VStack w="100%" textAlign="center">
+              <Spinner fontSize="xl" color="#FF61E6" emptyColor="#76EBF2"/>
+              <Text as="span" className="gradient2">Loading...</Text>
+            </VStack>
+          ) : (
+
+            <VStack textAlign="center" justify="center" p={5} bgColor="rgba(255, 255, 255, 0.1)"
+                backdropFilter="blur(7px)" borderRadius="2xl" textTransform="capitalize" onClick={toggleStream}
+                title="Open stream"
+                sx={{
+                  _hover: {
+                    cursor: 'pointer'
+                  }
+                }}>
+
+              <BoxedNextImage
+                src="assets/img/mf2-logo.png"
+                alt="MetaGame Logo"
+                boxSize={{ base: "200px", md: "300px" }}
+                objectFit="cover"
+                  textAlign="center"
+                sx={{
+                  transition: 'all 0.2s 0.1s ease',
+                  filter: "drop-shadow(0 0 15px rgba(0,0,0,0.6))",
+                  'img': {
+                    mx: 'auto'
+                  }
+                }}
+                />
+                <Text as="h3" fontSize="lg" fontWeight={500}>{DateTime.fromISO(currentSpeaker.start.dateTime) <= dateTime ? 'On stage now' : 'Up next...'}</Text>
+                <Text as="h4" className="gradient2" fontSize="3xl" fontWeight={500} mt={3}>{currentSpeaker.summary}</Text>
+                <Text fontSize="xl" >Start: {DateTime.fromISO(currentSpeaker.start.dateTime).toRelativeCalendar()}, {DateTime.fromISO(currentSpeaker.start.dateTime).toLocaleString(DateTime.TIME_24_WITH_SHORT_OFFSET)}</Text>
+                <Text fontSize="xl">End: {DateTime.fromISO(currentSpeaker.end.dateTime).toRelativeCalendar()}, {DateTime.fromISO(currentSpeaker.end.dateTime).toLocaleString(DateTime.TIME_24_WITH_SHORT_OFFSET)}</Text>
+                <Text fontSize="xl">Click to Open Stream</Text>
+            </VStack>
+          )}
         </Box>
       </Box>
       {open && (

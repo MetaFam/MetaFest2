@@ -25,8 +25,8 @@ import {
 import axios from 'axios';
 import { DateTime, Duration } from 'luxon';
 
+import { getSpeakers } from "@mf/utils/helpers";
 import { useGetSpeakers, useOnScreen } from "@mf/utils/hooks";
-
 
 export const SpeakersSection = () => {
   const ref = useRef(null);
@@ -74,7 +74,7 @@ export const SpeakersSection = () => {
       console.log('error', error);
       setLoading(false);
     }
-  }, [currentDateTime, currentSpeaker, getSpeakersList]);
+  }, [currentDateTime, getSpeakersList]);
 
   useEffect(() => {
     if (!loading && !speakersList.current) {
@@ -96,7 +96,7 @@ export const SpeakersSection = () => {
           makeList();
           console.log('makeList');
         }
-
+        console.log('curStartTime', curEndTime, now);
       }
     }, 5000);
 
@@ -208,56 +208,4 @@ export const SpeakersSection = () => {
       </Box>
     </Box>
   );
-};
-
-const calUrl = "https://www.googleapis.com/calendar/v3/calendars/85ftetvc3cdl0qop7a36iguacc@group.calendar.google.com/events?key=AIzaSyDo07MSotIB3Q4ETlx_7yxVUB2YKU3MySs";
-export const getSpeakers = async (num) => {
-  const today = DateTime.now();
-  const aBitEarlierThanNow = Duration.fromObject({ minutes: 30 }).negate();
-  const next2Days = Duration.fromObject({ days: 3 });
-
-  try {
-    const res = await axios.get(calUrl, {
-      params: {
-        maxResults: num,
-        timeMin: today.toISO(),
-        timeMax: today.plus(next2Days).toISO(),
-        singleEvents: true,
-        orderBy: "startTime",
-        fields: "items(description,end,start,summary,htmlLink,location, status)",
-      }
-    });
-    if (res.status === 200) {
-      const speakers = res.data.items.filter((item, i) => {
-        if (item.status === 'confirmed' && !item.summary.includes('FREE') && item.description !== undefined) {
-          return item
-        }
-      });
-      return speakers.length > 0 ? speakers : [];
-    }
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log('error fetching calendar', error);
-  }
-};
-
-// TODO: finish this
-export const getStreamStatus = async () => {
-  const nowTime = new Date();
-
-  try {
-    const res = await axios.get(calUrl)
-
-    const speakers = res.data.items.filter((item, i) => {
-      const itemDate = new Date(item.start.dateTime);
-      if (itemDate > nowTime) {
-        if (item.status === 'confirmed' && !item.summary.includes('FREE') && item.description !== undefined) {
-          return item
-        }
-      }
-    });
-    return speakers.length ? speakers : [];
-  } catch (error) {
-    console.log('error fetching calendar', error);
-  }
 };
