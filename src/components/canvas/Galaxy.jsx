@@ -83,7 +83,7 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
     const colorInside = new THREE.Color(parameters.insideColor)
     const colorOutside = new THREE.Color(parameters.outsideColor)
 
-    const sections = 7;
+    const sections = 8;
     const objectsDistance = 4;
 
 

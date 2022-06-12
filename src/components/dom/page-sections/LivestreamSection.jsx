@@ -9,7 +9,17 @@ import { useOnScreen } from "@mf/utils/hooks";
 import { BoxedNextImage } from "@mfdom/BoxedNextImage";
 import YoutubeInstance from "@mfdom/integrations/YoutubeInstance";
 
-const ringScaleMin = 0.98;
+
+export const LivestreamSection = () => {
+  const ref = useRef(null);
+  const onScreen = useOnScreen(ref);
+  const [open, setOpen] = useState(false);
+  const speaker = getSpeakers(1);
+  const [currentSpeaker, setCurrentspeaker] = useState(null);
+  const [loadingSpeaker, setLoadingSpeaker] = useState(true);
+  const [streaming, setStreaming] = useState(false);
+  const dateTime = DateTime.now();
+  const ringScaleMin = 0.98;
 const ringScaleMax = 1;
 const pulseRing = keyframes`
 	0% {
@@ -26,15 +36,6 @@ const pulseRing = keyframes`
     opacity: 1;
   }
 	`;
-export function LivestreamSection() {
-  const ref = useRef(null);
-  const onScreen = useOnScreen(ref);
-  const [open, setOpen] = useState(false);
-  const speaker = getSpeakers(1);
-  const [currentSpeaker, setCurrentspeaker] = useState(null);
-  const [loadingSpeaker, setLoadingSpeaker] = useState(true);
-  const [streaming, setStreaming] = useState(false);
-  const dateTime = DateTime.now();
   const toggleStream = () => {
     setOpen(!open);
     if (typeof window !== "undefined") {
@@ -138,7 +139,7 @@ export function LivestreamSection() {
   return (
     <Box
       as="section"
-      id="livestream"
+      id="live"
       justifyContent={{ base: "flex-end", lg: "space-between" }}
     >
       {open && (
