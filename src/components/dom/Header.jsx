@@ -148,6 +148,7 @@ export function SiteHeader() {
   const NavLink = ({ href, children, offset }) => (
     <Link
       ref={linkRef}
+      key={`nav-link-${href}`}
       fontWeight={{ base: 500, lg: 700 }}
       px={2}
       py={1}

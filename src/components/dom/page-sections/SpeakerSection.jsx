@@ -20,7 +20,8 @@ import {
   Text,
   Tooltip,
   VStack,
-  keyframes
+  keyframes,
+  useBreakpointValue
 } from "@chakra-ui/react";
 import axios from 'axios';
 import { DateTime, Duration } from 'luxon';
@@ -32,13 +33,14 @@ export const SpeakersSection = () => {
   const ref = useRef(null);
   const onScreen = useOnScreen(ref);
   // const list = getSpeakers();
-  const getSpeakersList = getSpeakers(20);
+  const pageDisplayLimit = useBreakpointValue({ base: 9, '2xl': 14 });
+  const resultLimit = useBreakpointValue({ base: 18, '2xl': 30 });
+  const getSpeakersList = getSpeakers(resultLimit);
   const [loading, setLoading] = useState(false);
   const speakersList = useRef(null);
   const currentDateTime = DateTime.now();
-  const halfHourAgo = Duration.fromObject({ minutes: 30 }).negate();
-  const comfortBreak = Duration.fromObject({ minutes: 30 });
   const [currentSpeaker, setCurrentSpeaker] = useState(null);
+  const popoverBtnSize = useBreakpointValue({ base: 'xs', '2xl': 'sm' });
   // console.log('times', currentDateTime.hour, halfHourAgo.values.minutes);
   const streamingBlink = keyframes`
   50% {
@@ -114,7 +116,7 @@ export const SpeakersSection = () => {
         opacity={onScreen ? 1 : 0}
         transition="transform 0.3s 0.4s ease-in-out, opacity 0.6s 0.5s ease-in"
         width="100%"
-        pt={{ base: 20, '2xl': 0 }}
+        pt={{ base: 20, xl: 0 }}
       >
         <Text as="h2">Speakers</Text>
         <Box className="__content__body">
@@ -127,23 +129,24 @@ export const SpeakersSection = () => {
             {loading ? (
               <Text>Loading...</Text>
             ) : (
-              <SimpleGrid spacing={5} columns={{ base: 1, xl: 5 }} mt={6}>
+              <SimpleGrid spacing={{base: 2, xl: 5}} columns={{ base: 2, lg: 2, xl: 5 }} mt={{base: 3, xl: 6}}>
                 {speakersList.current &&
                   speakersList.current.length > 0 &&
                   speakersList.current.map((speaker, i) => {
                     const startDate = DateTime.fromISO(speaker.start.dateTime);
                     const endDate = DateTime.fromISO(speaker.end.dateTime);
-                    // console.log('date', { startDate, endDate, currentDateTime, halfHourAgo, comfortBreak });
-                    if (i <= 9) {
+                    const key = DateTime.fromISO(speaker.start.dateTime).toFormat('x');
+                    const limit = resultLimit;
+                    if (i <= pageDisplayLimit) {
                       return (
-                        <Box key={speaker.id}
+                        <Box key={`speaker-${key}`}
                           sx={{
                             borderRadius: "lg",
                             border: endDate <= currentDateTime || startDate <= currentDateTime ? '1px solid #FF61E6' : 'none',
                             bgColor: endDate <= currentDateTime || startDate <= currentDateTime ? 'rgba(255,255,255,0.05)' : 'transparent',
                           }}
                         >
-                          <VStack align="flex-start" spacing={2} position="relative" p={3}
+                          <VStack align="flex-start" spacing={{ base: 1, xl: 2 }} position="relative" p={{base: 0, lg: 3}}
                           // sx={{
                           //   bgColor: 'rgba(0,0,0, 0.1)',
                           //   backdropFilter: 'blur(7px)',
@@ -159,16 +162,16 @@ export const SpeakersSection = () => {
                               bgColor="purple.800"
                               aria-label={`${speaker.description}`}
                             >
-                              <Text as="h4" fontSize={{ base: "md", sm: 'sm', '2xl': 'md' }} >
+                              <Text as="h4" fontSize={{ base: "sm", sm: 'sm', '2xl': 'md' }} fontWeight={{base: 300, xl: 700}}>
                                 {speaker.description ?? speaker.summary}</Text>
                             </Tooltip>
                             {endDate <= currentDateTime || startDate <= currentDateTime && (
                               <Text as="span" fontSize={{ base: 'xs', '2xl': "sm" }} className="gradient" position="absolute" top={0} right={0} variant="outline" animation={`2s ${streamingBlink} cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite`} transform={{ base: "translateY(-20px)", xl: 'translateY(-35px)', '2xl': "translateY(-38px)" }}>Streaming now...</Text>
                             )}
-                            <Text as="span" fontSize="sm">{startDate.toFormat('ccc')}, {startDate.toLocaleString(DateTime.DATETIME_FULL)}</Text>
+                            <Text as="span" fontSize={{ base: 'xs', '2xl': "sm" }}>{startDate.toFormat('ccc')}, {startDate.toLocaleString(DateTime.DATETIME_FULL)}</Text>
                             <Popover key={speaker.id} zIndex={100} colorScheme="purple" >
                               <PopoverTrigger>
-                                <Button size="sm" bg="#FF61E6" colorScheme="pink">More info</Button>
+                                <Button size={popoverBtnSize} colorScheme="purple">More info</Button>
                               </PopoverTrigger>
                               <PopoverContent as="div" bgColor="rgba(41,2,80,1)">
                                 <PopoverCloseButton />
