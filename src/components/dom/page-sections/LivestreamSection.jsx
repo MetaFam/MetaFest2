@@ -222,7 +222,7 @@ export function LivestreamSection() {
                   boxSize={{ base: "200px", md: "300px" }}
                   objectFit="cover"
                   textAlign="center"
-                  animation={streaming && `2.25s ${pulseRing} cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite`}
+                  animation={streaming ? `2.25s ${pulseRing} cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite` : 'paused'}
                   sx={{
                     transition: 'all 0.2s 0.1s ease',
                     filter: "drop-shadow(0 0 15px rgba(0,0,0,0.6))",
@@ -231,7 +231,7 @@ export function LivestreamSection() {
                     }
                   }}
                 />
-                <Text as="h3" fontSize="lg" fontWeight={500} color={streaming && '#FF61E6'}>{streaming ? 'On stage now' : 'Up next...'}</Text>
+                <Text as="h3" fontSize="lg" fontWeight={500} color={streaming ? '#FF61E6' : 'white'}>{streaming ? 'On stage now' : 'Up next...'}</Text>
                 <Text as="h4" className="gradient2" fontSize="3xl" fontWeight={500} mt={3}>{currentSpeaker.summary}</Text>
                 <Text fontSize="xl" >Start: {DateTime.fromISO(currentSpeaker.start.dateTime).toRelativeCalendar()}, {DateTime.fromISO(currentSpeaker.start.dateTime).toLocaleString(DateTime.TIME_24_WITH_SHORT_OFFSET)}</Text>
                 <Text fontSize="xl">End: {DateTime.fromISO(currentSpeaker.end.dateTime).toRelativeCalendar()}, {DateTime.fromISO(currentSpeaker.end.dateTime).toLocaleString(DateTime.TIME_24_WITH_SHORT_OFFSET)}</Text>
