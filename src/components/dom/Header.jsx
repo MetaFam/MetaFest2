@@ -32,7 +32,7 @@ const Links = [
   },
   {
     name: "MF2 Live",
-    href: "live"
+    href: "#live"
   },
   {
     name: "Schedule",
@@ -165,7 +165,7 @@ export function SiteHeader() {
       href={`/${href}`}
       onClick={handleToggle}
       color="white"
-      className={streaming && href === 'live' ? 'livestreamLink--live' : ''}
+      className={streaming && href === '#live' ? 'livestreamLink--live' : ''}
       sx={{
         '&.livestreamLink--live': {
           position: 'relative',

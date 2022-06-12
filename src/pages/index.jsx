@@ -11,11 +11,12 @@ import {
   ApplySection,
   ChatSection,
   HomeSection,
+  LivestreamSection,
   MetaverseSection,
   ScheduleSection,
   SpeakersSection,
-  WorkshopsSection,
-} from "@mf/components/dom/page-sections";
+  WorkshopsSection
+} from "@mfdom/page-sections";
 
 import {
   galaxy1Params,
@@ -24,6 +25,7 @@ import {
   galaxy4Params,
   galaxy5Params,
 } from '../components/canvas/galaxies';
+
 
 
 
@@ -53,7 +55,8 @@ const Galaxy = dynamic(() => import('@mf/components/canvas/Galaxy'), {
 // dom components goes here
 function DOM() {
   return <>
-      <HomeSection />
+    <HomeSection />
+    <LivestreamSection />
       <ScheduleSection />
       <WorkshopsSection />
       <SpeakersSection />
@@ -164,15 +167,28 @@ function R3F() {
                   z: 0,
                 });
                 break;
-
-              // Schedule
               case 1:
                 gsap.to(cameraGroup.current.rotation, {
                   duration: 1.5,
                   ease: "power2.inOut",
                   x: 0,
+                  y: 0,
+                  z: 0,
+                });
+                gsap.to(cameraGroup.current.position, {
+                  duration: 1.5,
+                  ease: "power2.inOut",
+                  z: -9,
+                });
+                break;
+              // Schedule
+              case 2:
+                gsap.to(cameraGroup.current.rotation, {
+                  duration: 1.5,
+                  ease: "power2.inOut",
+                  x: 0,
                   y: "0.33",
-                  z: "0",
+                  z: 0,
                 });
                 gsap.to(cameraGroup.current.position, {
                   duration: 1.5,
@@ -182,7 +198,7 @@ function R3F() {
                 break;
 
               // Workshops
-              case 2:
+              case 3:
                 gsap.to(cameraGroup.current.rotation, {
                   duration: 1.5,
                   ease: "power2.inOut",
@@ -198,7 +214,7 @@ function R3F() {
                 break;
 
               // Speakers
-              case 3:
+              case 4:
                 gsap.to(cameraGroup.current.rotation, {
                   duration: 1.5,
                   ease: "power2.inOut",
@@ -214,7 +230,7 @@ function R3F() {
                 break;
 
               // Metaverse
-              case 4:
+              case 5:
                 gsap.to(cameraGroup.current.rotation, {
                   duration: 1.5,
                   ease: "power2.inOut",
@@ -230,7 +246,7 @@ function R3F() {
                 break;
 
               // Chat
-              case 5:
+              case 6:
                 gsap.to(cameraGroup.current.rotation, {
                   duration: 1.5,
                   ease: "power2.inOut",
@@ -246,7 +262,7 @@ function R3F() {
                 break;
 
               // Chat
-              case 6:
+              case 7:
                 gsap.to(cameraGroup.current.rotation, {
                   duration: 1.5,
                   ease: "power2.inOut",
@@ -260,6 +276,7 @@ function R3F() {
                   z: 0,
                 });
                 break;
+
               default:
                 gsap.to(cameraGroup.current.rotation, {
                   duration: 1.5,
@@ -360,28 +377,28 @@ function R3F() {
         </group>
         <Galaxy dof={dof1} parameters={galaxy1Params} position={[6, 0, -13]} rotation={[4.8, 4.15, 4.75]} />
       </R3FSceneSection>
-
       <R3FSceneSection name="SectionTwo" count={1} />
+      <R3FSceneSection name="SectionThree" count={2} />
 
-      <R3FSceneSection name="SectionThree" count={2}>
+      <R3FSceneSection name="SectionFour" count={3}>
         <Galaxy dof={dof2} parameters={galaxy2Params} position={[0, -3, -15]} />
       </R3FSceneSection>
 
-      <R3FSceneSection name="SectionFour" count={3} />
+      <R3FSceneSection name="SectionFive" count={4} />
 
-      <R3FSceneSection name="SectionFive" count={4}>
+      <R3FSceneSection name="SectionSix" count={5}>
         <group ref={nomad} receiveShadow>
           <NomadVox route='/cv' position={[1.75, 0.5, 0.3]} rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
         </group>
       </R3FSceneSection>
 
-      <R3FSceneSection name="SectionSix" count={5}>
+      <R3FSceneSection name="SectionSeven" count={6}>
         <OctoPetVox position={[0, -1.8, 0]} animate rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
         <BabyEarthVox position={[-1.5, -.8, -2]} animate rotation={[-Math.PI / 0.51, Math.PI / 4.5, 0]} />
         <Galaxy dof={dof3} parameters={galaxy3Params} position={[6, -6.5, -15]} />
       </R3FSceneSection>
 
-      <R3FSceneSection name="SectionSeven" count={6}>
+      <R3FSceneSection name="SectionEight" count={7}>
         <group ref={jetsetter}>
           <JetsetterVox animate position={[-2, -1.8, 0]} rotation={[-Math.PI / .1, Math.PI / 6.5, 0]}
           />

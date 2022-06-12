@@ -5,3 +5,4 @@ export { MetaverseSection } from "./MetaverseSection";
 export { ScheduleSection } from "./ScheduleSection";
 export { SpeakersSection } from "./SpeakerSection";
 export { WorkshopsSection } from "./WorkshopSection";
+export { LivestreamSection } from "./LivestreamSection";
