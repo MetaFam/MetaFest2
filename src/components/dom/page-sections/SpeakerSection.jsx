@@ -123,7 +123,7 @@ export const SpeakersSection = () => {
           </Text>
 
           <Box w="100%" h="auto" mt={3}>
-            <Text as="h3" className="gradient2">Coming up...the next 48 hours</Text>
+            <Text as="h3" className="gradient2">Coming up...</Text>
             {loading ? (
               <Text>Loading...</Text>
             ) : (

@@ -6,7 +6,7 @@ const calUrl = "https://www.googleapis.com/calendar/v3/calendars/85ftetvc3cdl0qo
 export const getSpeakers = async (num) => {
   const today = DateTime.now();
   const aBitEarlierThanNow = Duration.fromObject({ minutes: 30 }).negate();
-  const next2Days = Duration.fromObject({ days: 3 });
+  const next2Days = Duration.fromObject({ days: 2});
   try {
     const res = await axios.get(calUrl, {
       params: {
