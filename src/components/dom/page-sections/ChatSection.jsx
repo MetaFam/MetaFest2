@@ -1,8 +1,10 @@
 import React, { useRef, useState } from "react";
-import { Box, Button, Link, Text } from "@chakra-ui/react";
+
 import { ExternalLinkIcon } from "@chakra-ui/icons";
-import ChatInstance from "@/components/dom/integrations/ChatInstance";
-import { useOnScreen } from "@/utils/hooks";
+import { Box, Button, Link, Text } from "@chakra-ui/react";
+
+import ChatInstance from "@mf/components/dom/integrations/ChatInstance";
+import { useOnScreen } from "@mf/utils/hooks";
 
 export const ChatSection = () => {
   const ref = useRef(null);
@@ -34,7 +36,7 @@ export const ChatSection = () => {
           size="sm"
           transition="all 0.3s 0.8s ease"
           transform={`translateY(${open ? 0 : "-70px"})`}
-          willChange={true}
+          willChange
           onClick={toggleChat}
           zIndex={2002}
         >
@@ -54,7 +56,7 @@ export const ChatSection = () => {
             Come and join the discusion.
           </Text>
           <Text as="p">
-            <Button colorScheme="ghost" onClick={toggleChat}>
+            <Button variant="ghost" onClick={toggleChat}>
               Open chat
             </Button>
           </Text>
@@ -77,7 +79,7 @@ export const ChatSection = () => {
           <ChatInstance />
           <Box position="absolute" top={2} right={8}>
             <Link
-              href="https://discord.com/channels/629411177947987986/629411178837442601"
+              href="https://discord.com/channels/935789606962610216/984775736718159932"
               isExternal
               fontWeight={500}
               fontSize="0.7vmax"
@@ -85,7 +87,7 @@ export const ChatSection = () => {
               <span role="img" aria-label="Attention!">
                 📢
               </span>{" "}
-              Hey octo, need more Discord? Open it up in a new tab.{" "}
+              Hey Anon, need more Discord? Open it up in a new tab.{" "}
               <ExternalLinkIcon />
             </Link>
           </Box>

@@ -4,6 +4,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll": true
   },
+  "prettier.eslintIntegration": true,
   "eslint.validate": ["javascript"],
   "eslint.workingDirectories": [{ "mode": "auto" }]
 }

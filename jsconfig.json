@@ -2,8 +2,15 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "module": "esnext",
+    "target": "es5",
+    "jsx": "react",
     "paths": {
-      "@/*": ["src/*"]
-    }
+      "@/*": ["src/*"],
+      "@mf/*": ["src/*"],
+      "@mfdom/*": ["src/components/dom/*"],
+      "@mfcanvas/*": ["src/components/canvas/*"],
+      "@mflayout/*": ["src/components/layout/*"]
+    },
   }
 }

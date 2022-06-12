@@ -1,5 +1,5 @@
-import * as THREE from 'three'
 import * as dat from 'lil-gui'
+import * as THREE from 'three'
 
 /**
  * Base
@@ -138,9 +138,9 @@ export const galaxy5Params = {
     focusY: 0,
     focusZ: 0,
 }
-let geometry = null
-let material = null
-let points = null
+const geometry = null
+const material = null
+const points = null
 
 
 

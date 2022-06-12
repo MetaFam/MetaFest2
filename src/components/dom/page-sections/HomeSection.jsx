@@ -1,19 +1,21 @@
 import React, { useRef } from "react";
+
 import {
   Box,
   Button,
+  HStack,
   Link,
   Text,
-  HStack,
   useBreakpointValue
 } from "@chakra-ui/react";
-import { useOnScreen } from "@/utils/hooks";
+
+import { useOnScreen } from "@mf/utils/hooks";
 
 
 export const HomeSection = () => {
   const ref = useRef(null);
   const onScreen = useOnScreen(ref);
-  const buttonSize = useBreakpointValue({ base: 'sm', md: 'lg' })
+  const buttonSize = useBreakpointValue({ base: 'sm', md: 'md' })
 
 
   return (
@@ -82,9 +84,6 @@ export const HomeSection = () => {
             </Text>
             .
           </Text>
-          <HStack mt={5}>
-            <Link href="#apply"><Button colorScheme="pink" bg="#FF61E6" size={buttonSize}>Apply</Button></Link>
-          </HStack>
         </Box>
       </Box>
     </Box>

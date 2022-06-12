@@ -1,12 +1,14 @@
-import { useEffect, useState, useRef } from 'react'
-import {
-  Text,
-  IconButton,
-  Box,
-} from '@chakra-ui/react'
+import { useEffect, useRef, useState } from 'react'
+
 import { CloseIcon } from '@chakra-ui/icons'
-import {getFromLS, saveToLS, localStore} from '@/helpers/store'
-import { useIsMac } from '@/utils/hooks';
+import {
+  Box,
+  IconButton,
+  Text,
+} from '@chakra-ui/react'
+
+import {localStore} from '@mf/helpers/store'
+import { useIsMac } from '@mf/utils/hooks';
 
 export function AlphaNotice() {
   const [toggle, setToggle] = useState(false);

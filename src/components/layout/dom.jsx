@@ -1,5 +1,5 @@
-import useStore, {getFromLS, saveToLS, localStore} from '@/helpers/store'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef , useState } from 'react'
+
 import {
   Box,
   HStack,
@@ -7,14 +7,14 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { FaToggleOn, FaToggleOff } from 'react-icons/fa'
-import { useIsMac } from "@/utils/hooks";
-import { SiteHeader } from "@/components/dom/Header";
-import { SiteFooter } from "@/components/dom/Footer";
-import { AlphaNotice } from '@/components/dom/AlphaNotice';
-import { EasterEgg } from '@/components/dom/EasterEgg';
-import { EasterEggGlitch } from '@/components/dom/EasterEggGlitch';
-import { useCallback } from 'react';
+import { FaToggleOff, FaToggleOn } from 'react-icons/fa'
+
+import { EasterEgg } from '@mf/components/dom/EasterEgg';
+import { EasterEggGlitch } from '@mf/components/dom/EasterEggGlitch';
+import { SiteFooter } from "@mf/components/dom/Footer";
+import { SiteHeader } from "@mf/components/dom/Header";
+import useStore, {localStore} from '@mf/helpers/store'
+import { useIsMac } from "@mf/utils/hooks";
 
 const Dom = ({ children }) => {
   const ref = useRef(null)
@@ -52,7 +52,6 @@ const Dom = ({ children }) => {
       {children}
       <SiteFooter />
       <UIToggles />
-      <AlphaNotice  />
       <EasterEgg />
       <EasterEggGlitch />
     </Box>
@@ -63,7 +62,7 @@ export default Dom
 
 export const UIToggles = () => {
   const macOS = useIsMac();
-  const [canvasOn, setCanvasOn] = useState(macOS ? false : true)
+  const [canvasOn, setCanvasOn] = useState(!macOS)
   const { on } = localStore.get('MF2Effects') || { on: canvasOn };
 
   const [uiOn, setUiOn] = useState(true);
@@ -93,7 +92,7 @@ export const UIToggles = () => {
       })
       setUiOn(!uiOn)
     }
-    return
+
   }
 
   const toggleCanvas = useCallback(() => {
@@ -107,16 +106,14 @@ export const UIToggles = () => {
     if(!on && !macOS ) {
       setCanvasOn(on)
       gracefulDegradation(!on)
-    } else {
-      if(!macOS) {
+    } else if(!macOS) {
         setCanvasOn(on)
         gracefulDegradation(!on)
       }
-    }
   }, [on, canvasOn, macOS, toggleCanvas]);
 
   return (
-    <HStack fontSize={{ base: '3vw', lg: '0.7vw' }} fontWeight={500} position="fixed" bottom={5} right={{ base: 3, lg: 5 }} opacity={0.5} transition="opacity 0.3s ease" zIndex={3000} _hover={{
+    <HStack fontSize={{ base: '3vw', lg: '0.7vw' }} fontWeight={500} position="fixed" bottom={5} right={{ base: 3, lg: 5 }} opacity={0.5} transition="opacity 0.3s ease" zIndex={2001} _hover={{
       opacity: 1
     }}>
       <VStack spacing={0}>
@@ -158,13 +155,13 @@ export const UIToggles = () => {
 export const gracefulDegradation = (isOn) => {
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
   const mob = isMobile ? '-mob' : ''
-  const homeBg = `assets/img/home-bg${mob}.jpg`
-  const scheduleBg = `assets/img/schedule-bg${mob}.jpg`
-  const workshopsBg = `assets/img/workshops-bg${mob}.jpg`
-  const speakersBg = `assets/img/speakers-bg${mob}.jpg`
-  const metaverseBg = `assets/img/metaverse-bg${mob}.jpg`
-  const chatBg = `assets/img/chat-bg${mob}.jpg`
-  const applyBg = `assets/img/apply-bg${mob}.jpg`
+  const homeBg = `/assets/img/home-bg${mob}.jpg`
+  const scheduleBg = `/assets/img/schedule-bg${mob}.jpg`
+  const workshopsBg = `/assets/img/workshops-bg${mob}.jpg`
+  const speakersBg = `/assets/img/speakers-bg${mob}.jpg`
+  const metaverseBg = `/assets/img/metaverse-bg${mob}.jpg`
+  const chatBg = `/assets/img/chat-bg${mob}.jpg`
+  const applyBg = `/assets/img/apply-bg${mob}.jpg`
 
 
   if (typeof window !== 'undefined') {
@@ -172,14 +169,34 @@ export const gracefulDegradation = (isOn) => {
     const canvas = document.querySelector('canvas')
     if (isOn) {
       console.log('degrading features');
-      if (content) {
-        content[0].style.backgroundImage = `url(${homeBg})`
-        content[1].style.backgroundImage = `url(${scheduleBg}) `
-        content[2].style.backgroundImage = `url(${workshopsBg}) `
-        content[3].style.backgroundImage = `url(${speakersBg}) `
-        content[4].style.backgroundImage = `url(${metaverseBg})`
-        content[5].style.backgroundImage = `url(${chatBg})`
-        content[6].style.backgroundImage = `url(${applyBg})`
+      if (content && content.length > 0) {
+        content.forEach((item, i) => {
+          switch (i) {
+            case 0:
+              item.style.backgroundImage = `url(${homeBg})`
+              break;
+            case 1:
+              item.style.backgroundImage = `url(${scheduleBg}) `
+              break;
+            case 2:
+              item.style.backgroundImage = `url(${workshopsBg}) `
+              break;
+            case 3:
+              item.style.backgroundImage = `url(${speakersBg}) `
+              break;
+            case 4:
+              item.style.backgroundImage = `url(${metaverseBg})`
+              break;
+            case 5:
+              item.style.backgroundImage = `url(${chatBg})`
+              break;
+            case 6:
+              item.style.backgroundImage = `url(${applyBg})`
+            default:
+              item.style.backgroundImage = `url(${homeBg})`
+              break;
+          }
+        });
       }
 
       if (canvas) {

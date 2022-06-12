@@ -1,12 +1,12 @@
-import * as THREE from 'three'
-import React, { Suspense, useRef, forwardRef, useState, useEffect } from 'react'
-import { Canvas, useFrame, useThree, useLoader } from '@react-three/fiber'
-import { TextureLoader } from 'three/src/loaders/TextureLoader'
-import { EffectComposer, DepthOfField } from '@react-three/postprocessing'
-import { useControls, folder } from 'leva'
+import React, { Suspense, forwardRef, useCallback, useEffect, useRef , useState } from 'react'
 
-import { CanvasLoader } from '@/components/canvas/Loader'
-import { useCallback } from 'react'
+import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber'
+import { DepthOfField, EffectComposer } from '@react-three/postprocessing'
+import { folder, useControls } from 'leva'
+import * as THREE from 'three'
+import { TextureLoader } from 'three/src/loaders/TextureLoader.js'
+
+import { CanvasLoader } from '@mf/components/canvas/Loader'
 
 
 // eslint-disable-next-line react/display-name
@@ -16,7 +16,7 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
   const material = useRef()
   const geometry = useRef()
   const points = useRef()
-  //const [movement] = useState(() => new THREE.Vector3())
+  // const [movement] = useState(() => new THREE.Vector3())
   const [temp] = useState(() => new THREE.Vector3())
   const [focus] = useState(() => new THREE.Vector3())
   const clock = new THREE.Clock();
@@ -104,9 +104,9 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
         const spinAngle = radius * parameters.spin
         const branchAngle = (i % parameters.branches) / parameters.branches * Math.PI * 2
 
-        const randomX = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)
-        const randomY = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)
-        const randomZ = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)
+        const randomX = Math.random()**parameters.randomnessPower * (Math.random() < 0.5 ? 1 : -1)
+        const randomY = Math.random()**parameters.randomnessPower * (Math.random() < 0.5 ? 1 : -1)
+        const randomZ = Math.random()**parameters.randomnessPower * (Math.random() < 0.5 ? 1 : -1)
 
         positions[i3 + 0] = Math.cos(branchAngle + spinAngle) * radius + randomX
         positions[i3 + 1] = Math.sin(spinAngle + radius) * (radius - Math.PI * 2)
@@ -131,9 +131,9 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
         const spinAngle = radius * parameters.spin
         const branchAngle = (i % parameters.branches) / parameters.branches * Math.PI * 2
 
-        const randomX = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)
-        const randomY = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)
-        const randomZ = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)
+        const randomX = Math.random()**parameters.randomnessPower * (Math.random() < 0.5 ? 1 : -1)
+        const randomY = Math.random()**parameters.randomnessPower * (Math.random() < 0.5 ? 1 : -1)
+        const randomZ = Math.random()**parameters.randomnessPower * (Math.random() < 0.5 ? 1 : -1)
 
         positions[i3 + 0] = Math.cos(branchAngle + spinAngle) * radius + randomX
         positions[i3 + 1] = (Math.PI * 0.12) * radius + randomY
@@ -159,9 +159,9 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
         const spinAngle = radius * parameters.spin
         const branchAngle = (i % parameters.branches) / parameters.branches * Math.PI * 2
 
-        const randomX = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)
-        const randomY = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)
-        const randomZ = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)
+        const randomX = Math.random()**parameters.randomnessPower * (Math.random() < 0.5 ? 1 : -1)
+        const randomY = Math.random()**parameters.randomnessPower * (Math.random() < 0.5 ? 1 : -1)
+        const randomZ = Math.random()**parameters.randomnessPower * (Math.random() < 0.5 ? 1 : -1)
 
         positions[i3 + 0] = Math.cos(branchAngle + spinAngle) * radius + randomX
         positions[i3 + 1] = Math.cos(spinAngle + radius) * radius + randomY
@@ -186,9 +186,9 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
         const spinAngle = radius * parameters.spin
         const branchAngle = (i % parameters.branches) / parameters.branches * Math.PI * 2
 
-        const randomX = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)
-        const randomY = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)
-        const randomZ = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)
+        const randomX = Math.random()**parameters.randomnessPower * (Math.random() < 0.5 ? 1 : -1)
+        const randomY = Math.random()**parameters.randomnessPower * (Math.random() < 0.5 ? 1 : -1)
+        const randomZ = Math.random()**parameters.randomnessPower * (Math.random() < 0.5 ? 1 : -1)
 
         positions[i3 + 0] = Math.cos(branchAngle + spinAngle) * radius + randomX
         positions[i3 + 1] = Math.sin(branchAngle - spinAngle) * radius + randomY
@@ -213,9 +213,9 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
         const spinAngle = radius * parameters.spin
         const branchAngle = (i % parameters.branches) / parameters.branches * Math.PI * 2
 
-        const randomX = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)
-        const randomY = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)
-        const randomZ = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1)
+        const randomX = Math.random()**parameters.randomnessPower * (Math.random() < 0.5 ? 1 : -1)
+        const randomY = Math.random()**parameters.randomnessPower * (Math.random() < 0.5 ? 1 : -1)
+        const randomZ = Math.random()**parameters.randomnessPower * (Math.random() < 0.5 ? 1 : -1)
 
         positions[i3 + 0] = (Math.random() - 0.5) * 10;
         positions[i3 + 1] =
@@ -258,11 +258,10 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
   }, [parameters, planeAlphaTexture, planeColorTexture])
 
   return (
-    <>
-      <group ref={group} {...props} dispose={null}>
+    <group ref={group} {...props} dispose={null}>
         <points ref={particles}>
           <bufferGeometry ref={geometry} />
-          <pointsMaterial ref={material} size={parameters.size} sizeAttenuation={true} depthWrite={true} vertexColors={true} blending={THREE.AdditiveBlending} />
+          <pointsMaterial ref={material} size={parameters.size} sizeAttenuation depthWrite vertexColors blending={THREE.AdditiveBlending} />
         </points>
         {nucleus && (
           <Nucleus size={0.125} />
@@ -271,13 +270,12 @@ const Galaxy = ({ dof, parameters, nucleus, helper, effects, ...props }) => {
           <axesHelper args={[2, 2, 2]} />
         )}
       </group>
-    </>
   )
 }
 
 export default Galaxy
 
-//function BlackHoleNucleus({ size }) {
+// function BlackHoleNucleus({ size }) {
 //  const meshRef = useRef();
 //
 //  return (
@@ -289,7 +287,7 @@ export default Galaxy
 //      <meshBasicMaterial attach="material" color="#000" />
 //    </mesh>
 //  );
-//}
+// }
 
 
 export function Nucleus({ size }) {
@@ -300,11 +298,11 @@ export function Nucleus({ size }) {
   return (
     <mesh ref={nucleusRef} position={[0, 0, 0]} scale={[size, size, size]}>
       <sphereBufferGeometry attach="geometry" args={[0.5, 32, 32, 0, 6.4, 0, 6.3]} />
-      <meshBasicMaterial attach="material" color={'#fff'} />
+      <meshBasicMaterial attach="material" color="#fff" />
     </mesh>
   )
 
-  //const geometry = new THREE.IcosahedronGeometry( 1, 15 );
+  // const geometry = new THREE.IcosahedronGeometry( 1, 15 );
 
   //		for ( let i = 0; i < 50; i ++ ) {
 

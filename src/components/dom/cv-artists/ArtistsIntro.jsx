@@ -1,13 +1,15 @@
 import React, { useRef } from "react";
+
 import {
   Box,
   Button,
+  HStack,
   Link,
   Text,
-  HStack,
   useBreakpointValue
 } from "@chakra-ui/react";
-import { useOnScreen } from "@/utils/hooks";
+
+import { useOnScreen } from "@mf/utils/hooks";
 
 
 export const ArtistsIntro = () => {

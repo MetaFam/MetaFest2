@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useFrame } from '@react-three/fiber'
+
 import { useGLTF } from "@react-three/drei";
-import * as THREE from "three";
+import { useFrame } from '@react-three/fiber'
 import gsap from "gsap";
-import useStore from '@/helpers/store'
+import * as THREE from "three";
+
+import useStore from '@mf/helpers/store'
 
 export default function JetsetterVox(props) {
   const router = useStore((s) => s.router)
@@ -32,7 +34,7 @@ export default function JetsetterVox(props) {
     }
     if (url && !isExternal) {
       () => router.push(url)
-      return
+
     }
 
   }

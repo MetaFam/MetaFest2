@@ -1,13 +1,15 @@
 import React, {useRef} from "react";
+
 import {
   Box,
   Flex,
   Link,
   Text,
 } from "@chakra-ui/react";
-import { useOnScreen } from "@/utils/hooks";
-import { BoxedNextImage } from "@/components/dom/BoxedNextImage";
-import OctopusImg from "@/static/assets/img/octopus.png";
+
+import { BoxedNextImage } from "@mf/components/dom/BoxedNextImage";
+import OctopusImg from "@mf/static/assets/img/octopus.png";
+import { useOnScreen } from "@mf/utils/hooks";
 // import MetaGameLogo from '../static/assets/img/logo.png'
 
 export function SiteFooter() {
@@ -37,13 +39,13 @@ export function SiteFooter() {
         }}
       >
         <BoxedNextImage
-          src={'assets/img/octopus.png'}
+          src="assets/img/octopus.png"
           boxSize={{base: '90px', md: "150px"}}
           position="absolute"
           bottom={0}
           left={{base: "calc(50% - 45px)", md: "calc(50% - 75px)"}}
         />
-        <Flex h={"100px"} alignItems={"center"} justifyContent={"center"}>
+        <Flex h="100px" alignItems="center" justifyContent="center">
           <Box className="gradient2">
             <Text textShadow="none" ><span role="img" aria-label="Octopus mascot">🐙</span> &copy; 2022 MetaFam <span role="img" aria-label="Octopus mascot">🐙</span> <Link href="https://metagame.wtf" isExternal>metagame.wtf</Link> <span role="img" aria-label="Octopus mascot">🐙</span></Text>
           </Box>

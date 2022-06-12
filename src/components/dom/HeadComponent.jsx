@@ -1,10 +1,11 @@
 /* eslint-disable @next/next/no-page-custom-font */
 import React from 'react';
-import { useRouter } from 'next/router';
-import Head from 'next/head';
-import { NextSeo } from 'next-seo';
 
-import { settings } from '@/seo.config';
+import { NextSeo } from 'next-seo';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+
+import { settings } from '@mf/seo.config';
 
 export const HeadComponent = (props) => {
   const { title, description, image } = props;
@@ -27,15 +28,13 @@ export const HeadComponent = (props) => {
       <meta itemProp="image" content={image} />
       <meta name="theme-color" property="theme-color" content="#5a32e6" />
 
-      {socialTags(props).map(({ name, content }) => {
-        return <meta key={name} name={name} content={content} />;
-      })}
+      {socialTags(props).map(({ name, content }) => <meta key={name} name={name} content={content} />)}
 
       <link rel="icon" href="/favicon.ico" />
 
           <script
             async
-            src={`https://www.googletagmanager.com/gtag/js?id=G-0YZ0KDRZ7J`}
+            src="https://www.googletagmanager.com/gtag/js?id=G-0YZ0KDRZ7J"
           />
           <script
             type="text/javascript"

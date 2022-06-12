@@ -1,18 +1,20 @@
 import React, { useEffect, useRef } from "react";
-import { Html, useProgress } from "@react-three/drei";
+
 import {
   Box,
   Text,
 } from "@chakra-ui/react";
+import { Html, useProgress } from "@react-three/drei";
 import gsap from "gsap";
-import useStore from '@/helpers/store'
+
+import useStore from '@mf/helpers/store'
 
 export const CanvasLoader = () => {
   const { dom } = useStore();
   const group = useRef(null);
   const loadingBar = useRef(null);
   const { active, progress, errors, item, loaded, total } = useProgress();
-  let ratioLoaded = loaded / total
+  const ratioLoaded = loaded / total
 
   useEffect(() => {
     if (ratioLoaded < 1) {

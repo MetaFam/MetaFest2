@@ -5,6 +5,7 @@ const useStore = create(() => {
     router: null,
     dom: null,
     os: null,
+    r3f: null,
   }
 })
 
@@ -16,7 +17,7 @@ export const localStore = {
   set: function (key, value) {
     if(!global.localStorage) return
     if (!key || !value) {return;}
-    console.log('setter', key, value);
+    // console.log('setter', key, value);
     if (typeof value === "object") {
       value = JSON.stringify(value);
     }

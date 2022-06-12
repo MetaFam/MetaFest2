@@ -1,14 +1,15 @@
-import { Canvas, useFrame } from '@react-three/fiber'
-import * as THREE from "three";
-import { Environment, OrbitControls, Preload } from '@react-three/drei'
-
-import useStore from '@/helpers/store'
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
-import { EffectComposer, Glitch, Scanline, DepthOfField, Vignette } from '@react-three/postprocessing';
-import { GlitchMode, BlendFunction } from 'postprocessing'
 
-import { CanvasLoader } from '@/components/canvas/Loader'
-import { useIsMac } from '@/utils/hooks';
+import { Environment, OrbitControls, Preload } from '@react-three/drei'
+import { Canvas, useFrame } from '@react-three/fiber'
+import { DepthOfField, EffectComposer, Glitch, Scanline, Vignette } from '@react-three/postprocessing';
+import { BlendFunction, GlitchMode } from 'postprocessing'
+import * as THREE from "three";
+
+
+import { CanvasLoader } from '@mf/components/canvas/Loader'
+import useStore from '@mf/helpers/store'
+import { useIsMac } from '@mf/utils/hooks';
 
 const LControl = () => {
   const dom = useStore((state) => state.dom)
@@ -31,7 +32,7 @@ const LCanvas = ({ children }) => {
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
   const canvas = useRef();
   const delay = (() => { });
-  const glitchEgg = dom.current.querySelector('.ee2');
+  const glitchEgg = dom.current ? dom.current.querySelector('.ee2') : undefined;
 
   const onPointerUp = useCallback(() => {
 
@@ -52,8 +53,9 @@ const LCanvas = ({ children }) => {
     }, 1000);
   }, [glitchEgg, on, setOn]);
 
+  // Detect user interaction for glitch, disable for mob
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && dom.current) {
       const el = dom.current
       if (isMobile) return
       el.addEventListener('pointerup', onPointerUp)
@@ -117,7 +119,7 @@ export const Effect = ({ on }) => {
     <EffectComposer>
       <Vignette eskil={false} offset={0.004} darkness={on ? 1.2 : 1} />
 
-      <Glitch active={true} ratio={0.89} delay={[0.5, 35]} duration={[0.1, 0.3]} strength={[0.1, 0.5]} mode={GlitchMode.SPORADIC} />
+      <Glitch active ratio={0.89} delay={[0.5, 35]} duration={[0.1, 0.3]} strength={[0.1, 0.5]} mode={GlitchMode.SPORADIC} />
       {on && (
         <Scanline density={on ? 3.5 : 50} blendFunction={BlendFunction.OVERLAY} />,
         <DepthOfField focusDistance={2} focalLength={0.5} bokehScale={6} />,

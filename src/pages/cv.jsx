@@ -1,16 +1,11 @@
-import { PerspectiveCamera, Stats } from '@react-three/drei'
-import React, { useEffect, useMemo, useRef, forwardRef, useLayoutEffect, Suspense } from "react";
-import * as THREE from "three";
-import gsap from "gsap";
-import { useFrame, extend } from '@react-three/fiber'
-import dynamic from 'next/dynamic'
+import React, { Suspense, forwardRef, useEffect, useLayoutEffect, useMemo, useRef } from "react";
 
-import {
-  ArtistsIntro,
-  Artist,
-  ArtistLuxumbra,
-  ArtistMusashi,
-} from "@/components/dom/cv-artists";
+import { PerspectiveCamera, Stats } from '@react-three/drei'
+import { extend, useFrame } from '@react-three/fiber'
+import gsap from "gsap";
+import dynamic from 'next/dynamic'
+import * as THREE from "three";
+
 
 import {
   galaxy1Params,
@@ -18,45 +13,51 @@ import {
   galaxy3Params,
   galaxy4Params,
   galaxy5Params,
-} from '@/components/canvas/galaxies';
-import { Effects, Nucleus } from "@/components/canvas/Galaxy";
-import { CanvasLoader } from '@/components/canvas/Loader';
+} from '@mf/components/canvas/galaxies';
+import { Effects, Nucleus } from "@mf/components/canvas/Galaxy";
+import { CanvasLoader } from '@mf/components/canvas/Loader';
+import {
+  Artist,
+  ArtistLuxumbra,
+  ArtistMusashi,
+  ArtistsIntro,
+} from "@mf/components/dom/cv-artists";
 
-const NomadVox = dynamic(() => import('@/components/canvas/Nomad'), {
+const NomadVox = dynamic(() => import('@mf/components/canvas/Nomad'), {
   ssr: false,
 })
-const LuxVox = dynamic(() => import('@/components/canvas/Lux'), {
+const LuxVox = dynamic(() => import('@mf/components/canvas/Lux'), {
   ssr: false,
 })
-const JetsetterVox = dynamic(() => import('@/components/canvas/Jetsetter'), {
+const JetsetterVox = dynamic(() => import('@mf/components/canvas/Jetsetter'), {
   ssr: false,
 })
-const HouseholdVox = dynamic(() => import('@/components/canvas/Household'), {
+const HouseholdVox = dynamic(() => import('@mf/components/canvas/Household'), {
   ssr: false,
 })
-const IndustrialVox = dynamic(() => import('@/components/canvas/Industrial'), {
+const IndustrialVox = dynamic(() => import('@mf/components/canvas/Industrial'), {
   ssr: false,
 })
-const BabyEarthVox = dynamic(() => import('@/components/canvas/BabyEarth'), {
+const BabyEarthVox = dynamic(() => import('@mf/components/canvas/BabyEarth'), {
   ssr: false,
 })
-const OctoPetVox = dynamic(() => import('@/components/canvas/OctoPet'), {
+const OctoPetVox = dynamic(() => import('@mf/components/canvas/OctoPet'), {
   ssr: false,
 })
-const Galaxy = dynamic(() => import('@/components/canvas/Galaxy'), {
+const Galaxy = dynamic(() => import('@mf/components/canvas/Galaxy'), {
   ssr: false,
 })
 // Musashi
-const Robe = dynamic(() => import('@/components/canvas/musashi/Robe'), {
+const Robe = dynamic(() => import('@mf/components/canvas/musashi/Robe'), {
   ssr: false,
 })
-const Robe2 = dynamic(() => import('@/components/canvas/musashi/Robe2'), {
+const Robe2 = dynamic(() => import('@mf/components/canvas/musashi/Robe2'), {
   ssr: false,
 })
-const ILB = dynamic(() => import('@/components/canvas/musashi/Ilb'), {
+const ILB = dynamic(() => import('@mf/components/canvas/musashi/Ilb'), {
   ssr: false,
 })
-const MolochPet1 = dynamic(() => import('@/components/canvas/musashi/MolochPet1'), {
+const MolochPet1 = dynamic(() => import('@mf/components/canvas/musashi/MolochPet1'), {
   ssr: false,
 })
 

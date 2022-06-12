@@ -1,15 +1,16 @@
-import "@/styles/App.css";
-import { useRouter } from 'next/router'
-import useStore from '@/helpers/store'
-import { useIsMac, useLocalStore } from "@/utils/hooks";
+// import "module-alias/register";
+import "@mf/styles/App.css";
 import React, { useEffect, useRef, useState } from 'react'
-import { HeadComponent } from "@/components/dom/HeadComponent";
-import Dom from '@/components/layout/dom'
-import partition from '@/helpers/partition'
+
+import { CSSReset, ChakraProvider, extendTheme, useBreakpointValue } from "@chakra-ui/react";
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 
-
-import { ChakraProvider, CSSReset, extendTheme, useBreakpointValue } from "@chakra-ui/react";
+import partition from '@mf/helpers/partition'
+import useStore from '@mf/helpers/store'
+import { useIsMac } from "@mf/utils/hooks";
+import { HeadComponent } from "@mfdom/HeadComponent";
+import Dom from '@mflayout/dom'
 
 
 const theme = extendTheme({
@@ -72,6 +73,10 @@ const theme = extendTheme({
             textDecoration: "none",
           },
         },
+        "&.livestreamLink": {
+          color: "#FF61E6",
+          position: "relative",
+        }
       },
       h1: {
         color: "#fff",
@@ -119,6 +124,17 @@ const theme = extendTheme({
         fontSize: { base: "2.6vmin", md: '1vmax', '2xl': ".8vmax" },
         textShadow: "0 0 5px rgba(0, 0, 0, 0.6)",
       },
+      button: {
+        '&.ghost': {
+          color: '#fff'
+        },
+        '&.chakra-button': {
+          _hover: {
+            bg: '#7C56FF',
+          }
+        }
+
+      },
       section: {
         position: "relative",
         display: 'flex',
@@ -127,9 +143,11 @@ const theme = extendTheme({
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         alignItems: "center",
-        height: '100vh',
+        height: { base: 'auto', '2xl': '100vh' },
+        minHeight: {base: '100vh', '2xl': 'initial'},
         w: '100vw',
         m: 0,
+        mb: {base: 5, '2xl': 0},
         py: 0,
         px: { base: 4, lg: '10%' },
         zIndex: 2000,
@@ -211,15 +229,30 @@ const theme = extendTheme({
           width: 'auto',
         }
       },
+      // '.live': {
+      //   position: 'relative',
+      //   "&:after": {
+      //     content: "'Streaming now...'",
+      //     position: 'absolute',
+      //     top: 0,
+      //     right: 0,
+      //     color: "#FF61E6",
+      //     fontSize: "xs",
+      //     transform: 'translateY(-10px)',
+      //     width: '200px',
+      //     textAlign: 'right',
+      //     textDecoration: 'blink',
+      //   }
+      // }
     },
   },
 });
 
-const LCanvas = dynamic(() => import('@/components/layout/canvas'), {
+const LCanvas = dynamic(() => import('../components/layout/canvas'), {
   ssr: false,
 })
 
-const Balance = ({ child }) => {
+function Balance({ child }) {
   const [r3f, dom] = partition(child, (c) => c.props.r3f === true);
   const mobile = useBreakpointValue({ base: true, lg: false });
   const macOS = useIsMac();
@@ -236,7 +269,7 @@ function App({ Component, pageProps = { title: 'index' } }) {
   const router = useRouter()
   const { os } = useStore();
   const curURL = useRef(null);
-  let host = curURL ?? curURL.current;
+  const host = curURL ?? curURL.current;
 
   useEffect(() => {
     if (typeof window !== "undefined") {

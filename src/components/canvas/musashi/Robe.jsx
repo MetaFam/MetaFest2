@@ -1,9 +1,11 @@
 import React, { useRef, useState } from "react";
-import { useFrame } from '@react-three/fiber'
+
 import { useGLTF } from "@react-three/drei";
-import * as THREE from "three";
+import { useFrame } from '@react-three/fiber'
 import gsap from "gsap";
-import useStore from '@/helpers/store'
+import * as THREE from "three";
+
+import useStore from '@mf/helpers/store'
 
 export default function RobeVox(props) {
   const router = useStore((s) => s.router)
@@ -43,7 +45,7 @@ export default function RobeVox(props) {
         intensity={3}
         distance={3}
         decay={2}
-        color={'0xffffff'}
+        color="0xffffff"
         castShadow
       />
     </group>

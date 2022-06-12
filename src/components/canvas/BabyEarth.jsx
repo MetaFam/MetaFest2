@@ -1,9 +1,10 @@
 import React, { useRef, useState } from "react";
-import { useFrame } from '@react-three/fiber'
+
 import { useGLTF } from "@react-three/drei";
-import * as THREE from "three";
+import { useFrame } from '@react-three/fiber'
 import gsap from "gsap";
-import useStore from '@/helpers/store'
+import * as THREE from "three";
+
 
 export default function BabyEarthVox(props) {
   // const router = useStore((s) => s.router)
@@ -45,7 +46,7 @@ export default function BabyEarthVox(props) {
         intensity={6}
         distance={3}
         decay={2}
-        color={'cyan'}
+        color="cyan"
         castShadow
       />
     </group>

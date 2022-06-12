@@ -4,30 +4,30 @@ import React, { useRef, useState } from "react";
 import {
   Box,
   Button,
-  Flex,
-  Stack,
   Container,
+  Flex,
   SimpleGrid,
+  Stack,
   StackDivider,
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import {
-  AirtableSpeakerInstance,
-  AirtableContributorInstance,
-  AirtablePerformerInstance,
-  AirtableSponsorInstance,
-  AirtableFairInstance,
-} from "../integrations/AirtableInstance";
-import { useOnScreen } from "@/utils/hooks";
-import { BoxedNextImage } from "@/components/dom/BoxedNextImage";
-
-import SpeakerIcon from "@/static/assets/img/icons/forum.svg"
-import ContributorIcon from "@/static/assets/img/icons/players.svg"
-import PerformerIcon from "@/static/assets/img/icons/xpearned.svg"
-import SponsorIcon from "@/static/assets/img/icons/patrons.svg"
-import FairIcon from "@/static/assets/img/icons/welcometometagame.svg"
 import { BsFillPinMapFill } from 'react-icons/bs';
+
+import { BoxedNextImage } from "@mf/components/dom/BoxedNextImage";
+import {
+  AirtableContributorInstance,
+  AirtableFairInstance,
+  AirtablePerformerInstance,
+  AirtableSpeakerInstance,
+  AirtableSponsorInstance,
+} from "@mf/components/dom/integrations/AirtableInstance";
+import SpeakerIcon from "@mf/static/assets/img/icons/forum.svg"
+import SponsorIcon from "@mf/static/assets/img/icons/patrons.svg"
+import ContributorIcon from "@mf/static/assets/img/icons/players.svg"
+import FairIcon from "@mf/static/assets/img/icons/welcometometagame.svg"
+import PerformerIcon from "@mf/static/assets/img/icons/xpearned.svg"
+import { useOnScreen } from "@mf/utils/hooks";
 
 
 export const ApplySection = () => {
@@ -51,7 +51,7 @@ const [openFairApplication, setOpenFairApplication] = useState(false);
         transform={`translate3d(${onScreen ? 0 : "-70px"}, 0, 0)`}
         opacity={onScreen ? 1 : 0}
         transition="transform 0.3s 0.4s ease-in-out, opacity 0.6s 0.5s ease-in"
-        willChange={true}
+        willChange
       >
         <Box className="__content__body" d={{base: 'unset', md: "flex"}} w="100%" flexFlow={{base: 'column wrap', md: "row nowrap"}} alignItems="center" justifyContent="space-between">
         <Container
@@ -78,13 +78,13 @@ const [openFairApplication, setOpenFairApplication] = useState(false);
             <SimpleGrid columns={{ base: 1 }} spacing={0}>
               <Stack spacing={{base: 2, md: 4}} >
                 <Text
-                  textTransform={"uppercase"}
+                  textTransform="uppercase"
                   fontWeight={500}
                   fontSize={{ base: "2.2vmin", md: "0.7vmax" }}
                   className="gradient"
                   p={0}
-                  alignSelf={"flex-start"}
-                  rounded={"md"}
+                  alignSelf="flex-start"
+                  rounded="md"
                 >
                   <span role="img" aria-label="Yay, come join us!">
                     🎉
@@ -112,41 +112,41 @@ const [openFairApplication, setOpenFairApplication] = useState(false);
                 </Text>
                 <Stack spacing={4} divider={<StackDivider />}>
                     <Feature
-                      icon={'assets/img/icons/forum.svg'}
-                    iconBg={"yellow.900"}
-                    text={"Speakers/Workshops"}
+                      icon="assets/img/icons/forum.svg"
+                    iconBg="yellow.900"
+                    text="Speakers/Workshops"
                     call={() =>
                       setOpenSpeakerApplication(!openSpeakerApplication)
                     }
                   />
                     <Feature
-                      icon={'assets/img/icons/players.svg'}
-                    iconBg={"green.900"}
-                    text={"Contributors"}
+                      icon="assets/img/icons/players.svg"
+                    iconBg="green.900"
+                    text="Contributors"
                     call={() =>
                       setOpenContributorApplication(!openContributorApplication)
                     }
                   />
                     <Feature
-                      icon={'assets/img/icons/xpearned.svg'}
-                    iconBg={"purple.900"}
-                    text={"Performers"}
+                      icon="assets/img/icons/xpearned.svg"
+                    iconBg="purple.900"
+                    text="Performers"
                     call={() =>
                       setOpenPerformerApplication(!openPerformerApplication)
                     }
                   />
                     <Feature
-                      icon={'assets/img/icons/patrons.svg'}
-                    iconBg={"purple.900"}
-                    text={"Sponsors"}
+                      icon="assets/img/icons/patrons.svg"
+                    iconBg="purple.900"
+                    text="Sponsors"
                     call={() =>
                       setOpenSponsorApplication(!openSponsorApplication)
                     }
                     />
                                         <Feature
-                      icon={'assets/img/icons/welcometometagame.svg'}
-                    iconBg={"purple.900"}
-                    text={"Job Fair"}
+                      icon="assets/img/icons/welcometometagame.svg"
+                    iconBg="purple.900"
+                    text="Job Fair"
                     call={() =>
                       setOpenFairApplication(!openFairApplication)
                     }
@@ -378,13 +378,13 @@ const [openFairApplication, setOpenFairApplication] = useState(false);
 export const Feature = ({ text, icon, iconBg, call }) => {
   const responsiveSize = useBreakpointValue({base: 'xs', md: 'sm'})
   return (
-    <Stack direction={"row"} align={"center"}>
+    <Stack direction="row" align="center">
       <Flex
         w={8}
         h={8}
-        align={"center"}
-        justify={"center"}
-        rounded={"full"}
+        align="center"
+        justify="center"
+        rounded="full"
         // bg={iconBg}
       >
         <BoxedNextImage src={icon} alt={text} boxSize={{base: '30px', lg: '75px'}} className="gradient" />
