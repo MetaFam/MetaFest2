@@ -32,7 +32,7 @@ export function LivestreamSection() {
   const [open, setOpen] = useState(false);
   const speaker = getSpeakers(1);
   const [currentSpeaker, setCurrentspeaker] = useState(null);
-  const [loadingSpeaker, setLoadingSpeaker] = useState(false);
+  const [loadingSpeaker, setLoadingSpeaker] = useState(true);
   const [streaming, setStreaming] = useState(false);
   const dateTime = DateTime.now();
   const toggleStream = () => {
@@ -193,17 +193,17 @@ export function LivestreamSection() {
           background={`url(/assets/img/speakercard.gif) no-repeat center`}
           backgroundSize="cover"
         >
-          {currentSpeaker === null && (
-            <VStack w="100%" textAlign="center">
-            <Text as="span" className="gradient2">No events</Text>
-          </VStack>
-          )}
 
           {loadingSpeaker && (
             <VStack w="100%" textAlign="center">
               <Spinner fontSize="xl" color="#FF61E6" emptyColor="#76EBF2" />
               <Text as="span" className="gradient2">Loading...</Text>
             </VStack>
+          )}
+          {!loadingSpeaker && currentSpeaker === null && (
+            <VStack w="100%" textAlign="center">
+            <Text as="span" className="gradient2">No events</Text>
+          </VStack>
           )}
           {currentSpeaker !== null && !loadingSpeaker && (
               <VStack textAlign="center" justify="center" p={5} bgColor="rgba(255, 255, 255, 0.1)"
