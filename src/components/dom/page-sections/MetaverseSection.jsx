@@ -75,13 +75,13 @@ export const MetaverseSection = () => {
         willChange
         zIndex={openHQ || openFair ? 0 : 2001}
       >
-        <Box className="__content__body--no-firstof" textAlign="right" mt={6}>
+        <Box className="__content__body--no-firstof" textAlign="right" mt={6} maxWidth={{base: 'full', '2xl': 'initial'}}>
           <Text as="h2">MetaFest-a-Verse</Text>
           <Text className="gradient">
             Metafest 2 full dive: The MetaGame HQ
           </Text>
           <Text>
-            Join us at our HQ and explore the metaverse as we join together in games, scavenger hunts, learning, and other fun events.{" "}
+            Join us at our HQ and explore the metaverse as we join together<br/> in games, scavenger hunts, learning, and other fun events.{" "}
           </Text>
 
           <Button variant="ghost" colorScheme="ghost" onClick={() => setOpenHQ(!openHQ)}>

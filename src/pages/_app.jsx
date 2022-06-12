@@ -149,7 +149,7 @@ const theme = extendTheme({
         m: 0,
         mb: {base: 5, '2xl': 0},
         py: 0,
-        px: { base: 4, lg: '10%' },
+        px: { base: 4, xl: '5%', '2xl': '10%' },
         zIndex: 2000,
       },
       ".__content__body": {
@@ -229,21 +229,6 @@ const theme = extendTheme({
           width: 'auto',
         }
       },
-      // '.live': {
-      //   position: 'relative',
-      //   "&:after": {
-      //     content: "'Streaming now...'",
-      //     position: 'absolute',
-      //     top: 0,
-      //     right: 0,
-      //     color: "#FF61E6",
-      //     fontSize: "xs",
-      //     transform: 'translateY(-10px)',
-      //     width: '200px',
-      //     textAlign: 'right',
-      //     textDecoration: 'blink',
-      //   }
-      // }
     },
   },
 });

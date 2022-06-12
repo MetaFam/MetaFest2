@@ -20,8 +20,8 @@ export const LivestreamSection = () => {
   const [streaming, setStreaming] = useState(false);
   const dateTime = DateTime.now();
   const ringScaleMin = 0.98;
-const ringScaleMax = 1;
-const pulseRing = keyframes`
+  const ringScaleMax = 1;
+  const pulseRing = keyframes`
 	0% {
     transform: scale(${ringScaleMin});
   }
@@ -51,13 +51,13 @@ const pulseRing = keyframes`
 
       if (n !== null) {
         // console.log('compareForNextSpeaker', n);
-          setCurrentspeaker(n[0]);
-          console.log('speakerChange', n[0]);
-          if (DateTime.fromISO(n[0]?.end.dateTime) > DateTime.now()) {
-            setStreaming(true);
-          } else {
-            setStreaming(false);
-          }
+        setCurrentspeaker(n[0]);
+        console.log('speakerChange', n[0]);
+        if (DateTime.fromISO(n[0]?.end.dateTime) > DateTime.now()) {
+          setStreaming(true);
+        } else {
+          setStreaming(false);
+        }
       }
       console.log('no speakerChange');
       setCurrentspeaker(null);
@@ -122,7 +122,7 @@ const pulseRing = keyframes`
   useEffect(() => {
     try {
       // if (!currentSpeaker) return;
-      if(currentSpeaker === null) return;
+      if (currentSpeaker === null) return;
       if (DateTime.fromISO(currentSpeaker.start.dateTime) < DateTime.now() && DateTime.fromISO(currentSpeaker.end.dateTime) > DateTime.now()) {
         setStreaming(true);
         // return;
@@ -140,7 +140,8 @@ const pulseRing = keyframes`
     <Box
       as="section"
       id="live"
-      justifyContent={{ base: "flex-end", lg: "space-between" }}
+      justifyContent={{ base: "center", lg: "space-between" }}
+      flexFlow={{ base: "column", lg: "row" }}
     >
       {open && (
         <Button
@@ -162,10 +163,12 @@ const pulseRing = keyframes`
       )}
       <Box
         ref={ref}
+        display={{ base: "none", lg: "initial" }}
         className="__content"
         transform={`translate3d(${!open ? 0 : "-70px"}, 0, 0)`}
         opacity={!open ? 1 : 0}
         transition="transform 0.3s 0.4s ease-in-out, opacity 0.6s 0.5s ease-in"
+
       >
         <Box className="__content__body" textAlign="right" mt={6}>
           <Text as="h2">LiveStream</Text>
@@ -180,7 +183,7 @@ const pulseRing = keyframes`
         </Box>
       </Box>
       <Box className="__support"
-        mt={6}
+        mt={{base: 0, xl: 0}}
         flex="0 1 50%"
         transform={`translate3d(${!open ? 0 : "70px"}, 0, 0)`}
         opacity={!open ? 1 : 0}
@@ -197,47 +200,47 @@ const pulseRing = keyframes`
 
           {loadingSpeaker && (
             <VStack w="100%" textAlign="center">
-              <Spinner fontSize="xl" color="#FF61E6" emptyColor="#76EBF2" />
+              <Spinner fontSize={{base: 'md', xl: "xl"}} color="#FF61E6" emptyColor="#76EBF2" />
               <Text as="span" className="gradient2">Loading...</Text>
             </VStack>
           )}
           {!loadingSpeaker && currentSpeaker === null && (
             <VStack w="100%" textAlign="center">
-            <Text as="span" className="gradient2">No events</Text>
-          </VStack>
+              <Text as="span" fontSize={{ base: 'md', xl: "xl" }} className="gradient2">No events</Text>
+            </VStack>
           )}
           {currentSpeaker !== null && !loadingSpeaker && (
-              <VStack textAlign="center" justify="center" p={5} bgColor="rgba(255, 255, 255, 0.1)"
-                backdropFilter="blur(7px)" borderRadius="2xl" textTransform="capitalize" onClick={toggleStream}
-                title="Open stream"
+            <VStack textAlign="center" justify="center" p={5} bgColor="rgba(255, 255, 255, 0.1)"
+              backdropFilter="blur(7px)" borderRadius="2xl" textTransform="capitalize" onClick={toggleStream}
+              title="Open stream"
+              sx={{
+                _hover: {
+                  cursor: 'pointer'
+                }
+              }}
+            >
+
+              <BoxedNextImage
+                src="assets/img/mf2-logo.png"
+                alt="MetaGame Logo"
+                boxSize={{ base: "150px", xl: '150px', '2xl': "300px" }}
+                objectFit="cover"
+                textAlign="center"
+                animation={streaming ? `2.25s ${pulseRing} cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite` : 'paused'}
                 sx={{
-                  _hover: {
-                    cursor: 'pointer'
+                  transition: 'all 0.2s 0.1s ease',
+                  filter: "drop-shadow(0 0 15px rgba(0,0,0,0.6))",
+                  'img': {
+                    mx: 'auto'
                   }
                 }}
-              >
-
-                <BoxedNextImage
-                  src="assets/img/mf2-logo.png"
-                  alt="MetaGame Logo"
-                  boxSize={{ base: "200px", md: "300px" }}
-                  objectFit="cover"
-                  textAlign="center"
-                  animation={streaming ? `2.25s ${pulseRing} cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite` : 'paused'}
-                  sx={{
-                    transition: 'all 0.2s 0.1s ease',
-                    filter: "drop-shadow(0 0 15px rgba(0,0,0,0.6))",
-                    'img': {
-                      mx: 'auto'
-                    }
-                  }}
-                />
-                <Text as="h3" fontSize="lg" fontWeight={500} color={streaming ? '#FF61E6' : 'white'}>{streaming ? 'On stage now' : 'Up next...'}</Text>
-                <Text as="h4" className="gradient2" fontSize="3xl" fontWeight={500} mt={3}>{currentSpeaker.summary}</Text>
-                <Text fontSize="xl" >Start: {DateTime.fromISO(currentSpeaker.start.dateTime).toRelativeCalendar()}, {DateTime.fromISO(currentSpeaker.start.dateTime).toLocaleString(DateTime.TIME_24_WITH_SHORT_OFFSET)}</Text>
-                <Text fontSize="xl">End: {DateTime.fromISO(currentSpeaker.end.dateTime).toRelativeCalendar()}, {DateTime.fromISO(currentSpeaker.end.dateTime).toLocaleString(DateTime.TIME_24_WITH_SHORT_OFFSET)}</Text>
-                    {streaming && <Text fontSize="xl">Click to Open Stream</Text>}
-                  </VStack>
+              />
+              <Text as="h3" fontSize={{ base: 'sm', xl: 'md', '2xl': "lg" }} fontWeight={500} color={streaming ? '#FF61E6' : 'white'}>{streaming ? 'On stage now' : 'Up next...'}</Text>
+              <Text as="h4" className="gradient2" fontSize={{ base: 'lg', xl: 'xl', '2xl': "3xl" }} fontWeight={500} mt={3}>{currentSpeaker.summary}</Text>
+              <Text  fontSize={{ base: 'sm', xl: 'md', '2xl': "lg" }} >Start: {DateTime.fromISO(currentSpeaker.start.dateTime).toRelativeCalendar()}, {DateTime.fromISO(currentSpeaker.start.dateTime).toLocaleString(DateTime.TIME_24_WITH_SHORT_OFFSET)}</Text>
+              <Text  fontSize={{ base: 'sm', xl: 'md', '2xl': "lg" }}>End: {DateTime.fromISO(currentSpeaker.end.dateTime).toRelativeCalendar()}, {DateTime.fromISO(currentSpeaker.end.dateTime).toLocaleString(DateTime.TIME_24_WITH_SHORT_OFFSET)}</Text>
+              {streaming && <Text  fontSize={{ base: 'sm', xl: 'md', '2xl': "lg" }}>Open Stream</Text>}
+            </VStack>
           )}
         </Box>
       </Box>
