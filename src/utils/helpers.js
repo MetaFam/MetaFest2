@@ -27,3 +27,9 @@ export const getSpeakers = async (num) => {
     console.log('error fetching calendar', error);
   }
 };
+
+export const htmlDecode = (input) => {
+  const e = document.createElement('textarea');
+  e.innerHTML = input;
+  return e.value;
+}

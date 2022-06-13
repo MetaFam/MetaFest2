@@ -26,7 +26,7 @@ import {
 import axios from 'axios';
 import { DateTime, Duration } from 'luxon';
 
-import { getSpeakers } from "@mf/utils/helpers";
+import { getSpeakers, htmlDecode } from "@mf/utils/helpers";
 import { useGetSpeakers, useOnScreen } from "@mf/utils/hooks";
 
 export const SpeakersSection = () => {
@@ -60,13 +60,13 @@ export const SpeakersSection = () => {
           const startTime = DateTime.fromISO(speaker.start.dateTime);
           const endTime = DateTime.fromISO(speaker.end.dateTime);
           if (startTime <= currentDateTime && endTime >= currentDateTime) {
-            console.log('current', speaker);
+            // console.log('current', speaker);
             return speaker;
           }
         });
         if (findSpeaker && findSpeaker.length > 0) {
           setCurrentSpeaker(findSpeaker[0]);
-          console.log('cur speaker updated', findSpeaker);
+          // console.log('cur speaker updated', findSpeaker);
         }
         // console.log('speakersListUpdated', speakersList.current[0], currentSpeaker);
       }
@@ -98,7 +98,7 @@ export const SpeakersSection = () => {
           makeList();
           console.log('makeList');
         }
-        console.log('curStartTime', curEndTime, now);
+        // console.log('curStartTime', curEndTime, now);
       }
     }, 5000);
 
@@ -146,14 +146,7 @@ export const SpeakersSection = () => {
                             bgColor: endDate <= currentDateTime || startDate <= currentDateTime ? 'rgba(255,255,255,0.05)' : 'transparent',
                           }}
                         >
-                          <VStack align="flex-start" spacing={{ base: 1, xl: 2 }} position="relative" p={{base: 0, lg: 3}}
-                          // sx={{
-                          //   bgColor: 'rgba(0,0,0, 0.1)',
-                          //   backdropFilter: 'blur(7px)',
-                          //   borderRadius: 'lg',
-                          //   zIndex: 0,
-                          // }}
-                          >
+                          <VStack align="flex-start" spacing={{ base: 1, xl: 2 }} position="relative" p={{base: 0, lg: 3}}>
                             <Tooltip
                               label={`${speaker.summary}`}
                               hasArrow
@@ -163,7 +156,7 @@ export const SpeakersSection = () => {
                               aria-label={`${speaker.description}`}
                             >
                               <Text as="h4" fontSize={{ base: "sm", sm: 'sm', '2xl': 'md' }} fontWeight={{base: 300, xl: 700}}>
-                                {speaker.description ?? speaker.summary}</Text>
+                                {speaker.summary}</Text>
                             </Tooltip>
                             {endDate <= currentDateTime || startDate <= currentDateTime && (
                               <Text as="span" fontSize={{ base: 'xs', '2xl': "sm" }} className="gradient" position="absolute" top={0} right={0} variant="outline" animation={`2s ${streamingBlink} cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite`} transform={{ base: "translateY(-20px)", xl: 'translateY(-35px)', '2xl': "translateY(-38px)" }}>Streaming now...</Text>
@@ -176,9 +169,12 @@ export const SpeakersSection = () => {
                               <PopoverContent as="div" bgColor="rgba(41,2,80,1)">
                                 <PopoverCloseButton />
                                 <PopoverArrow bgColor="rgba(41,2,80,1)" />
-                                <PopoverHeader fontWeight={900} className="gradient2" pointerEvents="none">{speaker.description}</PopoverHeader>
+                                <PopoverHeader fontWeight={900} className="gradient2" pointerEvents="none">{speaker.summary}</PopoverHeader>
                                 <PopoverBody>
-                                  <Box as="span" fontWeight="700">Title: {speaker.summary} </Box>
+                                  <Text as="span" fontSize={{ base: 'xs', '2xl': "sm" }} fontWeight={700}>On stage with:</Text>
+                                  <Box fontSize={{ base: 'xs', '2xl': 'sm' }} mb={2}>
+                                    <div dangerouslySetInnerHTML={{ __html: htmlDecode(speaker.description) }} />
+                                    </Box>
                                   <Text>Start: {startDate.toFormat('ccc')}, {startDate.toLocaleString(DateTime.DATETIME_FULL)}</Text>
                                   <Text>Finish: {endDate.toFormat('ccc')}, {endDate.toLocaleString(DateTime.DATETIME_FULL)}</Text>
                                 </PopoverBody>
@@ -194,7 +190,7 @@ export const SpeakersSection = () => {
                                   <HStack >
                                     <Link href={speaker.htmlLink} isExternal>Calendar</Link>
                                     <Link href="https://discord.gg/g3KnY4sXXP" isExternal>Chat</Link>
-                                    {endDate <= currentDateTime || startDate <= currentDateTime && <Link href="/live">Watch</Link>}
+                                    {endDate <= currentDateTime || startDate <= currentDateTime && <Link href="/#live">Watch</Link>}
                                   </HStack>
                                 </PopoverFooter>
                               </PopoverContent>
