@@ -268,11 +268,10 @@ export const LivestreamSection = () => {
             textAlign="center"
           >
             <Link
-              href="https://www.youtube.com/embed/live_stream?channel=UC6gdZ6Q7Fwfvn-Uu4QKDyhg"
+              href="https://www.youtube.com/watch?v=XCRh2p13mbM"
               isExternal
               fontWeight={700}
               fontSize="0.7vmax"
-              // d="inline-block"
               mx="auto"
               p={3}
               bg="linear-gradient(90.24deg, #640DFB99 0.3%, rgba(100, 13, 251, 0.9) 80.16%)"
