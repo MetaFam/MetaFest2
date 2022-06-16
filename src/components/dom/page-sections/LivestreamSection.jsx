@@ -270,7 +270,7 @@ export const LivestreamSection = () => {
             textAlign="center"
           >
             <Link
-              href="https://www.youtube.com/watch?v=XCRh2p13mbM"
+              href="https://www.youtube.com/channel/UC6gdZ6Q7Fwfvn-Uu4QKDyhg/live"
               isExternal
               fontWeight={700}
               fontSize="0.7vmax"
