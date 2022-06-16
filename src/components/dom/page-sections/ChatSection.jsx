@@ -8,7 +8,9 @@ import { useOnScreen } from "@mf/utils/hooks";
 
 export const ChatSection = () => {
   const ref = useRef(null);
+  const chatRef = useRef(null);
   const onScreen = useOnScreen(ref);
+  const chatOnScreen = useOnScreen(chatRef);
   const [open, setOpen] = useState(false);
 
   const toggleChat = () => {
@@ -64,7 +66,7 @@ export const ChatSection = () => {
       </Box>
       {open && (
         <Box
-          ref={ref}
+          ref={chatRef}
           position="absolute"
           top="12.5vh"
           left={0}
@@ -72,7 +74,7 @@ export const ChatSection = () => {
           minH="75vh"
           width="100vw"
           boxShadow="0 0 30px rgba(0,0,0,0.8)"
-          opacity={onScreen ? 1 : 0}
+          opacity={1}
           transition="opacity 1.2s 0.8s ease-in-out"
           zIndex={2001}
         >
