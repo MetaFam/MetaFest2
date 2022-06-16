@@ -139,7 +139,7 @@ export const SpeakersSection = () => {
                     const limit = resultLimit;
                     if (i <= pageDisplayLimit) {
                       return (
-                        <Box key={`speaker-${key}`}
+                        <Box key={`speaker-${i+key}`}
                           sx={{
                             borderRadius: "lg",
                             border: endDate <= currentDateTime || startDate <= currentDateTime ? '1px solid #FF61E6' : 'none',

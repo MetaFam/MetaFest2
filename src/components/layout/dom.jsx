@@ -113,7 +113,7 @@ export const UIToggles = () => {
   }, [on, canvasOn, macOS, toggleCanvas]);
 
   return (
-    <HStack fontSize={{ base: '3vw', lg: '0.7vw' }} fontWeight={500} position="fixed" bottom={5} right={{ base: 3, lg: 5 }} opacity={0.5} transition="opacity 0.3s ease" zIndex={2001} _hover={{
+    <HStack fontSize={{ base: '3vw', lg: '0.7vw' }} fontWeight={500} position="fixed" bottom={5} left={{ base: 3, lg: 5 }} opacity={0.5} transition="opacity 0.3s ease" zIndex={2001} _hover={{
       opacity: 1
     }}>
       <VStack spacing={0}>

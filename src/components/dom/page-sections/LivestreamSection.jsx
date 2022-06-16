@@ -12,7 +12,9 @@ import YoutubeInstance from "@mfdom/integrations/YoutubeInstance";
 
 export const LivestreamSection = () => {
   const ref = useRef(null);
+  const streamRef = useRef(null);
   const onScreen = useOnScreen(ref);
+  const streamOnScreen = useOnScreen(streamRef);
   const [open, setOpen] = useState(false);
   const speaker = getSpeakers(1);
   const [currentSpeaker, setCurrentspeaker] = useState(null);
@@ -246,7 +248,7 @@ export const LivestreamSection = () => {
       </Box>
       {open && (
         <Box
-          ref={ref}
+          ref={streamRef}
           position="absolute"
           top="12.5vh"
           left={0}
@@ -254,7 +256,7 @@ export const LivestreamSection = () => {
           minH="75vh"
           width="100vw"
           boxShadow="0 0 30px rgba(0,0,0,0.8)"
-          opacity={onScreen ? 1 : 0}
+          opacity={1}
           transition="opacity 1.2s 0.8s ease-in-out"
           zIndex={2001}
         >
@@ -268,7 +270,7 @@ export const LivestreamSection = () => {
             textAlign="center"
           >
             <Link
-              href="https://www.youtube.com/watch?v=XCRh2p13mbM"
+              href="https://www.youtube.com/channel/UC6gdZ6Q7Fwfvn-Uu4QKDyhg/live"
               isExternal
               fontWeight={700}
               fontSize="0.7vmax"
